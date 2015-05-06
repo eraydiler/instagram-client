@@ -9,6 +9,11 @@
 #import <UIKit/UIKit.h>
 
 @interface MyCustomTableViewCell : UITableViewCell
-@property (strong, nonatomic) IBOutlet UILabel *titleLabel;
-@property (strong, nonatomic) IBOutlet UILabel *bodyLabel;
+
+@property(nonatomic, strong) UITextField *searchField;
+@property(nonatomic, strong) UIImageView *profilePicture;
+@property(nonatomic, strong) UILabel *namelabel;
+@property(nonatomic, strong) UILabel *dateLabel;
+@property(nonatomic, strong) UIImageView *photo;
+
 @end

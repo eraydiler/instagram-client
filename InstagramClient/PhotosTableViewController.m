@@ -44,8 +44,21 @@ static NSString *CellIdentifier = @"CellIdentifier";
     MyCustomTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
     // Configure the cell...
+    [self configureCell:cell atIndexPath:indexPath];
     
     return cell;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSLog(@"%f", self.navigationController.navigationBar.bounds.size.height);
+    return tableView.bounds.size.height - self.navigationController.navigationBar.bounds.size.height;
+}
+
+#pragma mark - Helper Methods
+
+- (void)configureCell:(MyCustomTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
+    cell.namelabel.text = @"Mister Tester";
+    cell.dateLabel.text = @"2 hours ago";
 }
 
 @end
