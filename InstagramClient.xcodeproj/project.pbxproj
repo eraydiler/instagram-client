@@ -9,11 +9,16 @@
 /* Begin PBXBuildFile section */
 		2A0CC9E61AFAA03300FA46BC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A0CC9E51AFAA03300FA46BC /* main.m */; };
 		2A0CC9E91AFAA03300FA46BC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A0CC9E81AFAA03300FA46BC /* AppDelegate.m */; };
-		2A0CC9EC1AFAA03300FA46BC /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A0CC9EB1AFAA03300FA46BC /* ViewController.m */; };
 		2A0CC9EF1AFAA03300FA46BC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2A0CC9ED1AFAA03300FA46BC /* Main.storyboard */; };
 		2A0CC9F11AFAA03300FA46BC /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2A0CC9F01AFAA03300FA46BC /* Images.xcassets */; };
 		2A0CC9F41AFAA03300FA46BC /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2A0CC9F21AFAA03300FA46BC /* LaunchScreen.xib */; };
 		2A0CCA001AFAA03300FA46BC /* InstagramClientTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A0CC9FF1AFAA03300FA46BC /* InstagramClientTests.m */; };
+		2A0CCA141AFAA72A00FA46BC /* ALView+PureLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A0CCA0C1AFAA72A00FA46BC /* ALView+PureLayout.m */; };
+		2A0CCA151AFAA72A00FA46BC /* NSArray+PureLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A0CCA0E1AFAA72A00FA46BC /* NSArray+PureLayout.m */; };
+		2A0CCA161AFAA72A00FA46BC /* NSLayoutConstraint+PureLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A0CCA101AFAA72A00FA46BC /* NSLayoutConstraint+PureLayout.m */; };
+		2A0CCA1D1AFABD7F00FA46BC /* MyCustomTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A0CCA1C1AFABD7F00FA46BC /* MyCustomTableViewCell.m */; };
+		2A0CCA201AFAC09D00FA46BC /* PhotosTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A0CCA1F1AFAC09D00FA46BC /* PhotosTableViewController.m */; };
+		2A0CCA241AFAC9EB00FA46BC /* PhotoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A0CCA231AFAC9EB00FA46BC /* PhotoModel.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -32,14 +37,28 @@
 		2A0CC9E51AFAA03300FA46BC /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		2A0CC9E71AFAA03300FA46BC /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		2A0CC9E81AFAA03300FA46BC /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		2A0CC9EA1AFAA03300FA46BC /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		2A0CC9EB1AFAA03300FA46BC /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		2A0CC9EE1AFAA03300FA46BC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		2A0CC9F01AFAA03300FA46BC /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		2A0CC9F31AFAA03300FA46BC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		2A0CC9F91AFAA03300FA46BC /* InstagramClientTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = InstagramClientTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2A0CC9FE1AFAA03300FA46BC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2A0CC9FF1AFAA03300FA46BC /* InstagramClientTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InstagramClientTests.m; sourceTree = "<group>"; };
+		2A0CCA0B1AFAA72A00FA46BC /* ALView+PureLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ALView+PureLayout.h"; sourceTree = "<group>"; };
+		2A0CCA0C1AFAA72A00FA46BC /* ALView+PureLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ALView+PureLayout.m"; sourceTree = "<group>"; };
+		2A0CCA0D1AFAA72A00FA46BC /* NSArray+PureLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+PureLayout.h"; sourceTree = "<group>"; };
+		2A0CCA0E1AFAA72A00FA46BC /* NSArray+PureLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+PureLayout.m"; sourceTree = "<group>"; };
+		2A0CCA0F1AFAA72A00FA46BC /* NSLayoutConstraint+PureLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSLayoutConstraint+PureLayout.h"; sourceTree = "<group>"; };
+		2A0CCA101AFAA72A00FA46BC /* NSLayoutConstraint+PureLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSLayoutConstraint+PureLayout.m"; sourceTree = "<group>"; };
+		2A0CCA111AFAA72A00FA46BC /* PureLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PureLayout.h; sourceTree = "<group>"; };
+		2A0CCA121AFAA72A00FA46BC /* PureLayout+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PureLayout+Internal.h"; sourceTree = "<group>"; };
+		2A0CCA131AFAA72A00FA46BC /* PureLayoutDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PureLayoutDefines.h; sourceTree = "<group>"; };
+		2A0CCA1B1AFABD7F00FA46BC /* MyCustomTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyCustomTableViewCell.h; sourceTree = "<group>"; };
+		2A0CCA1C1AFABD7F00FA46BC /* MyCustomTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyCustomTableViewCell.m; sourceTree = "<group>"; };
+		2A0CCA1E1AFAC09D00FA46BC /* PhotosTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotosTableViewController.h; sourceTree = "<group>"; };
+		2A0CCA1F1AFAC09D00FA46BC /* PhotosTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotosTableViewController.m; sourceTree = "<group>"; };
+		2A0CCA211AFAC4A400FA46BC /* InstagramClient-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "InstagramClient-Prefix.pch"; sourceTree = "<group>"; };
+		2A0CCA221AFAC9EB00FA46BC /* PhotoModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoModel.h; sourceTree = "<group>"; };
+		2A0CCA231AFAC9EB00FA46BC /* PhotoModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoModel.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,13 +100,15 @@
 		2A0CC9E21AFAA03300FA46BC /* InstagramClient */ = {
 			isa = PBXGroup;
 			children = (
+				2A0CCA271AFACA3200FA46BC /* View */,
+				2A0CCA261AFACA2100FA46BC /* Controller */,
+				2A0CCA251AFACA0400FA46BC /* Model */,
 				2A0CC9E71AFAA03300FA46BC /* AppDelegate.h */,
 				2A0CC9E81AFAA03300FA46BC /* AppDelegate.m */,
-				2A0CC9EA1AFAA03300FA46BC /* ViewController.h */,
-				2A0CC9EB1AFAA03300FA46BC /* ViewController.m */,
 				2A0CC9ED1AFAA03300FA46BC /* Main.storyboard */,
 				2A0CC9F01AFAA03300FA46BC /* Images.xcassets */,
 				2A0CC9F21AFAA03300FA46BC /* LaunchScreen.xib */,
+				2A0CCA091AFAA6B000FA46BC /* libs */,
 				2A0CC9E31AFAA03300FA46BC /* Supporting Files */,
 			);
 			path = InstagramClient;
@@ -98,6 +119,7 @@
 			children = (
 				2A0CC9E41AFAA03300FA46BC /* Info.plist */,
 				2A0CC9E51AFAA03300FA46BC /* main.m */,
+				2A0CCA211AFAC4A400FA46BC /* InstagramClient-Prefix.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -117,6 +139,65 @@
 				2A0CC9FE1AFAA03300FA46BC /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		2A0CCA091AFAA6B000FA46BC /* libs */ = {
+			isa = PBXGroup;
+			children = (
+				2A0CCA0A1AFAA6CA00FA46BC /* PureLayout */,
+			);
+			name = libs;
+			sourceTree = "<group>";
+		};
+		2A0CCA0A1AFAA6CA00FA46BC /* PureLayout */ = {
+			isa = PBXGroup;
+			children = (
+				2A0CCA0B1AFAA72A00FA46BC /* ALView+PureLayout.h */,
+				2A0CCA0C1AFAA72A00FA46BC /* ALView+PureLayout.m */,
+				2A0CCA0D1AFAA72A00FA46BC /* NSArray+PureLayout.h */,
+				2A0CCA0E1AFAA72A00FA46BC /* NSArray+PureLayout.m */,
+				2A0CCA0F1AFAA72A00FA46BC /* NSLayoutConstraint+PureLayout.h */,
+				2A0CCA101AFAA72A00FA46BC /* NSLayoutConstraint+PureLayout.m */,
+				2A0CCA111AFAA72A00FA46BC /* PureLayout.h */,
+				2A0CCA121AFAA72A00FA46BC /* PureLayout+Internal.h */,
+				2A0CCA131AFAA72A00FA46BC /* PureLayoutDefines.h */,
+			);
+			name = PureLayout;
+			sourceTree = "<group>";
+		};
+		2A0CCA171AFAB4EF00FA46BC /* UITableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				2A0CCA1B1AFABD7F00FA46BC /* MyCustomTableViewCell.h */,
+				2A0CCA1C1AFABD7F00FA46BC /* MyCustomTableViewCell.m */,
+			);
+			name = UITableViewCell;
+			sourceTree = "<group>";
+		};
+		2A0CCA251AFACA0400FA46BC /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				2A0CCA221AFAC9EB00FA46BC /* PhotoModel.h */,
+				2A0CCA231AFAC9EB00FA46BC /* PhotoModel.m */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		2A0CCA261AFACA2100FA46BC /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				2A0CCA1E1AFAC09D00FA46BC /* PhotosTableViewController.h */,
+				2A0CCA1F1AFAC09D00FA46BC /* PhotosTableViewController.m */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		2A0CCA271AFACA3200FA46BC /* View */ = {
+			isa = PBXGroup;
+			children = (
+				2A0CCA171AFAB4EF00FA46BC /* UITableViewCell */,
+			);
+			name = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -219,9 +300,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2A0CC9EC1AFAA03300FA46BC /* ViewController.m in Sources */,
+				2A0CCA201AFAC09D00FA46BC /* PhotosTableViewController.m in Sources */,
 				2A0CC9E91AFAA03300FA46BC /* AppDelegate.m in Sources */,
+				2A0CCA241AFAC9EB00FA46BC /* PhotoModel.m in Sources */,
 				2A0CC9E61AFAA03300FA46BC /* main.m in Sources */,
+				2A0CCA141AFAA72A00FA46BC /* ALView+PureLayout.m in Sources */,
+				2A0CCA151AFAA72A00FA46BC /* NSArray+PureLayout.m in Sources */,
+				2A0CCA1D1AFABD7F00FA46BC /* MyCustomTableViewCell.m in Sources */,
+				2A0CCA161AFAA72A00FA46BC /* NSLayoutConstraint+PureLayout.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -347,6 +433,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				GCC_PREFIX_HEADER = "InstagramClient/InstagramClient-Prefix.pch";
 				INFOPLIST_FILE = InstagramClient/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -358,6 +445,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				GCC_PREFIX_HEADER = "InstagramClient/InstagramClient-Prefix.pch";
 				INFOPLIST_FILE = InstagramClient/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
