@@ -14,6 +14,5 @@
 @property(nonatomic, strong) UILabel *userName;
 @property(nonatomic, strong) UILabel *date;
 
-- populate
 
 @end
