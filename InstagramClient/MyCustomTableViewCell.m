@@ -28,12 +28,13 @@
     if (self) {
         
         [self.contentView addSubview:self.searchField];
+        [self.contentView  addSubview:self.containerView];
         [self.contentView addSubview:self.profilePicture];
         [self.contentView addSubview:self.namelabel];
         [self.contentView addSubview:self.dateLabel];
         [self.contentView addSubview:self.photo];
         
-        self.contentView.backgroundColor = [UIColor grayColor];
+        self.contentView.backgroundColor = [UIColor colorWithRed:206.0/255.0 green:206.0/255.0 blue:206.0/255.0 alpha:1.0];
         
         [self setNeedsUpdateConstraints];
     }
@@ -48,6 +49,11 @@
         [self.searchField autoPinEdge:ALEdgeTop toEdge:ALEdgeTop ofView:self.contentView withOffset:10.0];
         [self.searchField autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:10.0];
         [self.searchField autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:10.0];
+        
+        [self.containerView autoSetDimension:ALDimensionHeight toSize:50.0];
+        [self.containerView autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.searchField withOffset:10.0];
+        [self.containerView autoPinEdgeToSuperviewEdge:ALEdgeLeft];
+        [self.containerView autoPinEdgeToSuperviewEdge:ALEdgeRight];
         
         [self.profilePicture autoSetDimensionsToSize:CGSizeMake(40.0, 40.0)];
         [self.profilePicture autoCenterInSuperview];
@@ -71,7 +77,6 @@
 - (UITextField *)searchField {
     if (!_searchField) {
         _searchField = [UITextField newAutoLayoutView];
-//        _searchField.backgroundColor = [UIColor greenColor];
         _searchField.placeholder = @"Search";
         _searchField.font = [UIFont systemFontOfSize:20.0];
         _searchField.textAlignment = NSTextAlignmentCenter;
@@ -110,6 +115,14 @@
         _photo.backgroundColor = [UIColor brownColor];
     }
     return _photo;
+}
+
+-(UIView *)containerView {
+    if (!_containerView) {
+        _containerView = [UIView newAutoLayoutView];
+        _containerView.backgroundColor = [UIColor colorWithRed:237.0/255.0 green:237.0/255.0 blue:237.0/255.0 alpha:1.0];
+    }
+    return _containerView;
 }
 
 @end
