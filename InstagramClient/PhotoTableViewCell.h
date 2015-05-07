@@ -8,9 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MyCustomTableViewCell : UITableViewCell
+@interface PhotoTableViewCell : UITableViewCell
 
-@property(nonatomic, strong) UITextField *searchField;
+//@property(nonatomic, strong) UITextField *searchField;
 @property(nonatomic, strong) UIView *containerView;
 @property(nonatomic, strong) UIImageView *profilePicture;
 @property(nonatomic, strong) UILabel *namelabel;

@@ -7,12 +7,13 @@
 //
 
 #import "PhotosTableViewController.h"
-#import "MyCustomTableViewCell.h"
+#import "PhotoTableViewCell.h"
+#import "SearchTableViewCell.h"
 
-static NSString *CellIdentifier = @"CellIdentifier";
+static NSString *CellIdentifierSearch = @"SearchCellIdentifier";
+static NSString *CellIdentifierPhoto = @"PhotoCellIdentifier";
 
 @interface PhotosTableViewController ()
-
 @end
 
 @implementation PhotosTableViewController
@@ -21,7 +22,10 @@ static NSString *CellIdentifier = @"CellIdentifier";
     [super viewDidLoad];
     
     self.title = @"Instagram";
-    [self.tableView registerClass:[MyCustomTableViewCell class] forCellReuseIdentifier:CellIdentifier];
+    
+    [self.tableView registerClass:[SearchTableViewCell class] forCellReuseIdentifier:CellIdentifierSearch];
+    [self.tableView registerClass:[PhotoTableViewCell class] forCellReuseIdentifier:CellIdentifierPhoto];
+    
     self.tableView.estimatedRowHeight = UITableViewAutomaticDimension;
     self.tableView.allowsSelection = NO;
 }
@@ -34,15 +38,22 @@ static NSString *CellIdentifier = @"CellIdentifier";
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
+    return 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 1;
+    return (section == 0) ?  1 :  1;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    MyCustomTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    
+    UITableViewCell *cell = nil;
+   
+    if (indexPath.section == 0) {
+        cell = (SearchTableViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifierSearch forIndexPath:indexPath];
+    } else {
+    cell = (PhotoTableViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifierPhoto forIndexPath:indexPath];
+    }
     
     // Configure the cell...
     [self configureCell:cell atIndexPath:indexPath];
@@ -57,9 +68,36 @@ static NSString *CellIdentifier = @"CellIdentifier";
 
 #pragma mark - Helper Methods
 
-- (void)configureCell:(MyCustomTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
-    cell.namelabel.text = @"Mister Tester";
-    cell.dateLabel.text = @"2 hours ago";
+- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
+    
+    if (indexPath.section == 0) { // configure search cell
+        if (cell == nil) {
+            cell = [[SearchTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifierSearch];
+        }
+    } else { // configure photo cell
+        if (cell == nil) {
+            cell = [[PhotoTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifierPhoto];
+            
+        }
+        PhotoTableViewCell *photoCell = (PhotoTableViewCell *)cell;
+        photoCell.namelabel.text = @"Mister Tester";
+        photoCell.dateLabel.text = @"2 hours ago";
+    }
 }
+
+/*
+ if (cell == nil) {
+ 
+ cell = [[[SearchTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+ }
+ 
+ } else {
+ 
+ cell = [[PhotoTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+ cell.namelabel.text = @"Mister Tester";
+ cell.dateLabel.text = @"2 hours ago";
+ }
+
+ */
 
 @end

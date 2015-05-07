@@ -16,9 +16,10 @@
 		2A0CCA141AFAA72A00FA46BC /* ALView+PureLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A0CCA0C1AFAA72A00FA46BC /* ALView+PureLayout.m */; };
 		2A0CCA151AFAA72A00FA46BC /* NSArray+PureLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A0CCA0E1AFAA72A00FA46BC /* NSArray+PureLayout.m */; };
 		2A0CCA161AFAA72A00FA46BC /* NSLayoutConstraint+PureLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A0CCA101AFAA72A00FA46BC /* NSLayoutConstraint+PureLayout.m */; };
-		2A0CCA1D1AFABD7F00FA46BC /* MyCustomTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A0CCA1C1AFABD7F00FA46BC /* MyCustomTableViewCell.m */; };
+		2A0CCA1D1AFABD7F00FA46BC /* PhotoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A0CCA1C1AFABD7F00FA46BC /* PhotoTableViewCell.m */; };
 		2A0CCA201AFAC09D00FA46BC /* PhotosTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A0CCA1F1AFAC09D00FA46BC /* PhotosTableViewController.m */; };
 		2A0CCA241AFAC9EB00FA46BC /* PhotoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A0CCA231AFAC9EB00FA46BC /* PhotoModel.m */; };
+		2AFCB5591AFB037100E45E2B /* SearchTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2AFCB5581AFB037100E45E2B /* SearchTableViewCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,13 +53,15 @@
 		2A0CCA111AFAA72A00FA46BC /* PureLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PureLayout.h; sourceTree = "<group>"; };
 		2A0CCA121AFAA72A00FA46BC /* PureLayout+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PureLayout+Internal.h"; sourceTree = "<group>"; };
 		2A0CCA131AFAA72A00FA46BC /* PureLayoutDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PureLayoutDefines.h; sourceTree = "<group>"; };
-		2A0CCA1B1AFABD7F00FA46BC /* MyCustomTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyCustomTableViewCell.h; sourceTree = "<group>"; };
-		2A0CCA1C1AFABD7F00FA46BC /* MyCustomTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyCustomTableViewCell.m; sourceTree = "<group>"; };
+		2A0CCA1B1AFABD7F00FA46BC /* PhotoTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoTableViewCell.h; sourceTree = "<group>"; };
+		2A0CCA1C1AFABD7F00FA46BC /* PhotoTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoTableViewCell.m; sourceTree = "<group>"; };
 		2A0CCA1E1AFAC09D00FA46BC /* PhotosTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotosTableViewController.h; sourceTree = "<group>"; };
 		2A0CCA1F1AFAC09D00FA46BC /* PhotosTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotosTableViewController.m; sourceTree = "<group>"; };
 		2A0CCA211AFAC4A400FA46BC /* InstagramClient-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "InstagramClient-Prefix.pch"; sourceTree = "<group>"; };
 		2A0CCA221AFAC9EB00FA46BC /* PhotoModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoModel.h; sourceTree = "<group>"; };
 		2A0CCA231AFAC9EB00FA46BC /* PhotoModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoModel.m; sourceTree = "<group>"; };
+		2AFCB5571AFB037100E45E2B /* SearchTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchTableViewCell.h; sourceTree = "<group>"; };
+		2AFCB5581AFB037100E45E2B /* SearchTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchTableViewCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -168,8 +171,10 @@
 		2A0CCA171AFAB4EF00FA46BC /* UITableViewCell */ = {
 			isa = PBXGroup;
 			children = (
-				2A0CCA1B1AFABD7F00FA46BC /* MyCustomTableViewCell.h */,
-				2A0CCA1C1AFABD7F00FA46BC /* MyCustomTableViewCell.m */,
+				2A0CCA1B1AFABD7F00FA46BC /* PhotoTableViewCell.h */,
+				2A0CCA1C1AFABD7F00FA46BC /* PhotoTableViewCell.m */,
+				2AFCB5571AFB037100E45E2B /* SearchTableViewCell.h */,
+				2AFCB5581AFB037100E45E2B /* SearchTableViewCell.m */,
 			);
 			name = UITableViewCell;
 			sourceTree = "<group>";
@@ -305,8 +310,9 @@
 				2A0CCA241AFAC9EB00FA46BC /* PhotoModel.m in Sources */,
 				2A0CC9E61AFAA03300FA46BC /* main.m in Sources */,
 				2A0CCA141AFAA72A00FA46BC /* ALView+PureLayout.m in Sources */,
+				2AFCB5591AFB037100E45E2B /* SearchTableViewCell.m in Sources */,
 				2A0CCA151AFAA72A00FA46BC /* NSArray+PureLayout.m in Sources */,
-				2A0CCA1D1AFABD7F00FA46BC /* MyCustomTableViewCell.m in Sources */,
+				2A0CCA1D1AFABD7F00FA46BC /* PhotoTableViewCell.m in Sources */,
 				2A0CCA161AFAA72A00FA46BC /* NSLayoutConstraint+PureLayout.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -506,6 +512,7 @@
 				2A0CCA051AFAA03300FA46BC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		2A0CCA061AFAA03300FA46BC /* Build configuration list for PBXNativeTarget "InstagramClientTests" */ = {
 			isa = XCConfigurationList;
@@ -514,6 +521,7 @@
 				2A0CCA081AFAA03300FA46BC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
