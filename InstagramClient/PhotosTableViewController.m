@@ -63,7 +63,7 @@ static NSString *CellIdentifierPhoto = @"PhotoCellIdentifier";
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
 //    NSLog(@"%f", self.navigationController.navigationBar.bounds.size.height);
-    return tableView.bounds.size.height - self.navigationController.navigationBar.bounds.size.height;
+    return (indexPath.section == 0) ? 50.0 : tableView.bounds.size.height -self.navigationController.navigationBar.bounds.size.height -40.0;
 }
 
 #pragma mark - Helper Methods
@@ -84,20 +84,5 @@ static NSString *CellIdentifierPhoto = @"PhotoCellIdentifier";
         photoCell.dateLabel.text = @"2 hours ago";
     }
 }
-
-/*
- if (cell == nil) {
- 
- cell = [[[SearchTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
- }
- 
- } else {
- 
- cell = [[PhotoTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
- cell.namelabel.text = @"Mister Tester";
- cell.dateLabel.text = @"2 hours ago";
- }
-
- */
-
+    
 @end

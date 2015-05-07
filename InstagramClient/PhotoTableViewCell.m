@@ -52,7 +52,7 @@
         
         [self.containerView autoSetDimension:ALDimensionHeight toSize:50.0];
 //        [self.containerView autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.searchField withOffset:10.0];
-        [self.containerView autoPinEdgeToSuperviewEdge:ALEdgeTop];
+        [self.containerView autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:10.0];
         [self.containerView autoPinEdgeToSuperviewEdge:ALEdgeLeft];
         [self.containerView autoPinEdgeToSuperviewEdge:ALEdgeRight];
         

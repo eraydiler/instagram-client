@@ -7,7 +7,7 @@
 //
 
 #import "AppDelegate.h"
-#import "PhotosTableViewController.h"
+#import "PhotosViewController.h"
 
 @interface AppDelegate ()
 
@@ -19,7 +19,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    PhotosTableViewController *viewController = [[PhotosTableViewController alloc] initWithNibName:nil bundle:nil];
+    PhotosViewController *viewController = [[PhotosViewController alloc] initWithNibName:nil bundle:nil];
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:viewController];
     self.window.rootViewController = navigationController;
     [self.window makeKeyAndVisible];
