@@ -27,7 +27,7 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         
-        [self.contentView  addSubview:self.containerView];
+        [self.contentView addSubview:self.containerView];
         [self.contentView addSubview:self.profilePicture];
         [self.contentView addSubview:self.namelabel];
         [self.contentView addSubview:self.dateLabel];
@@ -45,29 +45,29 @@
     if (!self.didSetupConstraints) {
         
         [self.containerView autoSetDimension:ALDimensionHeight toSize:50.0];
-        [self.containerView autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:10.0];
+        [self.containerView autoPinEdgeToSuperviewEdge:ALEdgeTop];
         [self.containerView autoPinEdgeToSuperviewEdge:ALEdgeLeft];
         [self.containerView autoPinEdgeToSuperviewEdge:ALEdgeRight];
-//
+
         [self.profilePicture autoSetDimension:ALDimensionWidth toSize:50.0];
         [self.profilePicture autoPinEdge:ALEdgeTop toEdge:ALEdgeTop ofView:self.containerView];
         [self.profilePicture autoPinEdge:ALEdgeBottom toEdge:ALEdgeBottom ofView:self.containerView];
-        
+
         [self.dateLabel autoSetDimension:ALDimensionWidth toSize:100.0];
         [self.dateLabel autoPinEdge:ALEdgeTop toEdge:ALEdgeTop ofView:self.containerView];
         [self.dateLabel autoPinEdge:ALEdgeBottom toEdge:ALEdgeBottom ofView:self.containerView];
         [self.dateLabel autoPinEdge:ALEdgeRight toEdge:ALEdgeRight ofView:self.containerView];
         
-        [NSLayoutConstraint constraintWithItem:self.profilePicture
-                                     attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual
-                                        toItem:self.dateLabel attribute:NSLayoutAttributeLeft
-                                    multiplier:1.0 constant:10.0];
-        
+//        [NSLayoutConstraint constraintWithItem:self.profilePicture
+//                                     attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual
+//                                        toItem:self.dateLabel attribute:NSLayoutAttributeLeft
+//                                    multiplier:1.0 constant:10.0];
+//        
         [self.namelabel autoPinEdge:ALEdgeTop toEdge:ALEdgeTop ofView:self.containerView];
         [self.namelabel autoPinEdge:ALEdgeBottom toEdge:ALEdgeBottom ofView:self.containerView];
         [self.namelabel autoPinEdge:ALEdgeLeft toEdge:ALEdgeRight ofView:self.profilePicture];
         [self.namelabel autoSetDimension:ALDimensionWidth toSize:CGRectGetWidth(self.bounds)];
-        
+
         [self.photo autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.containerView];
         [self.photo autoPinEdgeToSuperviewEdge:ALEdgeBottom];
         [self.photo autoPinEdgeToSuperviewEdge:ALEdgeLeft];
@@ -107,7 +107,7 @@
 - (UIImageView *)photo {
     if (!_photo) {
         _photo = [UIImageView newAutoLayoutView];
-        _photo.backgroundColor = [UIColor brownColor];
+        _photo.backgroundColor = [UIColor darkGrayColor];
     }
     return _photo;
 }

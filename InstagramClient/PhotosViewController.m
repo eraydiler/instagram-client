@@ -46,7 +46,7 @@ static NSString *CellIdentifier= @"CellIdentifier";
     self.view.backgroundColor = [UIColor colorWithRed:206.0/255.0 green:206.0/255.0 blue:206.0/255.0 alpha:1.0];;
     
 //    self.tableView = [[UITableView alloc] initWithFrame:[[UIScreen mainScreen] applicationFrame] style:UITableViewStylePlain];
-    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0.0, 0.0, 10.0, 100.0) style:UITableViewStylePlain];
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0.0, 0.0, 0.0, 0.0) style:UITableViewStylePlain];
     
     self.tableView.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
     self.tableView.scrollEnabled = YES;
@@ -57,7 +57,7 @@ static NSString *CellIdentifier= @"CellIdentifier";
     [self.view addSubview:self.search];
     [self.containerView addSubview:self.tableView];
     [self.view addSubview:self.containerView];
-    NSLog(@"%f.0, %f.0", self.containerView.frame.size.width, self.containerView.frame.size.height);
+    NSLog(@"%f.0", self.view.frame.size.height);
         
     [self.view setNeedsUpdateConstraints];
 }
@@ -69,7 +69,7 @@ static NSString *CellIdentifier= @"CellIdentifier";
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 1;
+    return 10;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -82,10 +82,12 @@ static NSString *CellIdentifier= @"CellIdentifier";
     return cell;
 }
 
-//- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-//    //    NSLog(@"%f", self.navigationController.navigationBar.bounds.size.height);
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    //    NSLog(@"%f", self.navigationController.navigationBar.bounds.size.height);
 //    return tableView.bounds.size.height -self.navigationController.navigationBar.bounds.size.height -40.0;
-//}
+//    return 200.0;
+    return self.view.frame.size.height;
+}
 
 - (void)updateViewConstraints
 {
@@ -96,7 +98,7 @@ static NSString *CellIdentifier= @"CellIdentifier";
         [self.search autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:10.0];
         [self.search autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:10.0];
 
-        [self.containerView autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.search];
+        [self.containerView autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.search withOffset:10.0];
         [self.containerView autoPinEdge:ALEdgeBottom toEdge:ALEdgeBottom ofView:self.view];
         [self.containerView autoPinEdgeToSuperviewEdge:ALEdgeLeft];
         [self.containerView autoPinEdgeToSuperviewEdge:ALEdgeRight];
