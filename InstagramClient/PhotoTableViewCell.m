@@ -27,7 +27,6 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         
-//        [self.contentView addSubview:self.searchField];
         [self.contentView  addSubview:self.containerView];
         [self.contentView addSubview:self.profilePicture];
         [self.contentView addSubview:self.namelabel];
@@ -45,17 +44,11 @@
 {
     if (!self.didSetupConstraints) {
         
-//        [self.searchField autoSetDimension:ALDimensionHeight toSize:40.0];
-//        [self.searchField autoPinEdge:ALEdgeTop toEdge:ALEdgeTop ofView:self.contentView withOffset:10.0];
-//        [self.searchField autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:10.0];
-//        [self.searchField autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:10.0];
-        
         [self.containerView autoSetDimension:ALDimensionHeight toSize:50.0];
-//        [self.containerView autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.searchField withOffset:10.0];
         [self.containerView autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:10.0];
         [self.containerView autoPinEdgeToSuperviewEdge:ALEdgeLeft];
         [self.containerView autoPinEdgeToSuperviewEdge:ALEdgeRight];
-        
+//
         [self.profilePicture autoSetDimension:ALDimensionWidth toSize:50.0];
         [self.profilePicture autoPinEdge:ALEdgeTop toEdge:ALEdgeTop ofView:self.containerView];
         [self.profilePicture autoPinEdge:ALEdgeBottom toEdge:ALEdgeBottom ofView:self.containerView];
@@ -86,17 +79,6 @@
 }
 
 #pragma mark - instantiations
-
-//- (UITextField *)searchField {
-//    if (!_searchField) {
-//        _searchField = [UITextField newAutoLayoutView];
-//        _searchField.placeholder = @"Search";
-//        _searchField.font = [UIFont systemFontOfSize:20.0];
-//        _searchField.textAlignment = NSTextAlignmentCenter;
-//        _searchField.borderStyle = UITextBorderStyleRoundedRect;
-//    }
-//    return _searchField;
-//}
 
 - (UIImageView *)profilePicture {
     if (!_profilePicture) {
