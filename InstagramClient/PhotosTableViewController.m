@@ -20,6 +20,7 @@ static NSString *CellIdentifier = @"CellIdentifier";
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.title = @"Instagram";
     [self.tableView registerClass:[MyCustomTableViewCell class] forCellReuseIdentifier:CellIdentifier];
     self.tableView.estimatedRowHeight = UITableViewAutomaticDimension;
     self.tableView.allowsSelection = NO;

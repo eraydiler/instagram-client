@@ -55,21 +55,34 @@
         [self.containerView autoPinEdgeToSuperviewEdge:ALEdgeLeft];
         [self.containerView autoPinEdgeToSuperviewEdge:ALEdgeRight];
         
-        [self.profilePicture autoSetDimensionsToSize:CGSizeMake(40.0, 40.0)];
-        [self.profilePicture autoCenterInSuperview];
+        [self.profilePicture autoSetDimension:ALDimensionWidth toSize:50.0];
+        [self.profilePicture autoPinEdge:ALEdgeTop toEdge:ALEdgeTop ofView:self.containerView];
+        [self.profilePicture autoPinEdge:ALEdgeBottom toEdge:ALEdgeBottom ofView:self.containerView];
         
-        [self.namelabel autoSetDimensionsToSize:CGSizeMake(40.0, 40.0)];
-        [self.namelabel autoCenterInSuperview];
+        [self.dateLabel autoSetDimension:ALDimensionWidth toSize:100.0];
+        [self.dateLabel autoPinEdge:ALEdgeTop toEdge:ALEdgeTop ofView:self.containerView];
+        [self.dateLabel autoPinEdge:ALEdgeBottom toEdge:ALEdgeBottom ofView:self.containerView];
+        [self.dateLabel autoPinEdge:ALEdgeRight toEdge:ALEdgeRight ofView:self.containerView];
         
-        [self.dateLabel autoSetDimensionsToSize:CGSizeMake(40.0, 40.0)];
-        [self.dateLabel autoCenterInSuperview];
+        [NSLayoutConstraint constraintWithItem:self.profilePicture
+                                     attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual
+                                        toItem:self.dateLabel attribute:NSLayoutAttributeLeft
+                                    multiplier:1.0 constant:10.0];
         
-        [self.photo autoSetDimensionsToSize:CGSizeMake(200.0, 200.0)];
-        [self.photo autoCenterInSuperview];
+        [self.namelabel autoPinEdge:ALEdgeTop toEdge:ALEdgeTop ofView:self.containerView];
+        [self.namelabel autoPinEdge:ALEdgeBottom toEdge:ALEdgeBottom ofView:self.containerView];
+        [self.namelabel autoPinEdge:ALEdgeLeft toEdge:ALEdgeRight ofView:self.profilePicture];
+        [self.namelabel autoSetDimension:ALDimensionWidth toSize:CGRectGetWidth(self.bounds)];
+        
+        [self.photo autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.containerView];
+        [self.photo autoPinEdgeToSuperviewEdge:ALEdgeBottom];
+        [self.photo autoPinEdgeToSuperviewEdge:ALEdgeLeft];
+        [self.photo autoPinEdgeToSuperviewEdge:ALEdgeRight];
         
         self.didSetupConstraints = YES;
     }
     [super updateConstraints];
+    NSLog(@"self.photo's bounds is: %@", NSStringFromCGRect([self.photo bounds]));
 }
 
 #pragma mark - instantiations
