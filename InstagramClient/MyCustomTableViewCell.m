@@ -27,7 +27,12 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         
+        [self.contentView addSubview:self.searchField];
+        [self.contentView addSubview:self.profilePicture];
+        [self.contentView addSubview:self.namelabel];
+        [self.contentView addSubview:self.dateLabel];
         [self.contentView addSubview:self.photo];
+        
         self.contentView.backgroundColor = [UIColor grayColor];
         
         [self setNeedsUpdateConstraints];
@@ -39,8 +44,23 @@
 {
     if (!self.didSetupConstraints) {
         
-        [self.photo autoSetDimensionsToSize:CGSizeMake(100.0, 50.0)];
+        [self.searchField autoSetDimension:ALDimensionHeight toSize:40.0];
+        [self.searchField autoPinEdge:ALEdgeTop toEdge:ALEdgeTop ofView:self.contentView withOffset:10.0];
+        [self.searchField autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:10.0];
+        [self.searchField autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:10.0];
+        
+        [self.profilePicture autoSetDimensionsToSize:CGSizeMake(40.0, 40.0)];
+        [self.profilePicture autoCenterInSuperview];
+        
+        [self.namelabel autoSetDimensionsToSize:CGSizeMake(40.0, 40.0)];
+        [self.namelabel autoCenterInSuperview];
+        
+        [self.dateLabel autoSetDimensionsToSize:CGSizeMake(40.0, 40.0)];
+        [self.dateLabel autoCenterInSuperview];
+        
+        [self.photo autoSetDimensionsToSize:CGSizeMake(200.0, 200.0)];
         [self.photo autoCenterInSuperview];
+        
         self.didSetupConstraints = YES;
     }
     [super updateConstraints];
@@ -51,7 +71,11 @@
 - (UITextField *)searchField {
     if (!_searchField) {
         _searchField = [UITextField newAutoLayoutView];
-        _searchField.backgroundColor = [UIColor greenColor];
+//        _searchField.backgroundColor = [UIColor greenColor];
+        _searchField.placeholder = @"Search";
+        _searchField.font = [UIFont systemFontOfSize:20.0];
+        _searchField.textAlignment = NSTextAlignmentCenter;
+        _searchField.borderStyle = UITextBorderStyleRoundedRect;
     }
     return _searchField;
 }

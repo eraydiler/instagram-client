@@ -50,7 +50,7 @@ static NSString *CellIdentifier = @"CellIdentifier";
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"%f", self.navigationController.navigationBar.bounds.size.height);
+//    NSLog(@"%f", self.navigationController.navigationBar.bounds.size.height);
     return tableView.bounds.size.height - self.navigationController.navigationBar.bounds.size.height;
 }
 
