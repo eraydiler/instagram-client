@@ -121,13 +121,6 @@ static NSString *CellIdentifier= @"CellIdentifier";
     return _search;
 }
 
-//- (UITableView *)tableView {
-//    if(!_tableView) {
-//        _tableView = [UITableView newAutoLayoutView];
-//    }
-//    return _tableView;
-//}
-
 - (UIView *)containerView {
     if (!_containerView) {
         _containerView = [UIView newAutoLayoutView];
@@ -149,6 +142,7 @@ static NSString *CellIdentifier= @"CellIdentifier";
     cell.dateLabel.text = @"2 hours ago";
 }
 
+// For testing
 - (void)listSubviewsOfView:(UIView *)view {
     
     // Get the subviews of the view
