@@ -99,7 +99,8 @@
 - (UILabel *)dateLabel {
     if (!_dateLabel) {
         _dateLabel = [UILabel newAutoLayoutView];
-        _dateLabel.backgroundColor = [UIColor blueColor];
+        _dateLabel.backgroundColor = [UIColor clearColor];
+        _dateLabel.font = [UIFont systemFontOfSize:12.0];
     }
     return _dateLabel;
 }

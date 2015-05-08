@@ -189,7 +189,6 @@ static NSString *const InstagramApiURL = @"https://api.instagram.com/v1/tags/car
     url = [NSURL URLWithString:lowImage];
     request = [NSURLRequest requestWithURL:url];
     placeholderImage = [UIImage imageNamed:@"placeholder"];
-//    __weak PhotoTableViewCell *weakCell2 = cell;
     [cell.photo setImageWithURLRequest:request
                                placeholderImage:placeholderImage
                                         success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
@@ -197,7 +196,13 @@ static NSString *const InstagramApiURL = @"https://api.instagram.com/v1/tags/car
                                             [weakCell setNeedsLayout];
                                         } failure:nil];
 
-    
+    // Get time
+    NSString *createdTime = [dic objectForKey:@"created_time"];
+    NSTimeInterval interval = [createdTime doubleValue];;
+    NSDate *date = [NSDate dateWithTimeIntervalSince1970: interval];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    dateFormatter.dateFormat = @"yy/MM/dd HH:mm";
+    cell.dateLabel.text = [dateFormatter stringFromDate:date];
 }
 
 - (void)fetch {
