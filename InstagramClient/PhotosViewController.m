@@ -11,6 +11,7 @@
 #import "PureLayout.h"
 #import "AFNetworking.h"
 #import "PhotoModel.h"
+#import "UIImageView+AFNetworking.h"
 
 static NSString *CellIdentifier= @"CellIdentifier";
 
@@ -169,6 +170,21 @@ static NSString *CellIdentifier= @"CellIdentifier";
     NSString *userName = [user objectForKey:@"full_name"];
     
     cell.namelabel.text = userName;
+    
+    NSURL *url = [NSURL URLWithString:profilePicture];
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    UIImage *placeholderImage = [UIImage imageNamed:@"placeholder"];
+    
+    __weak PhotoTableViewCell *weakCell = cell;
+    
+    [cell.profilePicture setImageWithURLRequest:request
+                          placeholderImage:placeholderImage
+                                   success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+                                       
+                                       weakCell.profilePicture.image = image;
+                                       [weakCell setNeedsLayout];
+                                       
+                                   } failure:nil];
 }
 
 - (void)fetch {
