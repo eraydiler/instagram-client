@@ -14,6 +14,7 @@
 #import "UIImageView+AFNetworking.h"
 
 static NSString *CellIdentifier= @"CellIdentifier";
+static NSString *const InstagramApiURL = @"https://api.instagram.com/v1/tags/car/media/recent?access_token=220265065.5c873e0.81643230ea8a479e9e1355d49529903a";
 
 @interface PhotosViewController () <UITableViewDataSource, UITableViewDelegate>
 @property (nonatomic, assign) BOOL didSetupConstraints;
@@ -161,30 +162,42 @@ static NSString *CellIdentifier= @"CellIdentifier";
         cell = [[PhotoTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     
-//    cell.namelabel.text = @"Mister Tester";
-//    cell.dateLabel.text = @"2 hours ago";
-    
     NSDictionary *dic = [self.model objectAtIndex:indexPath.row];
+    
+    // Get user
     NSDictionary *user = [dic objectForKey:@"user"];
     NSString *profilePicture = [user objectForKey:@"profile_picture"];
     NSString *userName = [user objectForKey:@"full_name"];
-    
     cell.namelabel.text = userName;
     
+    // Get profile picture
     NSURL *url = [NSURL URLWithString:profilePicture];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     UIImage *placeholderImage = [UIImage imageNamed:@"placeholder"];
-    
     __weak PhotoTableViewCell *weakCell = cell;
-    
     [cell.profilePicture setImageWithURLRequest:request
                           placeholderImage:placeholderImage
                                    success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
-                                       
                                        weakCell.profilePicture.image = image;
                                        [weakCell setNeedsLayout];
-                                       
                                    } failure:nil];
+    
+    // Get photo
+    NSDictionary *images = [dic objectForKey:@"images"];
+    NSDictionary *lowRes = [images objectForKey:@"low_resolution"];
+    NSString *lowImage = [lowRes objectForKey:@"url"];
+    url = [NSURL URLWithString:lowImage];
+    request = [NSURLRequest requestWithURL:url];
+    placeholderImage = [UIImage imageNamed:@"placeholder"];
+//    __weak PhotoTableViewCell *weakCell2 = cell;
+    [cell.photo setImageWithURLRequest:request
+                               placeholderImage:placeholderImage
+                                        success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+                                            weakCell.photo.image = image;
+                                            [weakCell setNeedsLayout];
+                                        } failure:nil];
+
+    
 }
 
 - (void)fetch {
@@ -193,7 +206,7 @@ static NSString *CellIdentifier= @"CellIdentifier";
     [self.activityIndicator startAnimating];
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager GET:@"https://api.instagram.com/v1/tags/car/media/recent?access_token=220265065.5c873e0.81643230ea8a479e9e1355d49529903a"
+    [manager GET:InstagramApiURL
       parameters:nil
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
              //             NSLog(@"JSON: %@", responseObject);
