@@ -11,6 +11,7 @@
 #import "PureLayout.h"
 #import "AFNetworking.h"
 #import "PhotoModel.h"
+#import "AFNetworkActivityIndicatorManager.h"
 
 static NSString *CellIdentifier= @"CellIdentifier";
 
@@ -29,6 +30,9 @@ static NSString *CellIdentifier= @"CellIdentifier";
 @implementation PhotosViewController
 
 - (void)viewWillAppear:(BOOL)animated {
+    
+    [AFNetworkActivityIndicatorManager sharedManager].enabled = YES;
+    
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     [manager GET:@"https://api.instagram.com/v1/tags/car/media/recent?access_token=220265065.5c873e0.81643230ea8a479e9e1355d49529903a"
       parameters:nil
@@ -36,8 +40,16 @@ static NSString *CellIdentifier= @"CellIdentifier";
 //             NSLog(@"JSON: %@", responseObject);
 
              NSDictionary *dic = (NSDictionary *)responseObject;
-             NSArray *objects = [dic objectForKey:@"data"];
-             NSLog(@"%@", objects);
+             NSArray *data = [dic objectForKey:@"data"];
+             self.model = [data mutableCopy];
+             [self.tableView reloadData];
+             
+             [AFNetworkActivityIndicatorManager sharedManager].enabled = NO;
+             
+//             NSDictionary *object = [data objectAtIndex:0];
+//             NSDictionary *user = [object objectForKey:@"user"];
+//             NSString *profile_picture = [user objectForKey:@"profile_picture"];
+//             NSString *full_name = [user objectForKey:@"full_name"];
              
          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
              NSLog(@"Error: %@", error);
@@ -158,10 +170,15 @@ static NSString *CellIdentifier= @"CellIdentifier";
         cell = [[PhotoTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     
-    cell.namelabel.text = @"Mister Tester";
-    cell.dateLabel.text = @"2 hours ago";
+//    cell.namelabel.text = @"Mister Tester";
+//    cell.dateLabel.text = @"2 hours ago";
     
-    NSLog(@"%ld - %@", (long)indexPath.row, self.model);
+    NSDictionary *dic = [self.model objectAtIndex:indexPath.row];
+    NSDictionary *user = [dic objectForKey:@"user"];
+    NSString *profilePicture = [user objectForKey:@"profile_picture"];
+    NSString *userName = [user objectForKey:@"full_name"];
+    
+    cell.namelabel.text = userName;
 }
 
 // For testing
