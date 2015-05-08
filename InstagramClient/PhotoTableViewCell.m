@@ -91,7 +91,7 @@
 - (UILabel *)namelabel {
     if (!_namelabel) {
         _namelabel = [UILabel newAutoLayoutView];
-        _namelabel.backgroundColor = [UIColor yellowColor];
+        _namelabel.backgroundColor = [UIColor clearColor];
     }
     return _namelabel;
 }

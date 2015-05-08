@@ -11,19 +11,19 @@
 #import "PureLayout.h"
 #import "AFNetworking.h"
 #import "PhotoModel.h"
-#import "AFNetworkActivityIndicatorManager.h"
 
 static NSString *CellIdentifier= @"CellIdentifier";
 
 @interface PhotosViewController () <UITableViewDataSource, UITableViewDelegate>
+@property (nonatomic, assign) BOOL didSetupConstraints;
 
 @property(nonatomic, strong) UITextField *search;
 @property (strong, nonatomic) UITableView *tableView;
 @property(nonatomic, strong) UIView *containerView;
+@property(strong, nonatomic) UIView *activityView;
+@property (strong, nonatomic) UIActivityIndicatorView *activityIndicator;
 
 @property(nonatomic, strong) NSMutableArray *model;
-
-@property (nonatomic, assign) BOOL didSetupConstraints;
 
 @end
 
@@ -31,29 +31,10 @@ static NSString *CellIdentifier= @"CellIdentifier";
 
 - (void)viewWillAppear:(BOOL)animated {
     
-    [AFNetworkActivityIndicatorManager sharedManager].enabled = YES;
+    [self.activityView addSubview:self.activityIndicator];
+    [self.view addSubview:self.activityView];
     
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager GET:@"https://api.instagram.com/v1/tags/car/media/recent?access_token=220265065.5c873e0.81643230ea8a479e9e1355d49529903a"
-      parameters:nil
-         success:^(AFHTTPRequestOperation *operation, id responseObject) {
-//             NSLog(@"JSON: %@", responseObject);
-
-             NSDictionary *dic = (NSDictionary *)responseObject;
-             NSArray *data = [dic objectForKey:@"data"];
-             self.model = [data mutableCopy];
-             [self.tableView reloadData];
-             
-             [AFNetworkActivityIndicatorManager sharedManager].enabled = NO;
-             
-//             NSDictionary *object = [data objectAtIndex:0];
-//             NSDictionary *user = [object objectForKey:@"user"];
-//             NSString *profile_picture = [user objectForKey:@"profile_picture"];
-//             NSString *full_name = [user objectForKey:@"full_name"];
-             
-         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-             NSLog(@"Error: %@", error);
-         }];
+    [self fetch];
 }
 
 - (void)viewDidLoad {
@@ -84,13 +65,14 @@ static NSString *CellIdentifier= @"CellIdentifier";
     self.tableView.scrollEnabled = YES;
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
+    
     [self.tableView reloadData];
     
     [self.view addSubview:self.search];
     [self.containerView addSubview:self.tableView];
     [self.view addSubview:self.containerView];
-    NSLog(@"%f.0", self.view.frame.size.height);
-        
+    [self.view addSubview:self.activityIndicator];
+    
     [self.view setNeedsUpdateConstraints];
 }
 
@@ -161,6 +143,14 @@ static NSString *CellIdentifier= @"CellIdentifier";
     return _containerView;
 }
 
+- (UIActivityIndicatorView *)activityIndicator {
+    if (!_activityIndicator) {
+//        _activityIndicator = [UIActivityIndicatorView newAutoLayoutView];
+        _activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+    }
+    return _activityIndicator;
+}
+
 #pragma mark - Helper Methods
 
 - (void)configureCell:(PhotoTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
@@ -179,6 +169,35 @@ static NSString *CellIdentifier= @"CellIdentifier";
     NSString *userName = [user objectForKey:@"full_name"];
     
     cell.namelabel.text = userName;
+}
+
+- (void)fetch {
+    
+    [self.activityView setHidden:NO];
+    [self.activityIndicator startAnimating];
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager GET:@"https://api.instagram.com/v1/tags/car/media/recent?access_token=220265065.5c873e0.81643230ea8a479e9e1355d49529903a"
+      parameters:nil
+         success:^(AFHTTPRequestOperation *operation, id responseObject) {
+             //             NSLog(@"JSON: %@", responseObject);
+             
+             NSDictionary *dic = (NSDictionary *)responseObject;
+             NSArray *data = [dic objectForKey:@"data"];
+             self.model = [data mutableCopy];
+             [self.tableView reloadData];
+             
+             [self.activityView setHidden:YES];
+             [self.activityIndicator stopAnimating];
+             
+             //             NSDictionary *object = [data objectAtIndex:0];
+             //             NSDictionary *user = [object objectForKey:@"user"];
+             //             NSString *profile_picture = [user objectForKey:@"profile_picture"];
+             //             NSString *full_name = [user objectForKey:@"full_name"];
+             
+         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+             NSLog(@"Error: %@", error);
+         }];
 }
 
 // For testing
