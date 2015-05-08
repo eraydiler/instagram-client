@@ -9,6 +9,8 @@
 #import "PhotosViewController.h"
 #import "PhotoTableViewCell.h"
 #import "PureLayout.h"
+#import "AFNetworking.h"
+#import "PhotoModel.h"
 
 static NSString *CellIdentifier= @"CellIdentifier";
 
@@ -18,11 +20,29 @@ static NSString *CellIdentifier= @"CellIdentifier";
 @property (strong, nonatomic) UITableView *tableView;
 @property(nonatomic, strong) UIView *containerView;
 
+@property(nonatomic, strong) NSMutableArray *model;
+
 @property (nonatomic, assign) BOOL didSetupConstraints;
 
 @end
 
 @implementation PhotosViewController
+
+- (void)viewWillAppear:(BOOL)animated {
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager GET:@"https://api.instagram.com/v1/tags/car/media/recent?access_token=220265065.5c873e0.81643230ea8a479e9e1355d49529903a"
+      parameters:nil
+         success:^(AFHTTPRequestOperation *operation, id responseObject) {
+//             NSLog(@"JSON: %@", responseObject);
+
+             NSDictionary *dic = (NSDictionary *)responseObject;
+             NSArray *objects = [dic objectForKey:@"data"];
+             NSLog(@"%@", objects);
+             
+         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+             NSLog(@"Error: %@", error);
+         }];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -69,7 +89,7 @@ static NSString *CellIdentifier= @"CellIdentifier";
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 10;
+    return [self.model count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -108,7 +128,7 @@ static NSString *CellIdentifier= @"CellIdentifier";
     [super updateViewConstraints];
 }
 
-#pragma mark - instantiations
+#pragma mark - Lazy Instantiations
 
 - (UITextField *)search {
     if (!_search) {
@@ -140,6 +160,8 @@ static NSString *CellIdentifier= @"CellIdentifier";
     
     cell.namelabel.text = @"Mister Tester";
     cell.dateLabel.text = @"2 hours ago";
+    
+    NSLog(@"%ld - %@", (long)indexPath.row, self.model);
 }
 
 // For testing
