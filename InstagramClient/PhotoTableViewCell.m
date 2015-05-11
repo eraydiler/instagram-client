@@ -49,23 +49,20 @@
         [self.containerView autoPinEdgeToSuperviewEdge:ALEdgeLeft];
         [self.containerView autoPinEdgeToSuperviewEdge:ALEdgeRight];
 
-        [self.profilePicture autoSetDimension:ALDimensionWidth toSize:50.0];
-        [self.profilePicture autoPinEdge:ALEdgeTop toEdge:ALEdgeTop ofView:self.containerView];
-        [self.profilePicture autoPinEdge:ALEdgeBottom toEdge:ALEdgeBottom ofView:self.containerView];
+        [self.profilePicture autoSetDimension:ALDimensionWidth toSize:40.0];
+        [self.profilePicture autoPinEdge:ALEdgeLeft toEdge:ALEdgeLeft ofView:self.containerView withOffset:5.0];
+        [self.profilePicture autoPinEdge:ALEdgeTop toEdge:ALEdgeTop ofView:self.containerView withOffset:5.0];
+        [self.profilePicture autoPinEdge:ALEdgeBottom toEdge:ALEdgeBottom ofView:self.containerView withOffset:-5.0];
+        [self makeProfileImageCircular];
 
         [self.dateLabel autoSetDimension:ALDimensionWidth toSize:100.0];
         [self.dateLabel autoPinEdge:ALEdgeTop toEdge:ALEdgeTop ofView:self.containerView];
         [self.dateLabel autoPinEdge:ALEdgeBottom toEdge:ALEdgeBottom ofView:self.containerView];
         [self.dateLabel autoPinEdge:ALEdgeRight toEdge:ALEdgeRight ofView:self.containerView];
-        
-//        [NSLayoutConstraint constraintWithItem:self.profilePicture
-//                                     attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual
-//                                        toItem:self.dateLabel attribute:NSLayoutAttributeLeft
-//                                    multiplier:1.0 constant:10.0];
-//        
+
         [self.namelabel autoPinEdge:ALEdgeTop toEdge:ALEdgeTop ofView:self.containerView];
         [self.namelabel autoPinEdge:ALEdgeBottom toEdge:ALEdgeBottom ofView:self.containerView];
-        [self.namelabel autoPinEdge:ALEdgeLeft toEdge:ALEdgeRight ofView:self.profilePicture];
+        [self.namelabel autoPinEdge:ALEdgeLeft toEdge:ALEdgeRight ofView:self.profilePicture withOffset:5.0];
         [self.namelabel autoSetDimension:ALDimensionWidth toSize:CGRectGetWidth(self.bounds)];
 
         [self.photo autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.containerView];
@@ -119,6 +116,13 @@
         _containerView.backgroundColor = [UIColor colorWithRed:237.0/255.0 green:237.0/255.0 blue:237.0/255.0 alpha:1.0];
     }
     return _containerView;
+}
+
+#pragma mark - Helper Methods
+
+- (void) makeProfileImageCircular {
+    _profilePicture.layer.cornerRadius = 20 /*_profilePicture.frame.size.width / 2*/;
+    _profilePicture.clipsToBounds = YES;
 }
 
 @end
