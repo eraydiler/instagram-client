@@ -81,6 +81,7 @@
     if (!_profilePicture) {
         _profilePicture = [UIImageView newAutoLayoutView];
         _profilePicture.backgroundColor = [UIColor redColor];
+        _profilePicture.image = [UIImage imageNamed:@"placeholder.png"];
     }
     return _profilePicture;
 }
@@ -89,6 +90,7 @@
     if (!_namelabel) {
         _namelabel = [UILabel newAutoLayoutView];
         _namelabel.backgroundColor = [UIColor clearColor];
+        _namelabel.text = @"Mister Tester";
     }
     return _namelabel;
 }
@@ -98,6 +100,7 @@
         _dateLabel = [UILabel newAutoLayoutView];
         _dateLabel.backgroundColor = [UIColor clearColor];
         _dateLabel.font = [UIFont systemFontOfSize:12.0];
+        _dateLabel.text = @"2 hours ago";
     }
     return _dateLabel;
 }
@@ -105,7 +108,8 @@
 - (UIImageView *)photo {
     if (!_photo) {
         _photo = [UIImageView newAutoLayoutView];
-        _photo.backgroundColor = [UIColor darkGrayColor];
+        _photo.backgroundColor = [UIColor grayColor];
+        _photo.image = [UIImage imageNamed:@"placeholder.png"];
     }
     return _photo;
 }

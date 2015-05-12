@@ -8,12 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
+IB_DESIGNABLE
 @interface PhotoTableViewCell : UITableViewCell
 
-@property(nonatomic, strong) UIView *containerView;
-@property(nonatomic, strong) UIImageView *profilePicture;
-@property(nonatomic, strong) UILabel *namelabel;
-@property(nonatomic, strong) UILabel *dateLabel;
-@property(nonatomic, strong) UIImageView *photo;
+@property(nonatomic) IBInspectable UIView *containerView;
+@property(nonatomic) IBInspectable UIImageView *profilePicture;
+@property(nonatomic) IBInspectable UILabel *namelabel;
+@property(nonatomic) IBInspectable UILabel *dateLabel;
+@property(nonatomic) IBInspectable UIImageView *photo;
 
 @end

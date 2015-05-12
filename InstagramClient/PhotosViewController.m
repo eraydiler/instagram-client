@@ -18,6 +18,7 @@ static NSString *const InstagramApiURL = @"https://api.instagram.com/v1/tags/car
 
 @interface PhotosViewController () <UITableViewDataSource, UITableViewDelegate>
 @property (nonatomic, assign) BOOL didSetupConstraints;
+@property (nonatomic, assign) BOOL didSetupView;
 
 @property(nonatomic, strong) UITextField *search;
 @property (strong, nonatomic) UITableView *tableView;
@@ -32,7 +33,7 @@ static NSString *const InstagramApiURL = @"https://api.instagram.com/v1/tags/car
 @implementation PhotosViewController
 
 - (void)viewWillAppear:(BOOL)animated {
-    
+
     [self.activityView addSubview:self.activityIndicator];
     [self.view addSubview:self.activityView];
     
@@ -99,10 +100,9 @@ static NSString *const InstagramApiURL = @"https://api.instagram.com/v1/tags/car
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    //    NSLog(@"%f", self.navigationController.navigationBar.bounds.size.height);
-//    return tableView.bounds.size.height -self.navigationController.navigationBar.bounds.size.height -40.0;
-//    return 200.0;
-    return self.view.frame.size.height;
+//        NSLog(@"%@", NSStringFromCGRect(self.view.frame));
+        NSLog(@"%f", CGRectGetHeight(self.navigationController.navigationBar.frame));
+    return [self screenHeight] - self.search.frame.size.height - 40 - 44;
 }
 
 - (void)updateViewConstraints
@@ -232,6 +232,12 @@ static NSString *const InstagramApiURL = @"https://api.instagram.com/v1/tags/car
          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
              NSLog(@"Error: %@", error);
          }];
+}
+
+- (CGFloat)screenHeight {
+    CGRect screenRect = [[UIScreen mainScreen] bounds];
+    CGFloat screenHeight = screenRect.size.height;
+    return screenHeight;
 }
 
 // For testing
