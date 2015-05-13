@@ -8,7 +8,7 @@
 
 #import "PhotosViewController.h"
 #import "PhotoTableViewCell.h"
-#import "SearchField.h"
+#import "SearchBar.h"
 #import "PureLayout.h"
 #import "AFNetworking.h"
 #import "PhotoModel.h"
@@ -17,11 +17,11 @@
 static NSString *CellIdentifier= @"CellIdentifier";
 static NSString *const InstagramApiURL = @"https://api.instagram.com/v1/tags/car/media/recent?access_token=220265065.5c873e0.81643230ea8a479e9e1355d49529903a";
 
-@interface PhotosViewController () <UITableViewDataSource, UITableViewDelegate>
+@interface PhotosViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate>
 @property (nonatomic, assign) BOOL didSetupConstraints;
 @property (nonatomic, assign) BOOL didSetupView;
 
-@property(nonatomic, strong) UITextField *search;
+@property(nonatomic, strong) UISearchBar *search;
 @property (strong, nonatomic) UITableView *tableView;
 @property(nonatomic, strong) UIView *containerView;
 @property(strong, nonatomic) UIView *activityView;
@@ -72,11 +72,12 @@ static NSString *const InstagramApiURL = @"https://api.instagram.com/v1/tags/car
     
     [self.tableView reloadData];
     
-    
-    self.search = [[SearchField alloc]
+    self.search = [[SearchBar alloc]
                    initWithFrame:(CGRectMake(0, 0, [self screenWidth], 40.0))];
     
     [self.view addSubview:self.search];
+    self.search.delegate = self;
+
     [self.containerView addSubview:self.tableView];
     [self.view addSubview:self.containerView];
     [self.view addSubview:self.activityIndicator];
@@ -105,19 +106,19 @@ static NSString *const InstagramApiURL = @"https://api.instagram.com/v1/tags/car
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return [self screenHeight] - 2*[self searchHeight] - [self navBarHeight];
+    return [self screenHeight] - [self searchHeight] - [self navBarHeight] -20;
 }
 
 - (void)updateViewConstraints
 {
     if (!self.didSetupConstraints) {
         
-        [self.search autoSetDimension:ALDimensionHeight toSize:40.0];
-        [self.search autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.navigationController.navigationBar withOffset:10.0];
-        [self.search autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:10.0];
-        [self.search autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:10.0];
+        [self.search autoSetDimension:ALDimensionHeight toSize:50.0];
+        [self.search autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.navigationController.navigationBar /*withOffset:10.0*/];
+        [self.search autoPinEdgeToSuperviewEdge:ALEdgeLeft];
+        [self.search autoPinEdgeToSuperviewEdge:ALEdgeRight];
 
-        [self.containerView autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.search withOffset:10.0];
+        [self.containerView autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.search /*withOffset:10.0*/];
         [self.containerView autoPinEdge:ALEdgeBottom toEdge:ALEdgeBottom ofView:self.view];
         [self.containerView autoPinEdgeToSuperviewEdge:ALEdgeLeft];
         [self.containerView autoPinEdgeToSuperviewEdge:ALEdgeRight];
@@ -127,18 +128,18 @@ static NSString *const InstagramApiURL = @"https://api.instagram.com/v1/tags/car
     [super updateViewConstraints];
 }
 
-#pragma mark - Lazy Instantiations
+#pragma mark - UITextField delegate
 
-//- (UITextField *)search {
-//    if (!_search) {
-//        _search = [UITextField newAutoLayoutView];
-//        _search.placeholder = @"Search";
-//        _search.font = [UIFont systemFontOfSize:20.0];
-//        _search.textAlignment = NSTextAlignmentCenter;
-//        _search.borderStyle = UITextBorderStyleRoundedRect;
-//    }
-//    return _search;
-//}
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    NSLog(@"%@", textField.text);
+    if ( [textField.text isEqualToString:@""] ) {
+        [self showAlert:@"Warning" forMessage:@"Enter some tags"];
+    }
+    [textField resignFirstResponder];
+    return NO;
+}
+
+#pragma mark - Lazy Instantiations
 
 - (UIView *)containerView {
     if (!_containerView) {
@@ -251,6 +252,15 @@ static NSString *const InstagramApiURL = @"https://api.instagram.com/v1/tags/car
 
 - (CGFloat)navBarHeight {
     return CGRectGetHeight(self.navigationController.navigationBar.frame);
+}
+
+- (void)showAlert:(NSString *)title forMessage:(NSString *)message {
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title
+                                                       message:message
+                                                      delegate:self
+                                             cancelButtonTitle:@"OK"
+                                             otherButtonTitles:nil];
+    [alert show];
 }
 
 // For testing

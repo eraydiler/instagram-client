@@ -18,7 +18,7 @@
 		2A0CCA161AFAA72A00FA46BC /* NSLayoutConstraint+PureLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A0CCA101AFAA72A00FA46BC /* NSLayoutConstraint+PureLayout.m */; };
 		2A0CCA1D1AFABD7F00FA46BC /* PhotoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A0CCA1C1AFABD7F00FA46BC /* PhotoTableViewCell.m */; };
 		2A0CCA241AFAC9EB00FA46BC /* PhotoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A0CCA231AFAC9EB00FA46BC /* PhotoModel.m */; };
-		2A4B38A41B02D61C00F43DD4 /* SearchField.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A4B38A31B02D61C00F43DD4 /* SearchField.m */; };
+		2A8D51C11B03E221001C7130 /* SearchBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A8D51C01B03E221001C7130 /* SearchBar.m */; };
 		2AFCB55C1AFB7EA400E45E2B /* PhotosViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2AFCB55B1AFB7EA400E45E2B /* PhotosViewController.m */; };
 		2AFCB55E1AFBD62C00E45E2B /* placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 2AFCB55D1AFBD62C00E45E2B /* placeholder.png */; };
 		2AFCB5781AFC088500E45E2B /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 2AFCB5661AFC088500E45E2B /* AFHTTPRequestOperation.m */; };
@@ -76,8 +76,8 @@
 		2A0CCA211AFAC4A400FA46BC /* InstagramClient-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "InstagramClient-Prefix.pch"; sourceTree = "<group>"; };
 		2A0CCA221AFAC9EB00FA46BC /* PhotoModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoModel.h; sourceTree = "<group>"; };
 		2A0CCA231AFAC9EB00FA46BC /* PhotoModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoModel.m; sourceTree = "<group>"; };
-		2A4B38A21B02D61C00F43DD4 /* SearchField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchField.h; sourceTree = "<group>"; };
-		2A4B38A31B02D61C00F43DD4 /* SearchField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchField.m; sourceTree = "<group>"; };
+		2A8D51BF1B03E221001C7130 /* SearchBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchBar.h; sourceTree = "<group>"; };
+		2A8D51C01B03E221001C7130 /* SearchBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchBar.m; sourceTree = "<group>"; };
 		2AFCB55A1AFB7EA400E45E2B /* PhotosViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotosViewController.h; sourceTree = "<group>"; };
 		2AFCB55B1AFB7EA400E45E2B /* PhotosViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotosViewController.m; sourceTree = "<group>"; };
 		2AFCB55D1AFBD62C00E45E2B /* placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = placeholder.png; sourceTree = "<group>"; };
@@ -249,8 +249,8 @@
 			children = (
 				2A0CCA1B1AFABD7F00FA46BC /* PhotoTableViewCell.h */,
 				2A0CCA1C1AFABD7F00FA46BC /* PhotoTableViewCell.m */,
-				2A4B38A21B02D61C00F43DD4 /* SearchField.h */,
-				2A4B38A31B02D61C00F43DD4 /* SearchField.m */,
+				2A8D51BF1B03E221001C7130 /* SearchBar.h */,
+				2A8D51C01B03E221001C7130 /* SearchBar.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -414,6 +414,7 @@
 				2AFCB5781AFC088500E45E2B /* AFHTTPRequestOperation.m in Sources */,
 				2A0CC9E91AFAA03300FA46BC /* AppDelegate.m in Sources */,
 				2AFCB5941AFC089D00E45E2B /* UIAlertView+AFNetworking.m in Sources */,
+				2A8D51C11B03E221001C7130 /* SearchBar.m in Sources */,
 				2AFCB5791AFC088500E45E2B /* AFHTTPRequestOperationManager.m in Sources */,
 				2A0CCA241AFAC9EB00FA46BC /* PhotoModel.m in Sources */,
 				2AFCB55C1AFB7EA400E45E2B /* PhotosViewController.m in Sources */,
@@ -422,7 +423,6 @@
 				2AFCB5931AFC089D00E45E2B /* UIActivityIndicatorView+AFNetworking.m in Sources */,
 				2AFCB5921AFC089D00E45E2B /* AFNetworkActivityIndicatorManager.m in Sources */,
 				2A0CC9E61AFAA03300FA46BC /* main.m in Sources */,
-				2A4B38A41B02D61C00F43DD4 /* SearchField.m in Sources */,
 				2A0CCA141AFAA72A00FA46BC /* ALView+PureLayout.m in Sources */,
 				2A0CCA151AFAA72A00FA46BC /* NSArray+PureLayout.m in Sources */,
 				2AFCB57C1AFC088500E45E2B /* AFSecurityPolicy.m in Sources */,

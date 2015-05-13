@@ -1,5 +1,5 @@
 //
-//  SearchField.h
+//  SearchBar.h
 //  InstagramClient
 //
 //  Created by Eray on 13/05/15.
@@ -9,6 +9,5 @@
 #import <UIKit/UIKit.h>
 
 IB_DESIGNABLE
-@interface SearchField : UITextField
-@property (nonatomic, assign) BOOL didSetupConstraints;
+@interface SearchBar : UISearchBar
 @end
