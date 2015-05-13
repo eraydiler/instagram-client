@@ -25,6 +25,7 @@
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
+    
     if (self) {
         
         [self.contentView addSubview:self.containerView];
@@ -65,6 +66,7 @@
         [self.namelabel autoPinEdge:ALEdgeLeft toEdge:ALEdgeRight ofView:self.profilePicture withOffset:5.0];
         [self.namelabel autoSetDimension:ALDimensionWidth toSize:CGRectGetWidth(self.bounds)];
 
+//        [self.photo autoSetDimension:ALDimensionHeight toSize:60.0 ];
         [self.photo autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.containerView];
         [self.photo autoPinEdgeToSuperviewEdge:ALEdgeBottom];
         [self.photo autoPinEdgeToSuperviewEdge:ALEdgeLeft];
@@ -127,6 +129,13 @@
 - (void) makeProfileImageCircular {
     _profilePicture.layer.cornerRadius = 20 /*_profilePicture.frame.size.width / 2*/;
     _profilePicture.clipsToBounds = YES;
+}
+- (CGFloat)screenWidth {
+    return [[UIScreen mainScreen] bounds].size.width;
+}
+
+- (CGFloat)screenHeight {
+    return [[UIScreen mainScreen] bounds].size.height;
 }
 
 @end

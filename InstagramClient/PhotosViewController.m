@@ -8,6 +8,7 @@
 
 #import "PhotosViewController.h"
 #import "PhotoTableViewCell.h"
+#import "SearchField.h"
 #import "PureLayout.h"
 #import "AFNetworking.h"
 #import "PhotoModel.h"
@@ -71,6 +72,10 @@ static NSString *const InstagramApiURL = @"https://api.instagram.com/v1/tags/car
     
     [self.tableView reloadData];
     
+    
+    self.search = [[SearchField alloc]
+                   initWithFrame:(CGRectMake(0, 0, [self screenWidth], 40.0))];
+    
     [self.view addSubview:self.search];
     [self.containerView addSubview:self.tableView];
     [self.view addSubview:self.containerView];
@@ -100,9 +105,7 @@ static NSString *const InstagramApiURL = @"https://api.instagram.com/v1/tags/car
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-//        NSLog(@"%@", NSStringFromCGRect(self.view.frame));
-        NSLog(@"%f", CGRectGetHeight(self.navigationController.navigationBar.frame));
-    return [self screenHeight] - self.search.frame.size.height - 40 - 44;
+    return [self screenHeight] - 2*[self searchHeight] - [self navBarHeight];
 }
 
 - (void)updateViewConstraints
@@ -126,16 +129,16 @@ static NSString *const InstagramApiURL = @"https://api.instagram.com/v1/tags/car
 
 #pragma mark - Lazy Instantiations
 
-- (UITextField *)search {
-    if (!_search) {
-        _search = [UITextField newAutoLayoutView];
-        _search.placeholder = @"Search";
-        _search.font = [UIFont systemFontOfSize:20.0];
-        _search.textAlignment = NSTextAlignmentCenter;
-        _search.borderStyle = UITextBorderStyleRoundedRect;
-    }
-    return _search;
-}
+//- (UITextField *)search {
+//    if (!_search) {
+//        _search = [UITextField newAutoLayoutView];
+//        _search.placeholder = @"Search";
+//        _search.font = [UIFont systemFontOfSize:20.0];
+//        _search.textAlignment = NSTextAlignmentCenter;
+//        _search.borderStyle = UITextBorderStyleRoundedRect;
+//    }
+//    return _search;
+//}
 
 - (UIView *)containerView {
     if (!_containerView) {
@@ -234,10 +237,20 @@ static NSString *const InstagramApiURL = @"https://api.instagram.com/v1/tags/car
          }];
 }
 
+- (CGFloat)screenWidth {
+    return [[UIScreen mainScreen] bounds].size.width;
+}
+
 - (CGFloat)screenHeight {
-    CGRect screenRect = [[UIScreen mainScreen] bounds];
-    CGFloat screenHeight = screenRect.size.height;
-    return screenHeight;
+    return [[UIScreen mainScreen] bounds].size.height;
+}
+
+- (CGFloat)searchHeight {
+    return CGRectGetHeight(self.search.frame);
+}
+
+- (CGFloat)navBarHeight {
+    return CGRectGetHeight(self.navigationController.navigationBar.frame);
 }
 
 // For testing
