@@ -50,6 +50,9 @@ static NSString *const InstagramApiURL = @"https://api.instagram.com/v1/tags/car
     
     self.tableView.estimatedRowHeight = UITableViewAutomaticDimension;
     self.tableView.allowsSelection = NO;
+    
+    UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tableViewTapped:)];
+    [self.tableView addGestureRecognizer:tapRecognizer];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -137,6 +140,16 @@ static NSString *const InstagramApiURL = @"https://api.instagram.com/v1/tags/car
     }
     [textField resignFirstResponder];
     return NO;
+}
+
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
+    [searchBar resignFirstResponder];
+}
+
+#pragma mark - Selectors
+
+- (void)tableViewTapped: (UITapGestureRecognizer *)recognizer {
+    [self.search resignFirstResponder];
 }
 
 #pragma mark - Lazy Instantiations
