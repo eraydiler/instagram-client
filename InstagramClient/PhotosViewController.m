@@ -38,10 +38,7 @@ static NSString *const ACCESS_TOKEN = @"&access_token=220265065.5c873e0.81643230
 
 - (void)viewWillAppear:(BOOL)animated {
     
-    self.tableView.hidden = YES;
-    self.activityIndicator.hidden = NO;
-    [self.activityIndicator startAnimating];
-    
+    [self showActivityIndicator];
     [self fetch];
 }
 
@@ -150,6 +147,7 @@ static NSString *const ACCESS_TOKEN = @"&access_token=220265065.5c873e0.81643230
 #pragma mark - UISearchBar delegate
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
+    [self showActivityIndicator];
     [self fetch];
     [searchBar resignFirstResponder];
 }
@@ -230,6 +228,18 @@ static NSString *const ACCESS_TOKEN = @"&access_token=220265065.5c873e0.81643230
     cell.dateLabel.text = [dateFormatter stringFromDate:date];
 }
 
+- (void)showActivityIndicator {
+    self.tableView.hidden = YES;
+    self.activityIndicator.hidden = NO;
+    [self.activityIndicator startAnimating];
+}
+
+- (void)hideActivityIndicator {
+    [self.activityIndicator stopAnimating];
+    self.activityIndicator.hidden = YES;
+    self.tableView.hidden = NO;
+}
+
 - (void)fetch {
     
     NSString *tag = ([self.search.text isEqualToString:@""]) ? (@"car") : self.search.text;
@@ -244,11 +254,16 @@ static NSString *const ACCESS_TOKEN = @"&access_token=220265065.5c873e0.81643230
              NSDictionary *dic = (NSDictionary *)responseObject;
              NSArray *data = [dic objectForKey:@"data"];
              self.model = [data mutableCopy];
-             [self.tableView reloadData];
              
-             [self.activityIndicator stopAnimating];
-             self.activityIndicator.hidden = YES;
-             self.tableView.hidden = NO;
+             if (self.model.count == 0) {
+                 [self showAlert:@"Warning" forMessage:@"No result found please make another search please"];
+                 self.activityIndicator.hidden = YES;
+                 return;
+             }
+             
+             [self.tableView reloadData];
+             [self hideActivityIndicator];
+             
              
              //             NSDictionary *object = [data objectAtIndex:0];
              //             NSDictionary *user = [object objectForKey:@"user"];
