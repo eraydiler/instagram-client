@@ -15,7 +15,11 @@
 #import "UIImageView+AFNetworking.h"
 
 static NSString *CellIdentifier= @"CellIdentifier";
-static NSString *const InstagramApiURL = @"https://api.instagram.com/v1/tags/car/media/recent?access_token=220265065.5c873e0.81643230ea8a479e9e1355d49529903a";
+
+static NSString *const URL_BEGIN = @"https://api.instagram.com/v1/tags/";
+static NSString *const URL_END = @"/media/recent?";
+static NSString *const COUNT = @"&count=20";
+static NSString *const ACCESS_TOKEN = @"&access_token=220265065.5c873e0.81643230ea8a479e9e1355d49529903a";
 
 @interface PhotosViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate>
 @property (nonatomic, assign) BOOL didSetupConstraints;
@@ -24,7 +28,6 @@ static NSString *const InstagramApiURL = @"https://api.instagram.com/v1/tags/car
 @property(nonatomic, strong) UISearchBar *search;
 @property (strong, nonatomic) UITableView *tableView;
 @property(nonatomic, strong) UIView *containerView;
-@property(strong, nonatomic) UIView *activityView;
 @property (strong, nonatomic) UIActivityIndicatorView *activityIndicator;
 
 @property(nonatomic, strong) NSMutableArray *model;
@@ -34,25 +37,17 @@ static NSString *const InstagramApiURL = @"https://api.instagram.com/v1/tags/car
 @implementation PhotosViewController
 
 - (void)viewWillAppear:(BOOL)animated {
-
-    [self.activityView addSubview:self.activityIndicator];
-    [self.view addSubview:self.activityView];
+    
+    self.tableView.hidden = YES;
+    self.activityIndicator.hidden = NO;
+    [self.activityIndicator startAnimating];
     
     [self fetch];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
-    self.title = @"Instagram";
-    
-    [self.tableView registerClass:[PhotoTableViewCell class] forCellReuseIdentifier:CellIdentifier];
-    
-    self.tableView.estimatedRowHeight = UITableViewAutomaticDimension;
-    self.tableView.allowsSelection = NO;
-    
-    UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tableViewTapped:)];
-    [self.tableView addGestureRecognizer:tapRecognizer];
+    [self configureView];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -63,10 +58,14 @@ static NSString *const InstagramApiURL = @"https://api.instagram.com/v1/tags/car
 - (void)loadView
 {
     self.view = [[UIView alloc] init];
-    self.view.backgroundColor = [UIColor colorWithRed:206.0/255.0 green:206.0/255.0 blue:206.0/255.0 alpha:1.0];;
+    self.view.backgroundColor = [UIColor colorWithRed:206.0/255.0
+                                                green:206.0/255.0
+                                                 blue:206.0/255.0
+                                                alpha:1.0];
     
 //    self.tableView = [[UITableView alloc] initWithFrame:[[UIScreen mainScreen] applicationFrame] style:UITableViewStylePlain];
-    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0.0, 0.0, 0.0, 0.0) style:UITableViewStylePlain];
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0.0, 0.0, 0.0, 0.0)
+                                                  style:UITableViewStylePlain];
     
     self.tableView.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
     self.tableView.scrollEnabled = YES;
@@ -80,12 +79,27 @@ static NSString *const InstagramApiURL = @"https://api.instagram.com/v1/tags/car
     
     [self.view addSubview:self.search];
     self.search.delegate = self;
-
+    
+    ///////////////
+    [self.containerView addSubview:self.activityIndicator];
     [self.containerView addSubview:self.tableView];
+    
     [self.view addSubview:self.containerView];
-    [self.view addSubview:self.activityIndicator];
     
     [self.view setNeedsUpdateConstraints];
+}
+
+- (void)configureView {
+    
+    self.title = @"Instagram";
+    
+    [self.tableView registerClass:[PhotoTableViewCell class] forCellReuseIdentifier:CellIdentifier];
+    
+    self.tableView.estimatedRowHeight = UITableViewAutomaticDimension;
+    self.tableView.allowsSelection = NO;
+    
+    UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tableViewTapped:)];
+    [self.tableView addGestureRecognizer:tapRecognizer];
 }
 
 #pragma mark - Table view data source
@@ -117,32 +131,26 @@ static NSString *const InstagramApiURL = @"https://api.instagram.com/v1/tags/car
     if (!self.didSetupConstraints) {
         
         [self.search autoSetDimension:ALDimensionHeight toSize:50.0];
-        [self.search autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.navigationController.navigationBar /*withOffset:10.0*/];
+        [self.search autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.navigationController.navigationBar];
         [self.search autoPinEdgeToSuperviewEdge:ALEdgeLeft];
         [self.search autoPinEdgeToSuperviewEdge:ALEdgeRight];
 
-        [self.containerView autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.search /*withOffset:10.0*/];
+        [self.containerView autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.search];
         [self.containerView autoPinEdge:ALEdgeBottom toEdge:ALEdgeBottom ofView:self.view];
         [self.containerView autoPinEdgeToSuperviewEdge:ALEdgeLeft];
         [self.containerView autoPinEdgeToSuperviewEdge:ALEdgeRight];
+        
+        [self.activityIndicator autoCenterInSuperview];
         
         self.didSetupConstraints = YES;
     }
     [super updateViewConstraints];
 }
 
-#pragma mark - UITextField delegate
-
-- (BOOL)textFieldShouldReturn:(UITextField *)textField {
-    NSLog(@"%@", textField.text);
-    if ( [textField.text isEqualToString:@""] ) {
-        [self showAlert:@"Warning" forMessage:@"Enter some tags"];
-    }
-    [textField resignFirstResponder];
-    return NO;
-}
+#pragma mark - UISearchBar delegate
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
+    [self fetch];
     [searchBar resignFirstResponder];
 }
 
@@ -164,8 +172,8 @@ static NSString *const InstagramApiURL = @"https://api.instagram.com/v1/tags/car
 
 - (UIActivityIndicatorView *)activityIndicator {
     if (!_activityIndicator) {
-//        _activityIndicator = [UIActivityIndicatorView newAutoLayoutView];
         _activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+        _activityIndicator.color = [UIColor blackColor];
     }
     return _activityIndicator;
 }
@@ -224,11 +232,11 @@ static NSString *const InstagramApiURL = @"https://api.instagram.com/v1/tags/car
 
 - (void)fetch {
     
-    [self.activityView setHidden:NO];
-    [self.activityIndicator startAnimating];
+    NSString *tag = ([self.search.text isEqualToString:@""]) ? (@"car") : self.search.text;
+    NSString *requestURL = [NSString stringWithFormat:@"%@%@%@%@%@", URL_BEGIN, tag, URL_END, COUNT, ACCESS_TOKEN ];
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager GET:InstagramApiURL
+    [manager GET:requestURL
       parameters:nil
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
              //             NSLog(@"JSON: %@", responseObject);
@@ -238,8 +246,9 @@ static NSString *const InstagramApiURL = @"https://api.instagram.com/v1/tags/car
              self.model = [data mutableCopy];
              [self.tableView reloadData];
              
-             [self.activityView setHidden:YES];
              [self.activityIndicator stopAnimating];
+             self.activityIndicator.hidden = YES;
+             self.tableView.hidden = NO;
              
              //             NSDictionary *object = [data objectAtIndex:0];
              //             NSDictionary *user = [object objectForKey:@"user"];
