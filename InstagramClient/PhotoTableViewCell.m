@@ -32,7 +32,7 @@
         [self.contentView addSubview:self.profilePicture];
         [self.contentView addSubview:self.namelabel];
         [self.contentView addSubview:self.dateLabel];
-        [self.contentView addSubview:self.photo];
+        [self.contentView addSubview:self.photoView];
         
         self.contentView.backgroundColor = [UIColor colorWithRed:206.0/255.0 green:206.0/255.0 blue:206.0/255.0 alpha:1.0];
         
@@ -67,10 +67,10 @@
         [self.namelabel autoSetDimension:ALDimensionWidth toSize:CGRectGetWidth(self.bounds)];
 
 //        [self.photo autoSetDimension:ALDimensionHeight toSize:60.0 ];
-        [self.photo autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.containerView];
-        [self.photo autoPinEdgeToSuperviewEdge:ALEdgeBottom];
-        [self.photo autoPinEdgeToSuperviewEdge:ALEdgeLeft];
-        [self.photo autoPinEdgeToSuperviewEdge:ALEdgeRight];
+        [self.photoView autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.containerView];
+        [self.photoView autoPinEdgeToSuperviewEdge:ALEdgeBottom];
+        [self.photoView autoPinEdgeToSuperviewEdge:ALEdgeLeft];
+        [self.photoView autoPinEdgeToSuperviewEdge:ALEdgeRight];
         
         self.didSetupConstraints = YES;
     }
@@ -107,13 +107,13 @@
     return _dateLabel;
 }
 
-- (UIImageView *)photo {
-    if (!_photo) {
-        _photo = [UIImageView newAutoLayoutView];
-        _photo.backgroundColor = [UIColor grayColor];
-        _photo.image = [UIImage imageNamed:@"placeholder.png"];
+- (UIImageView *)photoView {
+    if (!_photoView) {
+        _photoView = [UIImageView newAutoLayoutView];
+        _photoView.backgroundColor = [UIColor grayColor];
+        _photoView.image = [UIImage imageNamed:@"placeholder.png"];
     }
-    return _photo;
+    return _photoView;
 }
 
 -(UIView *)containerView {

@@ -15,6 +15,6 @@ IB_DESIGNABLE
 @property(nonatomic) IBInspectable UIImageView *profilePicture;
 @property(nonatomic) IBInspectable UILabel *namelabel;
 @property(nonatomic) IBInspectable UILabel *dateLabel;
-@property(nonatomic) IBInspectable UIImageView *photo;
+@property(nonatomic) IBInspectable UIImageView *photoView;
 
 @end

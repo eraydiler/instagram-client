@@ -13,7 +13,8 @@
 #import "AFNetworking.h"
 #import "PhotoModel.h"
 #import "UIImageView+AFNetworking.h"
-#import "PhotoViewController.h"
+#import "PhotoDetailViewController.h"
+#import "HelperModel.h"
 
 static NSString *CellIdentifier= @"CellIdentifier";
 
@@ -26,13 +27,13 @@ static NSString *const ACCESS_TOKEN = @"&access_token=220265065.5c873e0.81643230
 @property (nonatomic, assign) BOOL didSetupConstraints;
 @property (nonatomic, assign) BOOL didSetupView;
 
-@property(nonatomic, strong) UISearchBar *search;
+@property (nonatomic, strong) UISearchBar *search;
 @property (strong, nonatomic) UITableView *tableView;
-@property(nonatomic, strong) UIView *containerView;
+@property (nonatomic, strong) UIView *containerView;
 @property (strong, nonatomic) UIActivityIndicatorView *activityIndicator;
 
 //@property(nonatomic, strong) NSMutableArray *model;
-@property(nonatomic, strong) NSMutableArray *photos;
+//@property(nonatomic, strong) NSMutableArray *photos;
 
 @property(nonatomic, strong) NSMutableArray *photoModels;
 
@@ -75,7 +76,7 @@ static NSString *const ACCESS_TOKEN = @"&access_token=220265065.5c873e0.81643230
     [self.tableView reloadData];
     
     self.search = [[SearchBar alloc]
-                   initWithFrame:(CGRectMake(0, 0, [self screenWidth], 40.0))];
+                   initWithFrame:(CGRectMake(0, 0, [HelperModel screenWidth] /*[self screenWidth]*/, 40.0))];
     
     [self.view addSubview:self.search];
     self.search.delegate = self;
@@ -95,10 +96,9 @@ static NSString *const ACCESS_TOKEN = @"&access_token=220265065.5c873e0.81643230
     [self.tableView registerClass:[PhotoTableViewCell class] forCellReuseIdentifier:CellIdentifier];
     
     self.tableView.estimatedRowHeight = UITableViewAutomaticDimension;
-    self.tableView.allowsSelection = YES;
+    [self.tableView setAllowsMultipleSelection:NO];
     
-    UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tableViewTapped:)];
-    [self.tableView addGestureRecognizer:tapRecognizer];
+//    [self addTapRecognizer];
 }
 
 #pragma mark - Table view data source
@@ -122,7 +122,8 @@ static NSString *const ACCESS_TOKEN = @"&access_token=220265065.5c873e0.81643230
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return [self screenHeight] - [self searchHeight] - [self navBarHeight] -20;
+//    return [self screenHeight] - [self searchHeight] - [self navBarHeight] -20;
+    return [HelperModel screenHeight] - [HelperModel viewHeight:self.search] - [HelperModel viewHeight:self.navigationController.navigationBar] -20;
 }
 
 #pragma mark - Table view delegate
@@ -130,8 +131,11 @@ static NSString *const ACCESS_TOKEN = @"&access_token=220265065.5c873e0.81643230
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     NSLog(@"%li", (long)indexPath.row);
     
-    PhotoViewController *photoVC = [[PhotoViewController alloc] init];
-    photoVC.imageView = self.photos[indexPath.row];
+    PhotoTableViewCell *selectedCell = (PhotoTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
+    UIImage *photo = selectedCell.photoView.image;
+    
+    PhotoDetailViewController *photoVC = [[PhotoDetailViewController alloc] init];
+    photoVC.photo = photo;
     [self.navigationController pushViewController:photoVC animated:NO];
 }
 
@@ -198,7 +202,8 @@ static NSString *const ACCESS_TOKEN = @"&access_token=220265065.5c873e0.81643230
 
 #pragma mark - Helper Methods
 
-- (void)configureCell:(PhotoTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
+- (void)configureCell:(PhotoTableViewCell *)cell
+          atIndexPath:(NSIndexPath *)indexPath {
     
     // configure photo cell
     if (cell == nil) {
@@ -229,11 +234,10 @@ static NSString *const ACCESS_TOKEN = @"&access_token=220265065.5c873e0.81643230
     // Get photo
     request = [NSURLRequest requestWithURL:photoModel.photoURL];
     placeholderImage = [UIImage imageNamed:@"placeholder"];
-    [cell.photo setImageWithURLRequest:request
+    [cell.photoView setImageWithURLRequest:request
                       placeholderImage:placeholderImage
                                success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
-                                   weakCell.photo.image = image;
-                                   self.photos[indexPath.row] = image;
+                                   weakCell.photoView.image = image;
                                    [weakCell setNeedsLayout];
                                } failure:nil];
 }
@@ -252,7 +256,7 @@ static NSString *const ACCESS_TOKEN = @"&access_token=220265065.5c873e0.81643230
 
 - (void)fetch {
     
-    NSString *tag = ([self.search.text isEqualToString:@""]) ? (@"car") : self.search.text;
+    NSString *tag = ([self.search.text isEqualToString:@""]) ? (@"instagram") : self.search.text;
     NSString *requestURL = [NSString stringWithFormat:@"%@%@%@%@%@", URL_BEGIN, tag, URL_END, COUNT, ACCESS_TOKEN ];
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
@@ -278,25 +282,25 @@ static NSString *const ACCESS_TOKEN = @"&access_token=220265065.5c873e0.81643230
              [self hideActivityIndicator];
              
          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-             NSLog(@"Error: %@", error);
+             NSLog(@"Fetch() Error: %@", error);
          }];
 }
 
-- (CGFloat)screenWidth {
-    return [[UIScreen mainScreen] bounds].size.width;
-}
-
-- (CGFloat)screenHeight {
-    return [[UIScreen mainScreen] bounds].size.height;
-}
-
-- (CGFloat)searchHeight {
-    return CGRectGetHeight(self.search.frame);
-}
-
-- (CGFloat)navBarHeight {
-    return CGRectGetHeight(self.navigationController.navigationBar.frame);
-}
+//- (CGFloat)screenWidth {
+//    return [[UIScreen mainScreen] bounds].size.width;
+//}
+//
+//- (CGFloat)screenHeight {
+//    return [[UIScreen mainScreen] bounds].size.height;
+//}
+//
+//- (CGFloat)searchHeight {
+//    return CGRectGetHeight(self.search.frame);
+//}
+//
+//- (CGFloat)navBarHeight {
+//    return CGRectGetHeight(self.navigationController.navigationBar.frame);
+//}
 
 - (void)showAlert:(NSString *)title forMessage:(NSString *)message {
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title
@@ -311,6 +315,12 @@ static NSString *const ACCESS_TOKEN = @"&access_token=220265065.5c873e0.81643230
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     dateFormatter.dateFormat = @"yy/MM/dd HH:mm";
     return [dateFormatter stringFromDate:date];
+}
+
+- (void)addTapRecognizer {
+    UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tableViewTapped:)];
+    [tapRecognizer setCancelsTouchesInView:NO];
+    [self.tableView addGestureRecognizer:tapRecognizer];
 }
 
 // For testing
