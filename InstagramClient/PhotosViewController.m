@@ -42,6 +42,8 @@ static NSString *const ACCESS_TOKEN = @"&access_token=220265065.5c873e0.81643230
 @implementation PhotosViewController
 
 - (void)viewWillAppear:(BOOL)animated {
+    self.didSetupConstraints = NO;
+    [self.view setNeedsUpdateConstraints];
     [self showActivityIndicator];
     [self fetch];
 }
@@ -73,10 +75,8 @@ static NSString *const ACCESS_TOKEN = @"&access_token=220265065.5c873e0.81643230
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     
-    [self.tableView reloadData];
-    
     self.search = [[SearchBar alloc]
-                   initWithFrame:(CGRectMake(0, 0, [HelperModel screenWidth] /*[self screenWidth]*/, 40.0))];
+                   initWithFrame:(CGRectMake(0, 0, [HelperModel screenWidth], 40.0))];
     
     [self.view addSubview:self.search];
     self.search.delegate = self;
@@ -136,7 +136,7 @@ static NSString *const ACCESS_TOKEN = @"&access_token=220265065.5c873e0.81643230
     
     PhotoDetailViewController *photoVC = [[PhotoDetailViewController alloc] init];
     photoVC.photo = photo;
-    [self.navigationController pushViewController:photoVC animated:NO];
+    [self.navigationController pushViewController:photoVC animated:YES];
 }
 
 - (void)updateViewConstraints
