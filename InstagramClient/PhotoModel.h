@@ -10,9 +10,11 @@
 
 @interface PhotoModel : NSObject
 
-@property(nonatomic, strong) UIImageView *profilePicture;
-@property(nonatomic, strong) UILabel *userName;
-@property(nonatomic, strong) UILabel *date;
+@property(nonatomic, strong) NSURL *profilePictureURL;
+@property(nonatomic, strong) NSString *userName;
+@property(nonatomic, strong) NSDate *date;
+@property(nonatomic, strong) NSURL *photoURL;
 
++ (PhotoModel *)getPhotoModels:(NSDictionary *)dic;
 
 @end

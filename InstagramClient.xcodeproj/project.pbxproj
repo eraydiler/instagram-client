@@ -18,6 +18,7 @@
 		2A0CCA161AFAA72A00FA46BC /* NSLayoutConstraint+PureLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A0CCA101AFAA72A00FA46BC /* NSLayoutConstraint+PureLayout.m */; };
 		2A0CCA1D1AFABD7F00FA46BC /* PhotoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A0CCA1C1AFABD7F00FA46BC /* PhotoTableViewCell.m */; };
 		2A0CCA241AFAC9EB00FA46BC /* PhotoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A0CCA231AFAC9EB00FA46BC /* PhotoModel.m */; };
+		2A79CBE51B055447004B7214 /* PhotoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A79CBE41B055447004B7214 /* PhotoViewController.m */; };
 		2A8D51C11B03E221001C7130 /* SearchBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A8D51C01B03E221001C7130 /* SearchBar.m */; };
 		2AFCB55C1AFB7EA400E45E2B /* PhotosViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2AFCB55B1AFB7EA400E45E2B /* PhotosViewController.m */; };
 		2AFCB55E1AFBD62C00E45E2B /* placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 2AFCB55D1AFBD62C00E45E2B /* placeholder.png */; };
@@ -76,6 +77,8 @@
 		2A0CCA211AFAC4A400FA46BC /* InstagramClient-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "InstagramClient-Prefix.pch"; sourceTree = "<group>"; };
 		2A0CCA221AFAC9EB00FA46BC /* PhotoModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoModel.h; sourceTree = "<group>"; };
 		2A0CCA231AFAC9EB00FA46BC /* PhotoModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoModel.m; sourceTree = "<group>"; };
+		2A79CBE31B055447004B7214 /* PhotoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoViewController.h; sourceTree = "<group>"; };
+		2A79CBE41B055447004B7214 /* PhotoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoViewController.m; sourceTree = "<group>"; };
 		2A8D51BF1B03E221001C7130 /* SearchBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchBar.h; sourceTree = "<group>"; };
 		2A8D51C01B03E221001C7130 /* SearchBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchBar.m; sourceTree = "<group>"; };
 		2AFCB55A1AFB7EA400E45E2B /* PhotosViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotosViewController.h; sourceTree = "<group>"; };
@@ -240,6 +243,8 @@
 			children = (
 				2AFCB55A1AFB7EA400E45E2B /* PhotosViewController.h */,
 				2AFCB55B1AFB7EA400E45E2B /* PhotosViewController.m */,
+				2A79CBE31B055447004B7214 /* PhotoViewController.h */,
+				2A79CBE41B055447004B7214 /* PhotoViewController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -412,6 +417,7 @@
 				2AFCB5951AFC089D00E45E2B /* UIButton+AFNetworking.m in Sources */,
 				2AFCB5971AFC089D00E45E2B /* UIProgressView+AFNetworking.m in Sources */,
 				2AFCB5781AFC088500E45E2B /* AFHTTPRequestOperation.m in Sources */,
+				2A79CBE51B055447004B7214 /* PhotoViewController.m in Sources */,
 				2A0CC9E91AFAA03300FA46BC /* AppDelegate.m in Sources */,
 				2AFCB5941AFC089D00E45E2B /* UIAlertView+AFNetworking.m in Sources */,
 				2A8D51C11B03E221001C7130 /* SearchBar.m in Sources */,

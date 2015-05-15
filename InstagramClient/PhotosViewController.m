@@ -13,6 +13,7 @@
 #import "AFNetworking.h"
 #import "PhotoModel.h"
 #import "UIImageView+AFNetworking.h"
+#import "PhotoViewController.h"
 
 static NSString *CellIdentifier= @"CellIdentifier";
 
@@ -30,14 +31,16 @@ static NSString *const ACCESS_TOKEN = @"&access_token=220265065.5c873e0.81643230
 @property(nonatomic, strong) UIView *containerView;
 @property (strong, nonatomic) UIActivityIndicatorView *activityIndicator;
 
-@property(nonatomic, strong) NSMutableArray *model;
+//@property(nonatomic, strong) NSMutableArray *model;
+@property(nonatomic, strong) NSMutableArray *photos;
+
+@property(nonatomic, strong) NSMutableArray *photoModels;
 
 @end
 
 @implementation PhotosViewController
 
 - (void)viewWillAppear:(BOOL)animated {
-    
     [self showActivityIndicator];
     [self fetch];
 }
@@ -77,7 +80,6 @@ static NSString *const ACCESS_TOKEN = @"&access_token=220265065.5c873e0.81643230
     [self.view addSubview:self.search];
     self.search.delegate = self;
     
-    ///////////////
     [self.containerView addSubview:self.activityIndicator];
     [self.containerView addSubview:self.tableView];
     
@@ -93,7 +95,7 @@ static NSString *const ACCESS_TOKEN = @"&access_token=220265065.5c873e0.81643230
     [self.tableView registerClass:[PhotoTableViewCell class] forCellReuseIdentifier:CellIdentifier];
     
     self.tableView.estimatedRowHeight = UITableViewAutomaticDimension;
-    self.tableView.allowsSelection = NO;
+    self.tableView.allowsSelection = YES;
     
     UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tableViewTapped:)];
     [self.tableView addGestureRecognizer:tapRecognizer];
@@ -106,7 +108,7 @@ static NSString *const ACCESS_TOKEN = @"&access_token=220265065.5c873e0.81643230
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [self.model count];
+    return [self.photoModels count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -121,6 +123,16 @@ static NSString *const ACCESS_TOKEN = @"&access_token=220265065.5c873e0.81643230
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return [self screenHeight] - [self searchHeight] - [self navBarHeight] -20;
+}
+
+#pragma mark - Table view delegate
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSLog(@"%li", (long)indexPath.row);
+    
+    PhotoViewController *photoVC = [[PhotoViewController alloc] init];
+    photoVC.imageView = self.photos[indexPath.row];
+    [self.navigationController pushViewController:photoVC animated:NO];
 }
 
 - (void)updateViewConstraints
@@ -147,6 +159,7 @@ static NSString *const ACCESS_TOKEN = @"&access_token=220265065.5c873e0.81643230
 #pragma mark - UISearchBar delegate
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
+    
     [self showActivityIndicator];
     [self fetch];
     [searchBar resignFirstResponder];
@@ -176,56 +189,53 @@ static NSString *const ACCESS_TOKEN = @"&access_token=220265065.5c873e0.81643230
     return _activityIndicator;
 }
 
+- (NSMutableArray *)photoModels {
+    if (!_photoModels) {
+        _photoModels = [[NSMutableArray alloc] init];
+    }
+    return _photoModels;
+}
+
 #pragma mark - Helper Methods
 
 - (void)configureCell:(PhotoTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
     
     // configure photo cell
     if (cell == nil) {
-        cell = [[PhotoTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        cell = [[PhotoTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
+                                         reuseIdentifier:CellIdentifier];
     }
     
-    NSDictionary *dic = [self.model objectAtIndex:indexPath.row];
+    PhotoModel *photoModel = self.photoModels[indexPath.row];
     
-    // Get user
-    NSDictionary *user = [dic objectForKey:@"user"];
-    NSString *profilePicture = [user objectForKey:@"profile_picture"];
-    NSString *userName = [user objectForKey:@"full_name"];
-    cell.namelabel.text = userName;
+    // Get user name
+    cell.namelabel.text = photoModel.userName;
     
+    // Get date
+    cell.dateLabel.text = [self stringFromDate:photoModel.date];
+
     // Get profile picture
-    NSURL *url = [NSURL URLWithString:profilePicture];
-    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    NSURLRequest *request = [NSURLRequest requestWithURL:photoModel.profilePictureURL];
     UIImage *placeholderImage = [UIImage imageNamed:@"placeholder"];
     __weak PhotoTableViewCell *weakCell = cell;
     [cell.profilePicture setImageWithURLRequest:request
-                          placeholderImage:placeholderImage
-                                   success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
-                                       weakCell.profilePicture.image = image;
-                                       [weakCell setNeedsLayout];
-                                   } failure:nil];
-    
-    // Get photo
-    NSDictionary *images = [dic objectForKey:@"images"];
-    NSDictionary *lowRes = [images objectForKey:@"low_resolution"];
-    NSString *lowImage = [lowRes objectForKey:@"url"];
-    url = [NSURL URLWithString:lowImage];
-    request = [NSURLRequest requestWithURL:url];
-    placeholderImage = [UIImage imageNamed:@"placeholder"];
-    [cell.photo setImageWithURLRequest:request
                                placeholderImage:placeholderImage
                                         success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
-                                            weakCell.photo.image = image;
+                                            weakCell.profilePicture.image = image;
                                             [weakCell setNeedsLayout];
                                         } failure:nil];
 
-    // Get time
-    NSString *createdTime = [dic objectForKey:@"created_time"];
-    NSTimeInterval interval = [createdTime doubleValue];;
-    NSDate *date = [NSDate dateWithTimeIntervalSince1970: interval];
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    dateFormatter.dateFormat = @"yy/MM/dd HH:mm";
-    cell.dateLabel.text = [dateFormatter stringFromDate:date];
+    
+    // Get photo
+    request = [NSURLRequest requestWithURL:photoModel.photoURL];
+    placeholderImage = [UIImage imageNamed:@"placeholder"];
+    [cell.photo setImageWithURLRequest:request
+                      placeholderImage:placeholderImage
+                               success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+                                   weakCell.photo.image = image;
+                                   self.photos[indexPath.row] = image;
+                                   [weakCell setNeedsLayout];
+                               } failure:nil];
 }
 
 - (void)showActivityIndicator {
@@ -249,26 +259,23 @@ static NSString *const ACCESS_TOKEN = @"&access_token=220265065.5c873e0.81643230
     [manager GET:requestURL
       parameters:nil
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
-             //             NSLog(@"JSON: %@", responseObject);
              
              NSDictionary *dic = (NSDictionary *)responseObject;
              NSArray *data = [dic objectForKey:@"data"];
-             self.model = [data mutableCopy];
              
-             if (self.model.count == 0) {
-                 [self showAlert:@"Warning" forMessage:@"No result found please make another search please"];
+             if (data.count == 0) {
+                 [self showAlert:@"Warning"
+                      forMessage:@"No result found please make another search please"];
                  self.activityIndicator.hidden = YES;
                  return;
              }
              
+             for (NSDictionary *dic in data) {
+                 [self.photoModels addObject:[PhotoModel getPhotoModels:dic]];
+             }
+             
              [self.tableView reloadData];
              [self hideActivityIndicator];
-             
-             
-             //             NSDictionary *object = [data objectAtIndex:0];
-             //             NSDictionary *user = [object objectForKey:@"user"];
-             //             NSString *profile_picture = [user objectForKey:@"profile_picture"];
-             //             NSString *full_name = [user objectForKey:@"full_name"];
              
          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
              NSLog(@"Error: %@", error);
@@ -298,6 +305,12 @@ static NSString *const ACCESS_TOKEN = @"&access_token=220265065.5c873e0.81643230
                                              cancelButtonTitle:@"OK"
                                              otherButtonTitles:nil];
     [alert show];
+}
+
+- (NSString *)stringFromDate: (NSDate *)date {
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    dateFormatter.dateFormat = @"yy/MM/dd HH:mm";
+    return [dateFormatter stringFromDate:date];
 }
 
 // For testing
