@@ -32,9 +32,6 @@ static NSString *const ACCESS_TOKEN = @"&access_token=220265065.5c873e0.81643230
 @property (nonatomic, strong) UIView *containerView;
 @property (strong, nonatomic) UIActivityIndicatorView *activityIndicator;
 
-//@property(nonatomic, strong) NSMutableArray *model;
-//@property(nonatomic, strong) NSMutableArray *photos;
-
 @property(nonatomic, strong) NSMutableArray *photoModels;
 
 @end
@@ -44,8 +41,6 @@ static NSString *const ACCESS_TOKEN = @"&access_token=220265065.5c873e0.81643230
 - (void)viewWillAppear:(BOOL)animated {
     self.didSetupConstraints = NO;
     [self.view setNeedsUpdateConstraints];
-    [self showActivityIndicator];
-    [self fetch];
 }
 
 - (void)viewDidLoad {
@@ -98,6 +93,9 @@ static NSString *const ACCESS_TOKEN = @"&access_token=220265065.5c873e0.81643230
     self.tableView.estimatedRowHeight = UITableViewAutomaticDimension;
     [self.tableView setAllowsMultipleSelection:NO];
     
+    [self showActivityIndicator];
+    [self fetch];
+
 //    [self addTapRecognizer];
 }
 
@@ -286,22 +284,6 @@ static NSString *const ACCESS_TOKEN = @"&access_token=220265065.5c873e0.81643230
          }];
 }
 
-//- (CGFloat)screenWidth {
-//    return [[UIScreen mainScreen] bounds].size.width;
-//}
-//
-//- (CGFloat)screenHeight {
-//    return [[UIScreen mainScreen] bounds].size.height;
-//}
-//
-//- (CGFloat)searchHeight {
-//    return CGRectGetHeight(self.search.frame);
-//}
-//
-//- (CGFloat)navBarHeight {
-//    return CGRectGetHeight(self.navigationController.navigationBar.frame);
-//}
-
 - (void)showAlert:(NSString *)title forMessage:(NSString *)message {
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title
                                                        message:message
@@ -321,25 +303,6 @@ static NSString *const ACCESS_TOKEN = @"&access_token=220265065.5c873e0.81643230
     UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tableViewTapped:)];
     [tapRecognizer setCancelsTouchesInView:NO];
     [self.tableView addGestureRecognizer:tapRecognizer];
-}
-
-// For testing
-- (void)listSubviewsOfView:(UIView *)view {
-    
-    // Get the subviews of the view
-    NSArray *subviews = [view subviews];
-    
-    // Return if there are no subviews
-    if ([subviews count] == 0) return; // COUNT CHECK LINE
-    
-    for (UIView *subview in subviews) {
-        
-        // Do what you want to do with the subview
-        NSLog(@"%@", subview);
-        
-        // List the subviews of subview
-        [self listSubviewsOfView:subview];
-    }
 }
 
 @end
