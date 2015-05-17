@@ -21,6 +21,8 @@
 		2A79CBE51B055447004B7214 /* PhotoDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A79CBE41B055447004B7214 /* PhotoDetailViewController.m */; };
 		2A79CBE81B064E24004B7214 /* HelperModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A79CBE71B064E24004B7214 /* HelperModel.m */; };
 		2A8D51C11B03E221001C7130 /* SearchBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A8D51C01B03E221001C7130 /* SearchBar.m */; };
+		2A905B201B07D8F100C3890E /* UIScrollView+SVInfiniteScrolling.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A905B1D1B07D8F100C3890E /* UIScrollView+SVInfiniteScrolling.m */; };
+		2A905B211B07D8F100C3890E /* UIScrollView+SVPullToRefresh.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A905B1F1B07D8F100C3890E /* UIScrollView+SVPullToRefresh.m */; };
 		2AFCB55C1AFB7EA400E45E2B /* PhotosViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2AFCB55B1AFB7EA400E45E2B /* PhotosViewController.m */; };
 		2AFCB55E1AFBD62C00E45E2B /* placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 2AFCB55D1AFBD62C00E45E2B /* placeholder.png */; };
 		2AFCB5781AFC088500E45E2B /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 2AFCB5661AFC088500E45E2B /* AFHTTPRequestOperation.m */; };
@@ -84,6 +86,11 @@
 		2A79CBE71B064E24004B7214 /* HelperModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HelperModel.m; sourceTree = "<group>"; };
 		2A8D51BF1B03E221001C7130 /* SearchBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchBar.h; sourceTree = "<group>"; };
 		2A8D51C01B03E221001C7130 /* SearchBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchBar.m; sourceTree = "<group>"; };
+		2A905B1B1B07D8F100C3890E /* SVPullToRefresh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVPullToRefresh.h; sourceTree = "<group>"; };
+		2A905B1C1B07D8F100C3890E /* UIScrollView+SVInfiniteScrolling.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+SVInfiniteScrolling.h"; sourceTree = "<group>"; };
+		2A905B1D1B07D8F100C3890E /* UIScrollView+SVInfiniteScrolling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+SVInfiniteScrolling.m"; sourceTree = "<group>"; };
+		2A905B1E1B07D8F100C3890E /* UIScrollView+SVPullToRefresh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+SVPullToRefresh.h"; sourceTree = "<group>"; };
+		2A905B1F1B07D8F100C3890E /* UIScrollView+SVPullToRefresh.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+SVPullToRefresh.m"; sourceTree = "<group>"; };
 		2AFCB55A1AFB7EA400E45E2B /* PhotosViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotosViewController.h; sourceTree = "<group>"; };
 		2AFCB55B1AFB7EA400E45E2B /* PhotosViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotosViewController.m; sourceTree = "<group>"; };
 		2AFCB55D1AFBD62C00E45E2B /* placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = placeholder.png; sourceTree = "<group>"; };
@@ -209,6 +216,7 @@
 		2A0CCA091AFAA6B000FA46BC /* libs */ = {
 			isa = PBXGroup;
 			children = (
+				2A905B1A1B07D8BB00C3890E /* SvPullToRefresh */,
 				2AFCB5641AFC085700E45E2B /* UIKit+AFNetworking */,
 				2AFCB5631AFC084700E45E2B /* AFNetworking */,
 				2A0CCA0A1AFAA6CA00FA46BC /* PureLayout */,
@@ -263,6 +271,18 @@
 				2A8D51C01B03E221001C7130 /* SearchBar.m */,
 			);
 			name = View;
+			sourceTree = "<group>";
+		};
+		2A905B1A1B07D8BB00C3890E /* SvPullToRefresh */ = {
+			isa = PBXGroup;
+			children = (
+				2A905B1B1B07D8F100C3890E /* SVPullToRefresh.h */,
+				2A905B1C1B07D8F100C3890E /* UIScrollView+SVInfiniteScrolling.h */,
+				2A905B1D1B07D8F100C3890E /* UIScrollView+SVInfiniteScrolling.m */,
+				2A905B1E1B07D8F100C3890E /* UIScrollView+SVPullToRefresh.h */,
+				2A905B1F1B07D8F100C3890E /* UIScrollView+SVPullToRefresh.m */,
+			);
+			name = SvPullToRefresh;
 			sourceTree = "<group>";
 		};
 		2AFCB5631AFC084700E45E2B /* AFNetworking */ = {
@@ -417,6 +437,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2AFCB5801AFC088500E45E2B /* AFURLSessionManager.m in Sources */,
+				2A905B201B07D8F100C3890E /* UIScrollView+SVInfiniteScrolling.m in Sources */,
 				2AFCB57D1AFC088500E45E2B /* AFURLConnectionOperation.m in Sources */,
 				2AFCB5981AFC089D00E45E2B /* UIRefreshControl+AFNetworking.m in Sources */,
 				2AFCB5951AFC089D00E45E2B /* UIButton+AFNetworking.m in Sources */,
@@ -429,6 +450,7 @@
 				2AFCB5791AFC088500E45E2B /* AFHTTPRequestOperationManager.m in Sources */,
 				2A0CCA241AFAC9EB00FA46BC /* PhotoModel.m in Sources */,
 				2AFCB55C1AFB7EA400E45E2B /* PhotosViewController.m in Sources */,
+				2A905B211B07D8F100C3890E /* UIScrollView+SVPullToRefresh.m in Sources */,
 				2A79CBE81B064E24004B7214 /* HelperModel.m in Sources */,
 				2AFCB5961AFC089D00E45E2B /* UIImageView+AFNetworking.m in Sources */,
 				2AFCB57A1AFC088500E45E2B /* AFHTTPSessionManager.m in Sources */,

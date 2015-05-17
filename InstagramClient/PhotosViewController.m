@@ -9,12 +9,14 @@
 #import "PhotosViewController.h"
 #import "PhotoTableViewCell.h"
 #import "SearchBar.h"
-#import "PureLayout.h"
 #import "AFNetworking.h"
 #import "PhotoModel.h"
 #import "UIImageView+AFNetworking.h"
 #import "PhotoDetailViewController.h"
 #import "HelperModel.h"
+#import "SVPullToRefresh.h"
+
+static int initialPage = 1; // paging start from 1, depends on your api
 
 static NSString *CellIdentifier= @"CellIdentifier";
 
@@ -33,6 +35,9 @@ static NSString *const ACCESS_TOKEN = @"&access_token=220265065.5c873e0.81643230
 @property (strong, nonatomic) UIActivityIndicatorView *activityIndicator;
 
 @property(nonatomic, strong) NSMutableArray *photoModels;
+
+// to keep track of what is the next page to load
+@property (nonatomic, assign) int currentPage;
 
 @end
 
@@ -95,6 +100,24 @@ static NSString *const ACCESS_TOKEN = @"&access_token=220265065.5c873e0.81643230
     
     [self showActivityIndicator];
     [self fetch];
+    
+    __weak typeof(self) weakSelf = self;
+    // refresh new data when pull the table list
+    [self.tableView addPullToRefreshWithActionHandler:^{
+        weakSelf.currentPage = initialPage; // reset the page
+        [weakSelf.photoModels removeAllObjects]; // remove all data
+        [weakSelf.tableView reloadData]; // before load new content, clear the existing table list
+        [weakSelf fetch]; // load new data
+        [weakSelf.tableView.pullToRefreshView stopAnimating]; // clear the animation
+        
+        // once refresh, allow the infinite scroll again
+        weakSelf.tableView.showsInfiniteScrolling = YES;
+    }];
+    
+    // load more content when scroll to the bottom most
+    [self.tableView addInfiniteScrollingWithActionHandler:^{
+        [weakSelf fetch];
+    }];
 
 //    [self addTapRecognizer];
 }
@@ -278,6 +301,10 @@ static NSString *const ACCESS_TOKEN = @"&access_token=220265065.5c873e0.81643230
              
              [self.tableView reloadData];
              [self hideActivityIndicator];
+             
+             // clear the pull to refresh & infinite scroll, this 2 lines very important
+             [self.tableView.pullToRefreshView stopAnimating];
+             [self.tableView.infiniteScrollingView stopAnimating];
              
          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
              NSLog(@"Fetch() Error: %@", error);
