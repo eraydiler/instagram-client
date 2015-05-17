@@ -26,8 +26,9 @@ static NSString *const COUNT = @"&count=20";
 static NSString *const ACCESS_TOKEN = @"&access_token=220265065.5c873e0.81643230ea8a479e9e1355d49529903a";
 
 @interface PhotosViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate>
-@property (nonatomic, assign) BOOL didSetupConstraints;
-@property (nonatomic, assign) BOOL didSetupView;
+@property (nonatomic) BOOL didSetupConstraints;
+@property (nonatomic) BOOL didSetupView;
+@property (nonatomic) BOOL didNewSearch;
 
 @property (nonatomic, strong) UISearchBar *search;
 @property (strong, nonatomic) UITableView *tableView;
@@ -99,7 +100,7 @@ static NSString *const ACCESS_TOKEN = @"&access_token=220265065.5c873e0.81643230
     [self.tableView setAllowsMultipleSelection:NO];
     
     [self showActivityIndicator];
-    [self loadFromInsagram];
+    [self loadFromInstagram];
     
     __weak typeof(self) weakSelf = self;
     // refresh new data when pull the table list
@@ -108,7 +109,7 @@ static NSString *const ACCESS_TOKEN = @"&access_token=220265065.5c873e0.81643230
         weakSelf.currentPage = initialPage; // reset the page
         [weakSelf.photoModels removeAllObjects]; // remove all data
         [weakSelf.tableView reloadData]; // before load new content, clear the existing table list
-        [weakSelf loadFromInsagram]; // load new data
+        [weakSelf loadFromInstagram]; // load new data
         [weakSelf.tableView.pullToRefreshView stopAnimating]; // clear the animation
         
         // once refresh, allow the infinite scroll again
@@ -117,7 +118,7 @@ static NSString *const ACCESS_TOKEN = @"&access_token=220265065.5c873e0.81643230
     
     // load more content when scroll to the bottom most
     [self.tableView addInfiniteScrollingWithActionHandler:^{
-        [weakSelf loadFromInsagram];
+        [weakSelf loadFromInstagram];
     }];
 
 }
@@ -185,8 +186,9 @@ static NSString *const ACCESS_TOKEN = @"&access_token=220265065.5c873e0.81643230
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
     
+    self.didNewSearch = YES;
     [self showActivityIndicator];
-    [self loadFromInsagram];
+    [self loadFromInstagram];
     [searchBar resignFirstResponder];
 }
 
@@ -269,11 +271,11 @@ static NSString *const ACCESS_TOKEN = @"&access_token=220265065.5c873e0.81643230
     self.tableView.hidden = NO;
 }
 
-- (void)loadFromInsagram {
+- (void)loadFromInstagram {
     
     NSString *tag = ([self.search.text isEqualToString:@""]) ? (@"instagram") : self.search.text;
     NSString *requestURL = [NSString stringWithFormat:@"%@%@%@%@%@", URL_BEGIN, tag, URL_END, COUNT, ACCESS_TOKEN ];
-    
+
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     [manager GET:requestURL
       parameters:nil
@@ -289,6 +291,13 @@ static NSString *const ACCESS_TOKEN = @"&access_token=220265065.5c873e0.81643230
                  return;
              }
              
+             if (self.didNewSearch) {
+                 [self.photoModels removeAllObjects];
+                 self.didNewSearch = NO;
+                 [self.tableView setContentOffset:CGPointMake(0.0f, -self.tableView.contentInset.top)
+                                         animated:NO];
+             }
+             
              for (NSDictionary *dic in data) {
                  [self.photoModels addObject:[PhotoModel getPhotoModels:dic]];
              }
@@ -302,6 +311,13 @@ static NSString *const ACCESS_TOKEN = @"&access_token=220265065.5c873e0.81643230
              
          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
              NSLog(@"Fetch() Error: %@", error);
+             
+             id responseObject = operation.responseObject;
+             NSDictionary *dic = (NSDictionary *)responseObject;
+             NSArray *meta = [dic objectForKey:@"meta"];
+             [self showAlert:@"Error" forMessage:[NSString stringWithFormat:@"%@ try to search different tags.", [(NSDictionary *)meta objectForKey:@"error_message" ]]];
+             [self hideActivityIndicator];
+             
          }];
 }
 
