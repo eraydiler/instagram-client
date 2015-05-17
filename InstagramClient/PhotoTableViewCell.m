@@ -130,12 +130,5 @@
     _profilePicture.layer.cornerRadius = 20 /*_profilePicture.frame.size.width / 2*/;
     _profilePicture.clipsToBounds = YES;
 }
-- (CGFloat)screenWidth {
-    return [[UIScreen mainScreen] bounds].size.width;
-}
-
-- (CGFloat)screenHeight {
-    return [[UIScreen mainScreen] bounds].size.height;
-}
 
 @end

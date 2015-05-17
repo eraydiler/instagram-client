@@ -16,7 +16,7 @@
 #import "HelperModel.h"
 #import "SVPullToRefresh.h"
 
-static int initialPage = 1; // paging start from 1, depends on your api
+static int initialPage = 1; // paging start from 1
 
 static NSString *CellIdentifier= @"CellIdentifier";
 
@@ -26,6 +26,7 @@ static NSString *const COUNT = @"&count=20";
 static NSString *const ACCESS_TOKEN = @"&access_token=220265065.5c873e0.81643230ea8a479e9e1355d49529903a";
 
 @interface PhotosViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate>
+
 @property (nonatomic) BOOL didSetupConstraints;
 @property (nonatomic) BOOL didSetupView;
 @property (nonatomic) BOOL didNewSearch;
@@ -67,7 +68,6 @@ static NSString *const ACCESS_TOKEN = @"&access_token=220265065.5c873e0.81643230
                                                  blue:206.0/255.0
                                                 alpha:1.0];
     
-//    self.tableView = [[UITableView alloc] initWithFrame:[[UIScreen mainScreen] applicationFrame] style:UITableViewStylePlain];
     self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0.0, 0.0, 0.0, 0.0)
                                                   style:UITableViewStylePlain];
     
@@ -100,7 +100,7 @@ static NSString *const ACCESS_TOKEN = @"&access_token=220265065.5c873e0.81643230
     [self.tableView setAllowsMultipleSelection:NO];
     
     [self showActivityIndicator];
-    [self loadFromInstagram];
+    [self loadFromInstagram: @""];
     
     __weak typeof(self) weakSelf = self;
     // refresh new data when pull the table list
@@ -109,7 +109,7 @@ static NSString *const ACCESS_TOKEN = @"&access_token=220265065.5c873e0.81643230
         weakSelf.currentPage = initialPage; // reset the page
         [weakSelf.photoModels removeAllObjects]; // remove all data
         [weakSelf.tableView reloadData]; // before load new content, clear the existing table list
-        [weakSelf loadFromInstagram]; // load new data
+        [weakSelf loadFromInstagram: weakSelf.search.text]; // load new data
         [weakSelf.tableView.pullToRefreshView stopAnimating]; // clear the animation
         
         // once refresh, allow the infinite scroll again
@@ -118,9 +118,11 @@ static NSString *const ACCESS_TOKEN = @"&access_token=220265065.5c873e0.81643230
     
     // load more content when scroll to the bottom most
     [self.tableView addInfiniteScrollingWithActionHandler:^{
-        [weakSelf loadFromInstagram];
+        NSArray *tags = [weakSelf splitTags:weakSelf.search.text];
+        for (NSString *tag in tags) {
+            [weakSelf loadFromInstagram:tag];
+        }
     }];
-
 }
 
 #pragma mark - Table view data source
@@ -144,7 +146,6 @@ static NSString *const ACCESS_TOKEN = @"&access_token=220265065.5c873e0.81643230
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-//    return [self screenHeight] - [self searchHeight] - [self navBarHeight] -20;
     return [HelperModel screenHeight] - [HelperModel viewHeight:self.search] - [HelperModel viewHeight:self.navigationController.navigationBar] -20;
 }
 
@@ -188,7 +189,12 @@ static NSString *const ACCESS_TOKEN = @"&access_token=220265065.5c873e0.81643230
     
     self.didNewSearch = YES;
     [self showActivityIndicator];
-    [self loadFromInstagram];
+    
+    NSArray *tags = [self splitTags:self.search.text];
+    for (NSString *tag in tags) {
+        [self loadFromInstagram:tag];
+    }
+    
     [searchBar resignFirstResponder];
 }
 
@@ -246,7 +252,6 @@ static NSString *const ACCESS_TOKEN = @"&access_token=220265065.5c873e0.81643230
                                             weakCell.profilePicture.image = image;
                                             [weakCell setNeedsLayout];
                                         } failure:nil];
-
     
     // Get photo
     request = [NSURLRequest requestWithURL:photoModel.photoURL];
@@ -271,9 +276,10 @@ static NSString *const ACCESS_TOKEN = @"&access_token=220265065.5c873e0.81643230
     self.tableView.hidden = NO;
 }
 
-- (void)loadFromInstagram {
+- (void)loadFromInstagram:(NSString *)tag {
     
-    NSString *tag = ([self.search.text isEqualToString:@""]) ? (@"instagram") : self.search.text;
+    //NSString *tag = ([self.search.text isEqualToString:@""]) ? (@"instagram") : self.search.text;
+    if ([tag isEqualToString:@""]) tag = @"instagram";
     NSString *requestURL = [NSString stringWithFormat:@"%@%@%@%@%@", URL_BEGIN, tag, URL_END, COUNT, ACCESS_TOKEN ];
 
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
@@ -302,6 +308,9 @@ static NSString *const ACCESS_TOKEN = @"&access_token=220265065.5c873e0.81643230
                  [self.photoModels addObject:[PhotoModel getPhotoModels:dic]];
              }
              
+             // Shuffle photo models array
+             [self shufflePhotoModels];
+             
              [self.tableView reloadData];
              [self hideActivityIndicator];
              
@@ -317,7 +326,6 @@ static NSString *const ACCESS_TOKEN = @"&access_token=220265065.5c873e0.81643230
              NSArray *meta = [dic objectForKey:@"meta"];
              [self showAlert:@"Error" forMessage:[NSString stringWithFormat:@"%@ try to search different tags.", [(NSDictionary *)meta objectForKey:@"error_message" ]]];
              [self hideActivityIndicator];
-             
          }];
 }
 
@@ -334,6 +342,19 @@ static NSString *const ACCESS_TOKEN = @"&access_token=220265065.5c873e0.81643230
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     dateFormatter.dateFormat = @"yy/MM/dd HH:mm";
     return [dateFormatter stringFromDate:date];
+}
+
+- (NSArray *)splitTags:(NSString *)tags {
+    return [self.search.text componentsSeparatedByString:@" "];
+}
+
+- (void)shufflePhotoModels {
+    NSUInteger count = [self.photoModels count];
+    for (NSUInteger i = 0; i < count; ++i) {
+        int nElements = (int)(count - i);
+        int n = (int)((arc4random() % nElements) + i);
+        [self.photoModels exchangeObjectAtIndex:i withObjectAtIndex:n];
+    }
 }
 
 @end
