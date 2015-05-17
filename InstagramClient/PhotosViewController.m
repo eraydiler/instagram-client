@@ -99,15 +99,16 @@ static NSString *const ACCESS_TOKEN = @"&access_token=220265065.5c873e0.81643230
     [self.tableView setAllowsMultipleSelection:NO];
     
     [self showActivityIndicator];
-    [self fetch];
+    [self loadFromInsagram];
     
     __weak typeof(self) weakSelf = self;
     // refresh new data when pull the table list
     [self.tableView addPullToRefreshWithActionHandler:^{
+        [weakSelf showActivityIndicator];
         weakSelf.currentPage = initialPage; // reset the page
         [weakSelf.photoModels removeAllObjects]; // remove all data
         [weakSelf.tableView reloadData]; // before load new content, clear the existing table list
-        [weakSelf fetch]; // load new data
+        [weakSelf loadFromInsagram]; // load new data
         [weakSelf.tableView.pullToRefreshView stopAnimating]; // clear the animation
         
         // once refresh, allow the infinite scroll again
@@ -116,10 +117,9 @@ static NSString *const ACCESS_TOKEN = @"&access_token=220265065.5c873e0.81643230
     
     // load more content when scroll to the bottom most
     [self.tableView addInfiniteScrollingWithActionHandler:^{
-        [weakSelf fetch];
+        [weakSelf loadFromInsagram];
     }];
 
-//    [self addTapRecognizer];
 }
 
 #pragma mark - Table view data source
@@ -186,14 +186,8 @@ static NSString *const ACCESS_TOKEN = @"&access_token=220265065.5c873e0.81643230
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
     
     [self showActivityIndicator];
-    [self fetch];
+    [self loadFromInsagram];
     [searchBar resignFirstResponder];
-}
-
-#pragma mark - Selectors
-
-- (void)tableViewTapped: (UITapGestureRecognizer *)recognizer {
-    [self.search resignFirstResponder];
 }
 
 #pragma mark - Lazy Instantiations
@@ -275,7 +269,7 @@ static NSString *const ACCESS_TOKEN = @"&access_token=220265065.5c873e0.81643230
     self.tableView.hidden = NO;
 }
 
-- (void)fetch {
+- (void)loadFromInsagram {
     
     NSString *tag = ([self.search.text isEqualToString:@""]) ? (@"instagram") : self.search.text;
     NSString *requestURL = [NSString stringWithFormat:@"%@%@%@%@%@", URL_BEGIN, tag, URL_END, COUNT, ACCESS_TOKEN ];
@@ -324,12 +318,6 @@ static NSString *const ACCESS_TOKEN = @"&access_token=220265065.5c873e0.81643230
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     dateFormatter.dateFormat = @"yy/MM/dd HH:mm";
     return [dateFormatter stringFromDate:date];
-}
-
-- (void)addTapRecognizer {
-    UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tableViewTapped:)];
-    [tapRecognizer setCancelsTouchesInView:NO];
-    [self.tableView addGestureRecognizer:tapRecognizer];
 }
 
 @end
