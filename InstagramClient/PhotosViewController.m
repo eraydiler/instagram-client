@@ -36,6 +36,10 @@ static NSString *const ACCESS_TOKEN = @"&access_token=220265065.5c873e0.81643230
 @property (nonatomic, strong) UIView *containerView;
 @property (strong, nonatomic) UIActivityIndicatorView *activityIndicator;
 
+// auto-complete
+@property (nonatomic, strong) NSMutableArray *autocompleteTags;
+@property (nonatomic, strong) UITableView *autocompleteTableView;
+
 @property(nonatomic, strong) NSMutableArray *photoModels;
 
 // to keep track of what is the next page to load
@@ -50,58 +54,17 @@ static NSString *const ACCESS_TOKEN = @"&access_token=220265065.5c873e0.81643230
     [self.view setNeedsUpdateConstraints];
 }
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    [self configureView];
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-- (void)loadView
-{
-    self.view = [[UIView alloc] init];
-    self.view.backgroundColor = [UIColor colorWithRed:206.0/255.0
-                                                green:206.0/255.0
-                                                 blue:206.0/255.0
-                                                alpha:1.0];
-    
-    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0.0, 0.0, 0.0, 0.0)
-                                                  style:UITableViewStylePlain];
-    
-    self.tableView.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
-    self.tableView.scrollEnabled = YES;
-    self.tableView.delegate = self;
-    self.tableView.dataSource = self;
-    
-    self.search = [[SearchBar alloc]
-                   initWithFrame:(CGRectMake(0, 0, [HelperModel screenWidth], 40.0))];
-    
-    [self.view addSubview:self.search];
-    self.search.delegate = self;
-    
-    [self.containerView addSubview:self.activityIndicator];
-    [self.containerView addSubview:self.tableView];
-    
-    [self.view addSubview:self.containerView];
-    
-    [self.view setNeedsUpdateConstraints];
-}
-
 - (void)configureView {
     
     self.title = @"Instagram";
     
-    [self.tableView registerClass:[PhotoTableViewCell class] forCellReuseIdentifier:CellIdentifier];
-    
-    self.tableView.estimatedRowHeight = UITableViewAutomaticDimension;
-    [self.tableView setAllowsMultipleSelection:NO];
+//    self.tableView.estimatedRowHeight = UITableViewAutomaticDimension;
+//    [self.tableView setAllowsMultipleSelection:NO];
     
     [self showActivityIndicator];
     [self loadFromInstagram: @""];
     
+    // Pull to refresh
     __weak typeof(self) weakSelf = self;
     // refresh new data when pull the table list
     [self.tableView addPullToRefreshWithActionHandler:^{
@@ -125,6 +88,94 @@ static NSString *const ACCESS_TOKEN = @"&access_token=220265065.5c873e0.81643230
     }];
 }
 
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    [self configureView];
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+- (void)loadView
+{
+    // Main view
+    self.view = [[UIView alloc] init];
+    self.view.backgroundColor = [UIColor colorWithRed:206.0/255.0
+                                                green:206.0/255.0
+                                                 blue:206.0/255.0
+                                                alpha:1.0];
+    
+    // Seach bar
+    self.search = [[SearchBar alloc]
+                   initWithFrame:(CGRectMake(0, 0, [HelperModel screenWidth], 40.0))];
+    self.search.delegate = self;
+    
+    // Adding search bar to main view
+    [self.view addSubview:self.search];
+    
+    // Auto complete table view
+//    self.autocompleteTableView = [[UITableView alloc] initWithFrame:CGRectMake(0.0, 0.0, 100.0, 100.0)
+//                                                              style:UITableViewStylePlain];
+    self.autocompleteTableView.hidden = NO;
+    self.autocompleteTableView.allowsSelection = NO;
+    self.autocompleteTableView.delegate = self;
+    self.autocompleteTableView.dataSource = self;
+    self.autocompleteTableView.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
+    self.autocompleteTableView.scrollEnabled = YES;
+    [self.autocompleteTableView registerClass:[UITableViewCell class]
+                       forCellReuseIdentifier:CellIdentifier];
+    
+    // Main table view
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0.0, 0.0, 0.0, 0.0)
+                                                  style:UITableViewStylePlain];
+    
+    self.tableView.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
+    self.tableView.scrollEnabled = YES;
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
+    [self.tableView registerClass:[PhotoTableViewCell class]
+           forCellReuseIdentifier:CellIdentifier];
+    
+    // Adding indicator and table views to container view
+    [self.containerView addSubview:self.activityIndicator];
+    [self.containerView addSubview:self.tableView];
+    [self.containerView addSubview:self.autocompleteTableView];
+    
+    // Adding container view to main view
+    [self.view addSubview:self.containerView];
+    
+    // update constraints
+    [self.view setNeedsUpdateConstraints];
+}
+
+- (void)updateViewConstraints
+{
+    if (!self.didSetupConstraints) {
+        
+        [self.search autoSetDimension:ALDimensionHeight toSize:50.0];
+        [self.search autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.navigationController.navigationBar];
+        [self.search autoPinEdgeToSuperviewEdge:ALEdgeLeft];
+        [self.search autoPinEdgeToSuperviewEdge:ALEdgeRight];
+        
+        [self.containerView autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.search];
+        [self.containerView autoPinEdge:ALEdgeBottom toEdge:ALEdgeBottom ofView:self.view];
+        [self.containerView autoPinEdgeToSuperviewEdge:ALEdgeLeft];
+        [self.containerView autoPinEdgeToSuperviewEdge:ALEdgeRight];
+        
+        [self.autocompleteTableView autoSetDimension:ALDimensionHeight toSize:150.0];
+        [self.autocompleteTableView autoPinEdgeToSuperviewEdge:ALEdgeTop];
+        [self.autocompleteTableView autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:10.0];
+        [self.autocompleteTableView autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:10.0];
+        
+        [self.activityIndicator autoCenterInSuperview];
+        
+        self.didSetupConstraints = YES;
+    }
+    [super updateViewConstraints];
+}
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -132,10 +183,21 @@ static NSString *const ACCESS_TOKEN = @"&access_token=220265065.5c873e0.81643230
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    if (tableView == self.autocompleteTableView) {
+        return 5;
+    }
     return [self.photoModels count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    if (tableView == self.autocompleteTableView) {
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+        cell.textLabel.text = [NSString stringWithFormat:@"%d", (int)indexPath.row];
+        cell.backgroundColor = [[UIColor clearColor] colorWithAlphaComponent:0.0];
+        cell.textLabel.font = [UIFont systemFontOfSize:20.0];
+        return cell;
+    }
     
     PhotoTableViewCell *cell = (PhotoTableViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
@@ -146,6 +208,9 @@ static NSString *const ACCESS_TOKEN = @"&access_token=220265065.5c873e0.81643230
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (tableView == self.autocompleteTableView) {
+        return 50.0;
+    }
     return [HelperModel screenHeight] - [HelperModel viewHeight:self.search] - [HelperModel viewHeight:self.navigationController.navigationBar] -20;
 }
 
@@ -162,27 +227,6 @@ static NSString *const ACCESS_TOKEN = @"&access_token=220265065.5c873e0.81643230
     [self.navigationController pushViewController:photoVC animated:YES];
 }
 
-- (void)updateViewConstraints
-{
-    if (!self.didSetupConstraints) {
-        
-        [self.search autoSetDimension:ALDimensionHeight toSize:50.0];
-        [self.search autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.navigationController.navigationBar];
-        [self.search autoPinEdgeToSuperviewEdge:ALEdgeLeft];
-        [self.search autoPinEdgeToSuperviewEdge:ALEdgeRight];
-
-        [self.containerView autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.search];
-        [self.containerView autoPinEdge:ALEdgeBottom toEdge:ALEdgeBottom ofView:self.view];
-        [self.containerView autoPinEdgeToSuperviewEdge:ALEdgeLeft];
-        [self.containerView autoPinEdgeToSuperviewEdge:ALEdgeRight];
-        
-        [self.activityIndicator autoCenterInSuperview];
-        
-        self.didSetupConstraints = YES;
-    }
-    [super updateViewConstraints];
-}
-
 #pragma mark - UISearchBar delegate
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
@@ -190,6 +234,7 @@ static NSString *const ACCESS_TOKEN = @"&access_token=220265065.5c873e0.81643230
     self.didNewSearch = YES;
     [self showActivityIndicator];
     
+    // Searching each tag
     NSArray *tags = [self splitTags:self.search.text];
     for (NSString *tag in tags) {
         [self loadFromInstagram:tag];
@@ -222,6 +267,16 @@ static NSString *const ACCESS_TOKEN = @"&access_token=220265065.5c873e0.81643230
     }
     return _photoModels;
 }
+
+- (UITableView *)autocompleteTableView {
+    if (!_autocompleteTableView) {
+        _autocompleteTableView = [UITableView newAutoLayoutView];
+        _autocompleteTableView.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.8];
+    }
+    return _autocompleteTableView;
+}
+
+#pragma mark - Autocomplete table view
 
 #pragma mark - Helper Methods
 
@@ -278,7 +333,6 @@ static NSString *const ACCESS_TOKEN = @"&access_token=220265065.5c873e0.81643230
 
 - (void)loadFromInstagram:(NSString *)tag {
     
-    //NSString *tag = ([self.search.text isEqualToString:@""]) ? (@"instagram") : self.search.text;
     if ([tag isEqualToString:@""]) tag = @"instagram";
     NSString *requestURL = [NSString stringWithFormat:@"%@%@%@%@%@", URL_BEGIN, tag, URL_END, COUNT, ACCESS_TOKEN ];
 
@@ -297,6 +351,7 @@ static NSString *const ACCESS_TOKEN = @"&access_token=220265065.5c873e0.81643230
                  return;
              }
              
+             // if seach is made from seach bar
              if (self.didNewSearch) {
                  [self.photoModels removeAllObjects];
                  self.didNewSearch = NO;
@@ -324,7 +379,7 @@ static NSString *const ACCESS_TOKEN = @"&access_token=220265065.5c873e0.81643230
              id responseObject = operation.responseObject;
              NSDictionary *dic = (NSDictionary *)responseObject;
              NSArray *meta = [dic objectForKey:@"meta"];
-             [self showAlert:@"Error" forMessage:[NSString stringWithFormat:@"%@ try to search different tags.", [(NSDictionary *)meta objectForKey:@"error_message" ]]];
+             [self showAlert:[NSString stringWithFormat:@"Error with tag: %@", tag] forMessage:[NSString stringWithFormat:@"%@ try to search different tags.", [(NSDictionary *)meta objectForKey:@"error_message"]]];
              [self hideActivityIndicator];
          }];
 }
