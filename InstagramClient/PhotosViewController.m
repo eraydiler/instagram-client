@@ -107,36 +107,8 @@ static NSString *const ACCESS_TOKEN = @"&access_token=220265065.5c873e0.81643230
                                                  blue:206.0/255.0
                                                 alpha:1.0];
     
-    // Seach bar
-    self.search = [[SearchBar alloc]
-                   initWithFrame:(CGRectMake(0, 0, [HelperModel screenWidth], 40.0))];
-    self.search.delegate = self;
-    
     // Adding search bar to main view
     [self.view addSubview:self.search];
-    
-    // Auto complete table view
-//    self.autocompleteTableView = [[UITableView alloc] initWithFrame:CGRectMake(0.0, 0.0, 100.0, 100.0)
-//                                                              style:UITableViewStylePlain];
-    self.autocompleteTableView.hidden = NO;
-    self.autocompleteTableView.allowsSelection = NO;
-    self.autocompleteTableView.delegate = self;
-    self.autocompleteTableView.dataSource = self;
-    self.autocompleteTableView.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
-    self.autocompleteTableView.scrollEnabled = YES;
-    [self.autocompleteTableView registerClass:[UITableViewCell class]
-                       forCellReuseIdentifier:CellIdentifier];
-    
-    // Main table view
-    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0.0, 0.0, 0.0, 0.0)
-                                                  style:UITableViewStylePlain];
-    
-    self.tableView.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
-    self.tableView.scrollEnabled = YES;
-    self.tableView.delegate = self;
-    self.tableView.dataSource = self;
-    [self.tableView registerClass:[PhotoTableViewCell class]
-           forCellReuseIdentifier:CellIdentifier];
     
     // Adding indicator and table views to container view
     [self.containerView addSubview:self.activityIndicator];
@@ -268,10 +240,39 @@ static NSString *const ACCESS_TOKEN = @"&access_token=220265065.5c873e0.81643230
     return _photoModels;
 }
 
+- (UISearchBar *)search {
+    if (!_search) {
+        _search = [SearchBar newAutoLayoutView];
+        _search.delegate = self;
+    }
+    return _search;
+}
+
+- (UITableView *)tableView {
+    if (!_tableView) {
+        _tableView = [UITableView newAutoLayoutView];
+        _tableView.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
+        _tableView.scrollEnabled = YES;
+        _tableView.delegate = self;
+        _tableView.dataSource = self;
+        [_tableView registerClass:[PhotoTableViewCell class]
+               forCellReuseIdentifier:CellIdentifier];
+    }
+    return _tableView;
+}
+
 - (UITableView *)autocompleteTableView {
     if (!_autocompleteTableView) {
         _autocompleteTableView = [UITableView newAutoLayoutView];
         _autocompleteTableView.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.8];
+        _autocompleteTableView.hidden = NO;
+        _autocompleteTableView.allowsSelection = NO;
+        _autocompleteTableView.delegate = self;
+        _autocompleteTableView.dataSource = self;
+        _autocompleteTableView.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
+        _autocompleteTableView.scrollEnabled = YES;
+        [_autocompleteTableView registerClass:[UITableViewCell class]
+                           forCellReuseIdentifier:CellIdentifier];
     }
     return _autocompleteTableView;
 }
