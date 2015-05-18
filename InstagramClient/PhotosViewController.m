@@ -25,7 +25,7 @@ static NSString *const URL_END = @"/media/recent?";
 static NSString *const COUNT = @"&count=20";
 static NSString *const ACCESS_TOKEN = @"&access_token=220265065.5c873e0.81643230ea8a479e9e1355d49529903a";
 
-@interface PhotosViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate>
+@interface PhotosViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UITextFieldDelegate>
 
 @property (nonatomic) BOOL didSetupConstraints;
 @property (nonatomic) BOOL didSetupView;
@@ -39,6 +39,7 @@ static NSString *const ACCESS_TOKEN = @"&access_token=220265065.5c873e0.81643230
 // auto-complete
 @property (nonatomic, strong) NSMutableArray *autocompleteTags;
 @property (nonatomic, strong) UITableView *autocompleteTableView;
+@property (nonatomic, strong) NSMutableArray *pastTags;
 
 @property(nonatomic, strong) NSMutableArray *photoModels;
 
@@ -86,6 +87,9 @@ static NSString *const ACCESS_TOKEN = @"&access_token=220265065.5c873e0.81643230
             [weakSelf loadFromInstagram:tag];
         }
     }];
+    
+    UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(addTapGesture:)];
+    [self.navigationController.navigationBar addGestureRecognizer:tapRecognizer];
 }
 
 - (void)viewDidLoad {
@@ -137,7 +141,7 @@ static NSString *const ACCESS_TOKEN = @"&access_token=220265065.5c873e0.81643230
         [self.containerView autoPinEdgeToSuperviewEdge:ALEdgeRight];
         
         [self.autocompleteTableView autoSetDimension:ALDimensionHeight toSize:150.0];
-        [self.autocompleteTableView autoPinEdgeToSuperviewEdge:ALEdgeTop];
+        [self.autocompleteTableView autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:-10];
         [self.autocompleteTableView autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:10.0];
         [self.autocompleteTableView autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:10.0];
         
@@ -156,7 +160,7 @@ static NSString *const ACCESS_TOKEN = @"&access_token=220265065.5c873e0.81643230
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (tableView == self.autocompleteTableView) {
-        return 5;
+        return [self.autocompleteTags count];
     }
     return [self.photoModels count];
 }
@@ -165,7 +169,7 @@ static NSString *const ACCESS_TOKEN = @"&access_token=220265065.5c873e0.81643230
     
     if (tableView == self.autocompleteTableView) {
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-        cell.textLabel.text = [NSString stringWithFormat:@"%d", (int)indexPath.row];
+        cell.textLabel.text = [self.autocompleteTags objectAtIndex:indexPath.row];
         cell.backgroundColor = [[UIColor clearColor] colorWithAlphaComponent:0.0];
         cell.textLabel.font = [UIFont systemFontOfSize:20.0];
         return cell;
@@ -204,7 +208,13 @@ static NSString *const ACCESS_TOKEN = @"&access_token=220265065.5c873e0.81643230
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
     
     self.didNewSearch = YES;
+    self.autocompleteTableView.hidden = YES;
     [self showActivityIndicator];
+    
+    // Add tags to the list of entered tags if they are not already there
+    if (![self.pastUrls containsObject:searchBar.text]) {
+        [self.pastUrls addObject:searchBar.text];
+    }
     
     // Searching each tag
     NSArray *tags = [self splitTags:self.search.text];
@@ -213,6 +223,33 @@ static NSString *const ACCESS_TOKEN = @"&access_token=220265065.5c873e0.81643230
     }
     
     [searchBar resignFirstResponder];
+}
+
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
+{
+    // fired whenever the text is changed, or clear tapped
+    if (searchText.length == 0) {
+        // Do something
+        NSLog(@"Clear clicked");
+    }
+}
+
+#pragma mark - UITextField delegate
+
+// Handling search bar clear button
+- (BOOL)textFieldShouldClear:(UITextField *)textField {
+    self.autocompleteTableView.hidden = YES;
+    return YES;
+}
+
+- (BOOL)searchBar:(UISearchBar *)searchBar shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
+    if (self.autocompleteTags.count > 0) {
+        self.autocompleteTableView.hidden = NO;
+    }
+    NSString *substring = [NSString stringWithString:searchBar.text];
+    substring = [substring stringByReplacingCharactersInRange:range withString:text];
+    [self searchAutocompleteEntriesWithSubstring:substring];
+    return YES;
 }
 
 #pragma mark - Lazy Instantiations
@@ -265,16 +302,32 @@ static NSString *const ACCESS_TOKEN = @"&access_token=220265065.5c873e0.81643230
     if (!_autocompleteTableView) {
         _autocompleteTableView = [UITableView newAutoLayoutView];
         _autocompleteTableView.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.8];
-        _autocompleteTableView.hidden = NO;
+        _autocompleteTableView.hidden = YES;
         _autocompleteTableView.allowsSelection = NO;
         _autocompleteTableView.delegate = self;
         _autocompleteTableView.dataSource = self;
         _autocompleteTableView.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
         _autocompleteTableView.scrollEnabled = YES;
+        _autocompleteTableView.layer.cornerRadius = 10;
+        _autocompleteTableView.layer.masksToBounds = YES;
         [_autocompleteTableView registerClass:[UITableViewCell class]
                            forCellReuseIdentifier:CellIdentifier];
     }
     return _autocompleteTableView;
+}
+
+- (NSMutableArray *)autocompleteTags {
+    if (!_autocompleteTags) {
+        _autocompleteTags = [[NSMutableArray alloc] init];
+    }
+    return _autocompleteTags;
+}
+
+- (NSMutableArray *)pastUrls {
+    if (!_pastTags) {
+        _pastTags = [[NSMutableArray alloc] init];
+    }
+    return _pastTags;
 }
 
 #pragma mark - Autocomplete table view
@@ -411,6 +464,24 @@ static NSString *const ACCESS_TOKEN = @"&access_token=220265065.5c873e0.81643230
         int n = (int)((arc4random() % nElements) + i);
         [self.photoModels exchangeObjectAtIndex:i withObjectAtIndex:n];
     }
+}
+
+- (void)searchAutocompleteEntriesWithSubstring:(NSString *)substring {
+    
+    // Put anything that starts with this substring into the autocompleteUrls array
+    // The items in this array is what will show up in the table view
+    [self.autocompleteTags removeAllObjects];
+    for(NSString *curString in self.pastUrls) {
+        NSRange substringRange = [curString rangeOfString:substring];
+        if (substringRange.location == 0) {
+            [self.autocompleteTags addObject:curString];
+        }
+    }
+    [self.autocompleteTableView reloadData];
+}
+
+- (void)addTapGesture:(UITapGestureRecognizer *)recognizer {
+    [self.search resignFirstResponder];
 }
 
 @end
