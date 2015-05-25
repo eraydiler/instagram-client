@@ -64,7 +64,8 @@
         [self.namelabel autoPinEdge:ALEdgeTop toEdge:ALEdgeTop ofView:self.containerView];
         [self.namelabel autoPinEdge:ALEdgeBottom toEdge:ALEdgeBottom ofView:self.containerView];
         [self.namelabel autoPinEdge:ALEdgeLeft toEdge:ALEdgeRight ofView:self.profilePicture withOffset:5.0];
-        [self.namelabel autoSetDimension:ALDimensionWidth toSize:CGRectGetWidth(self.bounds)];
+//        [self.namelabel autoSetDimension:ALDimensionWidth toSize:CGRectGetWidth(self.bounds)];
+        [self.namelabel autoPinEdge:ALEdgeRight toEdge:ALEdgeLeft ofView:self.dateLabel];
 
 //        [self.photo autoSetDimension:ALDimensionHeight toSize:60.0 ];
         [self.photoView autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.containerView];

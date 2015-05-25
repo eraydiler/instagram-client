@@ -23,6 +23,8 @@
 		2A8D51C11B03E221001C7130 /* SearchBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A8D51C01B03E221001C7130 /* SearchBar.m */; };
 		2A905B201B07D8F100C3890E /* UIScrollView+SVInfiniteScrolling.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A905B1D1B07D8F100C3890E /* UIScrollView+SVInfiniteScrolling.m */; };
 		2A905B211B07D8F100C3890E /* UIScrollView+SVPullToRefresh.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A905B1F1B07D8F100C3890E /* UIScrollView+SVPullToRefresh.m */; };
+		2AD8BA0B1B0CEB0600CE49DA /* DetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2AD8BA0A1B0CEB0600CE49DA /* DetailsViewController.m */; };
+		2AD8BA111B0D5CCE00CE49DA /* heart.png in Resources */ = {isa = PBXBuildFile; fileRef = 2AD8BA101B0D5CCE00CE49DA /* heart.png */; };
 		2AFCB55C1AFB7EA400E45E2B /* PhotosViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2AFCB55B1AFB7EA400E45E2B /* PhotosViewController.m */; };
 		2AFCB55E1AFBD62C00E45E2B /* placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 2AFCB55D1AFBD62C00E45E2B /* placeholder.png */; };
 		2AFCB5781AFC088500E45E2B /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 2AFCB5661AFC088500E45E2B /* AFHTTPRequestOperation.m */; };
@@ -91,6 +93,9 @@
 		2A905B1D1B07D8F100C3890E /* UIScrollView+SVInfiniteScrolling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+SVInfiniteScrolling.m"; sourceTree = "<group>"; };
 		2A905B1E1B07D8F100C3890E /* UIScrollView+SVPullToRefresh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+SVPullToRefresh.h"; sourceTree = "<group>"; };
 		2A905B1F1B07D8F100C3890E /* UIScrollView+SVPullToRefresh.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+SVPullToRefresh.m"; sourceTree = "<group>"; };
+		2AD8BA091B0CEB0600CE49DA /* DetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailsViewController.h; sourceTree = "<group>"; };
+		2AD8BA0A1B0CEB0600CE49DA /* DetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailsViewController.m; sourceTree = "<group>"; };
+		2AD8BA101B0D5CCE00CE49DA /* heart.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = heart.png; sourceTree = "<group>"; };
 		2AFCB55A1AFB7EA400E45E2B /* PhotosViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotosViewController.h; sourceTree = "<group>"; };
 		2AFCB55B1AFB7EA400E45E2B /* PhotosViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotosViewController.m; sourceTree = "<group>"; };
 		2AFCB55D1AFBD62C00E45E2B /* placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = placeholder.png; sourceTree = "<group>"; };
@@ -188,6 +193,7 @@
 		2A0CC9E31AFAA03300FA46BC /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				2AD8BA101B0D5CCE00CE49DA /* heart.png */,
 				2AFCB55D1AFBD62C00E45E2B /* placeholder.png */,
 				2A0CC9E41AFAA03300FA46BC /* Info.plist */,
 				2A0CC9E51AFAA03300FA46BC /* main.m */,
@@ -256,6 +262,8 @@
 			children = (
 				2AFCB55A1AFB7EA400E45E2B /* PhotosViewController.h */,
 				2AFCB55B1AFB7EA400E45E2B /* PhotosViewController.m */,
+				2AD8BA091B0CEB0600CE49DA /* DetailsViewController.h */,
+				2AD8BA0A1B0CEB0600CE49DA /* DetailsViewController.m */,
 				2A79CBE31B055447004B7214 /* PhotoDetailViewController.h */,
 				2A79CBE41B055447004B7214 /* PhotoDetailViewController.m */,
 			);
@@ -417,6 +425,7 @@
 			files = (
 				2A0CC9EF1AFAA03300FA46BC /* Main.storyboard in Resources */,
 				2A0CC9F41AFAA03300FA46BC /* LaunchScreen.xib in Resources */,
+				2AD8BA111B0D5CCE00CE49DA /* heart.png in Resources */,
 				2AFCB55E1AFBD62C00E45E2B /* placeholder.png in Resources */,
 				2A0CC9F11AFAA03300FA46BC /* Images.xcassets in Resources */,
 			);
@@ -448,6 +457,7 @@
 				2AFCB5941AFC089D00E45E2B /* UIAlertView+AFNetworking.m in Sources */,
 				2A8D51C11B03E221001C7130 /* SearchBar.m in Sources */,
 				2AFCB5791AFC088500E45E2B /* AFHTTPRequestOperationManager.m in Sources */,
+				2AD8BA0B1B0CEB0600CE49DA /* DetailsViewController.m in Sources */,
 				2A0CCA241AFAC9EB00FA46BC /* PhotoModel.m in Sources */,
 				2AFCB55C1AFB7EA400E45E2B /* PhotosViewController.m in Sources */,
 				2A905B211B07D8F100C3890E /* UIScrollView+SVPullToRefresh.m in Sources */,

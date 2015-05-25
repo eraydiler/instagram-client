@@ -11,9 +11,15 @@
 @interface PhotoModel : NSObject
 
 @property(nonatomic, strong) NSURL *profilePictureURL;
+@property(nonatomic, strong) NSString *fullName;
 @property(nonatomic, strong) NSString *userName;
 @property(nonatomic, strong) NSDate *date;
 @property(nonatomic, strong) NSURL *photoURL;
+
+@property(nonatomic, strong) NSString *text;
+@property(nonatomic, strong) NSArray *tags;
+@property(nonatomic, strong) NSArray *comments;
+@property(nonatomic) int numbersOfLikes;
 
 + (PhotoModel *)getPhotoModels:(NSDictionary *)dic;
 

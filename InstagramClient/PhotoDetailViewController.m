@@ -11,9 +11,11 @@
 #import "HelperModel.h"
 
 @interface PhotoDetailViewController () <UIScrollViewDelegate>
+
 @property (nonatomic, assign) BOOL didSetupConstraints;
 @property (nonatomic, strong) UIScrollView *scrollView;
 @property (nonatomic, strong) UIImageView *photoView;
+
 @end
 
 @implementation PhotoDetailViewController
@@ -83,7 +85,7 @@
 - (UIScrollView *)scrollView {
     if (!_scrollView) {
         _scrollView = [UIScrollView newAutoLayoutView];
-        _scrollView.backgroundColor = [UIColor redColor];
+//        _scrollView.backgroundColor = [UIColor redColor];
         _scrollView.maximumZoomScale = 2.0;
         _scrollView.minimumZoomScale = 0.5;
     }

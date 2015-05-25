@@ -18,7 +18,8 @@
     // Get user
     NSDictionary *user = [dic objectForKey:@"user"];
     NSString *profilePicture = [user objectForKey:@"profile_picture"];
-    photoModel.userName = [user objectForKey:@"full_name"];
+    photoModel.fullName = [user objectForKey:@"full_name"];
+    photoModel.userName = [user objectForKey:@"username"];
     
     // Get profile picture
     photoModel.profilePictureURL = [NSURL URLWithString:profilePicture];
@@ -34,6 +35,21 @@
     NSTimeInterval interval = [createdTime doubleValue];;
     NSDate *date = [NSDate dateWithTimeIntervalSince1970: interval];
     photoModel.date = date;
+    
+    // Get text
+    NSDictionary *caption = [dic objectForKey:@"caption"];
+    photoModel.text = [caption objectForKey:@"text"];    
+    
+    // Get tags
+    photoModel.tags = [dic objectForKey:@"tags"];
+    
+    // Get comments
+    NSDictionary *comments = [dic objectForKey:@"comments"];
+    photoModel.comments = [comments objectForKey:@"data"];
+    
+    // Get number of likes
+    NSDictionary *likes = [dic objectForKey:@"likes"];
+    photoModel.numbersOfLikes = (int)[likes objectForKey:@"count"];
     
     return photoModel;
 }

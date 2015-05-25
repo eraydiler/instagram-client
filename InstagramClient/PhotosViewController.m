@@ -12,7 +12,7 @@
 #import "AFNetworking.h"
 #import "PhotoModel.h"
 #import "UIImageView+AFNetworking.h"
-#import "PhotoDetailViewController.h"
+#import "DetailsViewController.h"
 #import "HelperModel.h"
 #import "SVPullToRefresh.h"
 
@@ -40,6 +40,7 @@ static NSString *const ACCESS_TOKEN = @"&access_token=220265065.5c873e0.81643230
 @property (nonatomic, strong) NSMutableArray *autocompleteTags;
 @property (nonatomic, strong) UITableView *autocompleteTableView;
 @property (nonatomic, strong) NSMutableArray *pastTags;
+@property (nonatomic, strong) NSString *searchText;
 
 @property(nonatomic, strong) NSMutableArray *photoModels;
 
@@ -58,9 +59,6 @@ static NSString *const ACCESS_TOKEN = @"&access_token=220265065.5c873e0.81643230
 - (void)configureView {
     
     self.title = @"Instagram";
-    
-//    self.tableView.estimatedRowHeight = UITableViewAutomaticDimension;
-//    [self.tableView setAllowsMultipleSelection:NO];
     
     [self showActivityIndicator];
     [self loadFromInstagram: @""];
@@ -90,6 +88,15 @@ static NSString *const ACCESS_TOKEN = @"&access_token=220265065.5c873e0.81643230
     
     UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(addTapGesture:)];
     [self.navigationController.navigationBar addGestureRecognizer:tapRecognizer];
+    
+    // This prevents navigation bar from clicking issues.
+    [tapRecognizer setCancelsTouchesInView:NO];
+    
+    // testing
+//    [self.navigationController.navigationBar setBackgroundImage:[[UIImage alloc] init]
+//                                                  forBarMetrics:UIBarMetricsDefault];
+//    self.navigationController.navigationBar.shadowImage = [[UIImage alloc] init];
+//    self.navigationController.navigationBar.translucent = YES;
 }
 
 - (void)viewDidLoad {
@@ -187,20 +194,27 @@ static NSString *const ACCESS_TOKEN = @"&access_token=220265065.5c873e0.81643230
     if (tableView == self.autocompleteTableView) {
         return 50.0;
     }
+    NSLog(@"%f, %f, %f", [HelperModel screenHeight], [HelperModel viewHeight:self.search], [HelperModel viewHeight:self.navigationController.navigationBar]);
     return [HelperModel screenHeight] - [HelperModel viewHeight:self.search] - [HelperModel viewHeight:self.navigationController.navigationBar] -20;
 }
 
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"%li", (long)indexPath.row);
     
     PhotoTableViewCell *selectedCell = (PhotoTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
+    UIImage *profilePhoto = selectedCell.profilePicture.image;
     UIImage *photo = selectedCell.photoView.image;
     
-    PhotoDetailViewController *photoVC = [[PhotoDetailViewController alloc] init];
-    photoVC.photo = photo;
-    [self.navigationController pushViewController:photoVC animated:YES];
+    DetailsViewController *detailsVC = [[DetailsViewController alloc] init];
+    detailsVC.profilePhoto = profilePhoto;
+    detailsVC.photo = photo;
+    
+    PhotoModel *selectedModel = self.photoModels[indexPath.row];
+    detailsVC.photoModel = selectedModel;
+    
+    // Go to details view controller
+    [self.navigationController pushViewController:detailsVC animated:YES];
 }
 
 #pragma mark - UISearchBar delegate
@@ -227,11 +241,14 @@ static NSString *const ACCESS_TOKEN = @"&access_token=220265065.5c873e0.81643230
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
 {
-    // fired whenever the text is changed, or clear tapped
-    if (searchText.length == 0) {
-        // Do something
-        NSLog(@"Clear clicked");
+    if ([searchText isEqualToString:@""]) {
+        self.autocompleteTableView.hidden = YES;
     }
+//    if (![searchText isEqualToString:self.searchText]) {
+//        self.searchText = searchText;
+//        return;
+//    }
+//    NSLog(@"Clear clicked");
 }
 
 #pragma mark - UITextField delegate
@@ -243,12 +260,15 @@ static NSString *const ACCESS_TOKEN = @"&access_token=220265065.5c873e0.81643230
 }
 
 - (BOOL)searchBar:(UISearchBar *)searchBar shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
+    
     if (self.autocompleteTags.count > 0) {
         self.autocompleteTableView.hidden = NO;
     }
+    
     NSString *substring = [NSString stringWithString:searchBar.text];
     substring = [substring stringByReplacingCharactersInRange:range withString:text];
     [self searchAutocompleteEntriesWithSubstring:substring];
+    
     return YES;
 }
 
@@ -330,7 +350,12 @@ static NSString *const ACCESS_TOKEN = @"&access_token=220265065.5c873e0.81643230
     return _pastTags;
 }
 
-#pragma mark - Autocomplete table view
+- (NSString *)searchText {
+    if (!_searchText) {
+        _searchText = [[NSString alloc] init];
+    }
+    return _searchText;
+}
 
 #pragma mark - Helper Methods
 
@@ -346,7 +371,9 @@ static NSString *const ACCESS_TOKEN = @"&access_token=220265065.5c873e0.81643230
     PhotoModel *photoModel = self.photoModels[indexPath.row];
     
     // Get user name
-    cell.namelabel.text = photoModel.userName;
+    if ([photoModel.fullName isEqualToString:@""]) {
+        cell.namelabel.text = photoModel.userName;
+    } else cell.namelabel.text = photoModel.fullName;
     
     // Get date
     cell.dateLabel.text = [self stringFromDate:photoModel.date];
