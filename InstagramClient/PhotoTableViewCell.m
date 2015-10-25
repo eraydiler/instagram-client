@@ -27,7 +27,6 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     
     if (self) {
-        
         [self.contentView addSubview:self.containerView];
         [self.contentView addSubview:self.profilePicture];
         [self.contentView addSubview:self.namelabel];
@@ -38,6 +37,7 @@
         
         [self setNeedsUpdateConstraints];
     }
+    
     return self;
 }
 
@@ -54,6 +54,7 @@
         [self.profilePicture autoPinEdge:ALEdgeLeft toEdge:ALEdgeLeft ofView:self.containerView withOffset:5.0];
         [self.profilePicture autoPinEdge:ALEdgeTop toEdge:ALEdgeTop ofView:self.containerView withOffset:5.0];
         [self.profilePicture autoPinEdge:ALEdgeBottom toEdge:ALEdgeBottom ofView:self.containerView withOffset:-5.0];
+        
         [self makeProfileImageCircular];
 
         [self.dateLabel autoSetDimension:ALDimensionWidth toSize:100.0];
@@ -64,10 +65,8 @@
         [self.namelabel autoPinEdge:ALEdgeTop toEdge:ALEdgeTop ofView:self.containerView];
         [self.namelabel autoPinEdge:ALEdgeBottom toEdge:ALEdgeBottom ofView:self.containerView];
         [self.namelabel autoPinEdge:ALEdgeLeft toEdge:ALEdgeRight ofView:self.profilePicture withOffset:5.0];
-//        [self.namelabel autoSetDimension:ALDimensionWidth toSize:CGRectGetWidth(self.bounds)];
         [self.namelabel autoPinEdge:ALEdgeRight toEdge:ALEdgeLeft ofView:self.dateLabel];
 
-//        [self.photo autoSetDimension:ALDimensionHeight toSize:60.0 ];
         [self.photoView autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.containerView];
         [self.photoView autoPinEdgeToSuperviewEdge:ALEdgeBottom];
         [self.photoView autoPinEdgeToSuperviewEdge:ALEdgeLeft];
@@ -75,7 +74,15 @@
         
         self.didSetupConstraints = YES;
     }
+    
     [super updateConstraints];
+}
+
+- (void)prepareForReuse {
+    [_profilePicture setImage:nil];
+    [_namelabel setText:nil];
+    [_dateLabel setText:nil];
+    [_photoView setImage:nil];
 }
 
 #pragma mark - instantiations
@@ -86,6 +93,7 @@
         _profilePicture.backgroundColor = [UIColor redColor];
         _profilePicture.image = [UIImage imageNamed:@"placeholder.png"];
     }
+    
     return _profilePicture;
 }
 
@@ -95,6 +103,7 @@
         _namelabel.backgroundColor = [UIColor clearColor];
         _namelabel.text = @"Mister Tester";
     }
+    
     return _namelabel;
 }
 
@@ -105,6 +114,7 @@
         _dateLabel.font = [UIFont systemFontOfSize:12.0];
         _dateLabel.text = @"2 hours ago";
     }
+    
     return _dateLabel;
 }
 
@@ -114,6 +124,7 @@
         _photoView.backgroundColor = [UIColor grayColor];
         _photoView.image = [UIImage imageNamed:@"placeholder.png"];
     }
+    
     return _photoView;
 }
 
@@ -122,6 +133,7 @@
         _containerView = [UIView newAutoLayoutView];
         _containerView.backgroundColor = [UIColor colorWithRed:237.0/255.0 green:237.0/255.0 blue:237.0/255.0 alpha:1.0];
     }
+    
     return _containerView;
 }
 
