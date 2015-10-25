@@ -6,13 +6,13 @@
 //  Copyright (c) 2015 Eray. All rights reserved.
 //
 
-#import "PhotoTableViewCell.h"
+#import "INSPhotoTableViewCell.h"
 
-@interface PhotoTableViewCell()
+@interface INSPhotoTableViewCell()
 @property (nonatomic, assign) BOOL didSetupConstraints;
 @end
 
-@implementation PhotoTableViewCell
+@implementation INSPhotoTableViewCell
 
 - (void)awakeFromNib {
     // Initialization code

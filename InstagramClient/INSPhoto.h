@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface PhotoModel : NSObject
+@interface INSPhoto : NSObject
 
 @property(nonatomic, strong) NSURL *profilePictureURL;
 @property(nonatomic, strong) NSString *fullName;
@@ -21,6 +21,6 @@
 @property(nonatomic, strong) NSArray *comments;
 @property(nonatomic) int numbersOfLikes;
 
-+ (PhotoModel *)getPhotoModels:(NSDictionary *)dic;
++ (INSPhoto *)getPhotoModel:(NSDictionary *)dic;
 
 @end

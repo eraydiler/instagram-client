@@ -6,14 +6,14 @@
 //  Copyright (c) 2015 Eray. All rights reserved.
 //
 
-#import "PhotoModel.h"
+#import "INSPhoto.h"
 #import "UIImageView+AFNetworking.h"
 
-@implementation PhotoModel
+@implementation INSPhoto
 
-+ (PhotoModel *)getPhotoModels:(NSDictionary *)dic {
++ (INSPhoto *)getPhotoModel:(NSDictionary *)dic {
     
-    PhotoModel *photoModel = [[PhotoModel alloc] init];
+    INSPhoto *photoModel = [[INSPhoto alloc] init];
     
     // Get user
     NSDictionary *user = [dic objectForKey:@"user"];

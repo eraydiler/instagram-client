@@ -7,7 +7,7 @@
 //
 
 #import "DetailsViewController.h"
-#import "PhotoModel.h"
+#import "INSPhoto.h"
 #import "PhotoDetailViewController.h"
 #import "HelperModel.h"
 

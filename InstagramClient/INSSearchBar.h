@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 IB_DESIGNABLE
-@interface SearchBar : UISearchBar
+@interface INSSearchBar : UISearchBar
 @end

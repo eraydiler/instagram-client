@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 IB_DESIGNABLE
-@interface PhotoTableViewCell : UITableViewCell
+@interface INSPhotoTableViewCell : UITableViewCell
 
 @property(nonatomic) IBInspectable UIView *containerView;
 @property(nonatomic) IBInspectable UIImageView *profilePicture;

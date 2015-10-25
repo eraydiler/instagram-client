@@ -7,10 +7,10 @@
 //
 
 #import "PhotosViewController.h"
-#import "PhotoTableViewCell.h"
-#import "SearchBar.h"
+#import "INSPhotoTableViewCell.h"
+#import "INSSearchBar.h"
 #import "AFNetworking.h"
-#import "PhotoModel.h"
+#import "INSPhoto.h"
 #import "UIImageView+AFNetworking.h"
 #import "DetailsViewController.h"
 #import "HelperModel.h"
@@ -182,7 +182,7 @@ static NSString *const ACCESS_TOKEN = @"&access_token=220265065.5c873e0.81643230
         return cell;
     }
     
-    PhotoTableViewCell *cell = (PhotoTableViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    INSPhotoTableViewCell *cell = (INSPhotoTableViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
     // Configure the cell...
     [self configureCell:cell atIndexPath:indexPath];
@@ -202,7 +202,7 @@ static NSString *const ACCESS_TOKEN = @"&access_token=220265065.5c873e0.81643230
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    PhotoTableViewCell *selectedCell = (PhotoTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
+    INSPhotoTableViewCell *selectedCell = (INSPhotoTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
     UIImage *profilePhoto = selectedCell.profilePicture.image;
     UIImage *photo = selectedCell.photoView.image;
     
@@ -210,7 +210,7 @@ static NSString *const ACCESS_TOKEN = @"&access_token=220265065.5c873e0.81643230
     detailsVC.profilePhoto = profilePhoto;
     detailsVC.photo = photo;
     
-    PhotoModel *selectedModel = self.photoModels[indexPath.row];
+    INSPhoto *selectedModel = self.photoModels[indexPath.row];
     detailsVC.photoModel = selectedModel;
     
     // Go to details view controller
@@ -299,7 +299,7 @@ static NSString *const ACCESS_TOKEN = @"&access_token=220265065.5c873e0.81643230
 
 - (UISearchBar *)search {
     if (!_search) {
-        _search = [SearchBar newAutoLayoutView];
+        _search = [INSSearchBar newAutoLayoutView];
         _search.delegate = self;
     }
     return _search;
@@ -312,7 +312,7 @@ static NSString *const ACCESS_TOKEN = @"&access_token=220265065.5c873e0.81643230
         _tableView.scrollEnabled = YES;
         _tableView.delegate = self;
         _tableView.dataSource = self;
-        [_tableView registerClass:[PhotoTableViewCell class]
+        [_tableView registerClass:[INSPhotoTableViewCell class]
                forCellReuseIdentifier:CellIdentifier];
     }
     return _tableView;
@@ -359,16 +359,16 @@ static NSString *const ACCESS_TOKEN = @"&access_token=220265065.5c873e0.81643230
 
 #pragma mark - Helper Methods
 
-- (void)configureCell:(PhotoTableViewCell *)cell
+- (void)configureCell:(INSPhotoTableViewCell *)cell
           atIndexPath:(NSIndexPath *)indexPath {
     
     // configure photo cell
     if (cell == nil) {
-        cell = [[PhotoTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
+        cell = [[INSPhotoTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
                                          reuseIdentifier:CellIdentifier];
     }
     
-    PhotoModel *photoModel = self.photoModels[indexPath.row];
+    INSPhoto *photoModel = self.photoModels[indexPath.row];
     
     // Get user name
     if ([photoModel.fullName isEqualToString:@""]) {
@@ -381,7 +381,7 @@ static NSString *const ACCESS_TOKEN = @"&access_token=220265065.5c873e0.81643230
     // Get profile picture
     NSURLRequest *request = [NSURLRequest requestWithURL:photoModel.profilePictureURL];
     UIImage *placeholderImage = [UIImage imageNamed:@"placeholder"];
-    __weak PhotoTableViewCell *weakCell = cell;
+    __weak INSPhotoTableViewCell *weakCell = cell;
     [cell.profilePicture setImageWithURLRequest:request
                                placeholderImage:placeholderImage
                                         success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
@@ -428,7 +428,9 @@ static NSString *const ACCESS_TOKEN = @"&access_token=220265065.5c873e0.81643230
              if (data.count == 0) {
                  [self showAlert:@"Warning"
                       forMessage:@"No result found please make another search please"];
+                 
                  self.activityIndicator.hidden = YES;
+                 
                  return;
              }
              
@@ -441,7 +443,7 @@ static NSString *const ACCESS_TOKEN = @"&access_token=220265065.5c873e0.81643230
              }
              
              for (NSDictionary *dic in data) {
-                 [self.photoModels addObject:[PhotoModel getPhotoModels:dic]];
+                 [self.photoModels addObject:[INSPhoto getPhotoModel:dic]];
              }
              
              // Shuffle photo models array

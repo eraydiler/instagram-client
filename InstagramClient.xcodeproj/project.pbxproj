@@ -16,11 +16,11 @@
 		2A0CCA141AFAA72A00FA46BC /* ALView+PureLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A0CCA0C1AFAA72A00FA46BC /* ALView+PureLayout.m */; };
 		2A0CCA151AFAA72A00FA46BC /* NSArray+PureLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A0CCA0E1AFAA72A00FA46BC /* NSArray+PureLayout.m */; };
 		2A0CCA161AFAA72A00FA46BC /* NSLayoutConstraint+PureLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A0CCA101AFAA72A00FA46BC /* NSLayoutConstraint+PureLayout.m */; };
-		2A0CCA1D1AFABD7F00FA46BC /* PhotoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A0CCA1C1AFABD7F00FA46BC /* PhotoTableViewCell.m */; };
-		2A0CCA241AFAC9EB00FA46BC /* PhotoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A0CCA231AFAC9EB00FA46BC /* PhotoModel.m */; };
+		2A0CCA1D1AFABD7F00FA46BC /* INSPhotoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A0CCA1C1AFABD7F00FA46BC /* INSPhotoTableViewCell.m */; };
+		2A0CCA241AFAC9EB00FA46BC /* INSPhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A0CCA231AFAC9EB00FA46BC /* INSPhoto.m */; };
 		2A79CBE51B055447004B7214 /* PhotoDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A79CBE41B055447004B7214 /* PhotoDetailViewController.m */; };
 		2A79CBE81B064E24004B7214 /* HelperModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A79CBE71B064E24004B7214 /* HelperModel.m */; };
-		2A8D51C11B03E221001C7130 /* SearchBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A8D51C01B03E221001C7130 /* SearchBar.m */; };
+		2A8D51C11B03E221001C7130 /* INSSearchBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A8D51C01B03E221001C7130 /* INSSearchBar.m */; };
 		2A905B201B07D8F100C3890E /* UIScrollView+SVInfiniteScrolling.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A905B1D1B07D8F100C3890E /* UIScrollView+SVInfiniteScrolling.m */; };
 		2A905B211B07D8F100C3890E /* UIScrollView+SVPullToRefresh.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A905B1F1B07D8F100C3890E /* UIScrollView+SVPullToRefresh.m */; };
 		2AD8BA0B1B0CEB0600CE49DA /* DetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2AD8BA0A1B0CEB0600CE49DA /* DetailsViewController.m */; };
@@ -77,17 +77,17 @@
 		2A0CCA111AFAA72A00FA46BC /* PureLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PureLayout.h; sourceTree = "<group>"; };
 		2A0CCA121AFAA72A00FA46BC /* PureLayout+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PureLayout+Internal.h"; sourceTree = "<group>"; };
 		2A0CCA131AFAA72A00FA46BC /* PureLayoutDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PureLayoutDefines.h; sourceTree = "<group>"; };
-		2A0CCA1B1AFABD7F00FA46BC /* PhotoTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoTableViewCell.h; sourceTree = "<group>"; };
-		2A0CCA1C1AFABD7F00FA46BC /* PhotoTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoTableViewCell.m; sourceTree = "<group>"; };
+		2A0CCA1B1AFABD7F00FA46BC /* INSPhotoTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = INSPhotoTableViewCell.h; sourceTree = "<group>"; };
+		2A0CCA1C1AFABD7F00FA46BC /* INSPhotoTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = INSPhotoTableViewCell.m; sourceTree = "<group>"; };
 		2A0CCA211AFAC4A400FA46BC /* InstagramClient-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "InstagramClient-Prefix.pch"; sourceTree = "<group>"; };
-		2A0CCA221AFAC9EB00FA46BC /* PhotoModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoModel.h; sourceTree = "<group>"; };
-		2A0CCA231AFAC9EB00FA46BC /* PhotoModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoModel.m; sourceTree = "<group>"; };
+		2A0CCA221AFAC9EB00FA46BC /* INSPhoto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = INSPhoto.h; sourceTree = "<group>"; };
+		2A0CCA231AFAC9EB00FA46BC /* INSPhoto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = INSPhoto.m; sourceTree = "<group>"; };
 		2A79CBE31B055447004B7214 /* PhotoDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoDetailViewController.h; sourceTree = "<group>"; };
 		2A79CBE41B055447004B7214 /* PhotoDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoDetailViewController.m; sourceTree = "<group>"; };
 		2A79CBE61B064E24004B7214 /* HelperModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelperModel.h; sourceTree = "<group>"; };
 		2A79CBE71B064E24004B7214 /* HelperModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HelperModel.m; sourceTree = "<group>"; };
-		2A8D51BF1B03E221001C7130 /* SearchBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchBar.h; sourceTree = "<group>"; };
-		2A8D51C01B03E221001C7130 /* SearchBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchBar.m; sourceTree = "<group>"; };
+		2A8D51BF1B03E221001C7130 /* INSSearchBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = INSSearchBar.h; sourceTree = "<group>"; };
+		2A8D51C01B03E221001C7130 /* INSSearchBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = INSSearchBar.m; sourceTree = "<group>"; };
 		2A905B1B1B07D8F100C3890E /* SVPullToRefresh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVPullToRefresh.h; sourceTree = "<group>"; };
 		2A905B1C1B07D8F100C3890E /* UIScrollView+SVInfiniteScrolling.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+SVInfiniteScrolling.h"; sourceTree = "<group>"; };
 		2A905B1D1B07D8F100C3890E /* UIScrollView+SVInfiniteScrolling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+SVInfiniteScrolling.m"; sourceTree = "<group>"; };
@@ -249,8 +249,8 @@
 		2A0CCA251AFACA0400FA46BC /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				2A0CCA221AFAC9EB00FA46BC /* PhotoModel.h */,
-				2A0CCA231AFAC9EB00FA46BC /* PhotoModel.m */,
+				2A0CCA221AFAC9EB00FA46BC /* INSPhoto.h */,
+				2A0CCA231AFAC9EB00FA46BC /* INSPhoto.m */,
 				2A79CBE61B064E24004B7214 /* HelperModel.h */,
 				2A79CBE71B064E24004B7214 /* HelperModel.m */,
 			);
@@ -273,10 +273,10 @@
 		2A0CCA271AFACA3200FA46BC /* View */ = {
 			isa = PBXGroup;
 			children = (
-				2A0CCA1B1AFABD7F00FA46BC /* PhotoTableViewCell.h */,
-				2A0CCA1C1AFABD7F00FA46BC /* PhotoTableViewCell.m */,
-				2A8D51BF1B03E221001C7130 /* SearchBar.h */,
-				2A8D51C01B03E221001C7130 /* SearchBar.m */,
+				2A0CCA1B1AFABD7F00FA46BC /* INSPhotoTableViewCell.h */,
+				2A0CCA1C1AFABD7F00FA46BC /* INSPhotoTableViewCell.m */,
+				2A8D51BF1B03E221001C7130 /* INSSearchBar.h */,
+				2A8D51C01B03E221001C7130 /* INSSearchBar.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -387,11 +387,13 @@
 		2A0CC9D81AFAA03200FA46BC /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				CLASSPREFIX = INS;
 				LastUpgradeCheck = 0630;
 				ORGANIZATIONNAME = Eray;
 				TargetAttributes = {
 					2A0CC9DF1AFAA03200FA46BC = {
 						CreatedOnToolsVersion = 6.3;
+						DevelopmentTeam = KJZJDKU3SG;
 					};
 					2A0CC9F81AFAA03300FA46BC = {
 						CreatedOnToolsVersion = 6.3;
@@ -455,10 +457,10 @@
 				2A79CBE51B055447004B7214 /* PhotoDetailViewController.m in Sources */,
 				2A0CC9E91AFAA03300FA46BC /* AppDelegate.m in Sources */,
 				2AFCB5941AFC089D00E45E2B /* UIAlertView+AFNetworking.m in Sources */,
-				2A8D51C11B03E221001C7130 /* SearchBar.m in Sources */,
+				2A8D51C11B03E221001C7130 /* INSSearchBar.m in Sources */,
 				2AFCB5791AFC088500E45E2B /* AFHTTPRequestOperationManager.m in Sources */,
 				2AD8BA0B1B0CEB0600CE49DA /* DetailsViewController.m in Sources */,
-				2A0CCA241AFAC9EB00FA46BC /* PhotoModel.m in Sources */,
+				2A0CCA241AFAC9EB00FA46BC /* INSPhoto.m in Sources */,
 				2AFCB55C1AFB7EA400E45E2B /* PhotosViewController.m in Sources */,
 				2A905B211B07D8F100C3890E /* UIScrollView+SVPullToRefresh.m in Sources */,
 				2A79CBE81B064E24004B7214 /* HelperModel.m in Sources */,
@@ -470,7 +472,7 @@
 				2A0CCA141AFAA72A00FA46BC /* ALView+PureLayout.m in Sources */,
 				2A0CCA151AFAA72A00FA46BC /* NSArray+PureLayout.m in Sources */,
 				2AFCB57C1AFC088500E45E2B /* AFSecurityPolicy.m in Sources */,
-				2A0CCA1D1AFABD7F00FA46BC /* PhotoTableViewCell.m in Sources */,
+				2A0CCA1D1AFABD7F00FA46BC /* INSPhotoTableViewCell.m in Sources */,
 				2AFCB57E1AFC088500E45E2B /* AFURLRequestSerialization.m in Sources */,
 				2AFCB57B1AFC088500E45E2B /* AFNetworkReachabilityManager.m in Sources */,
 				2AFCB5991AFC089D00E45E2B /* UIWebView+AFNetworking.m in Sources */,
@@ -601,6 +603,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PREFIX_HEADER = "InstagramClient/InstagramClient-Prefix.pch";
 				INFOPLIST_FILE = InstagramClient/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -613,6 +616,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PREFIX_HEADER = "InstagramClient/InstagramClient-Prefix.pch";
 				INFOPLIST_FILE = InstagramClient/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;

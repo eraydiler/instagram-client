@@ -8,10 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@class PhotoModel;
+@class INSPhoto;
 @interface DetailsViewController : UIViewController
 
-@property (nonatomic, strong) PhotoModel *photoModel;
+@property (nonatomic, strong) INSPhoto *photoModel;
 @property (nonatomic, strong) UIImage *profilePhoto;
 @property (nonatomic, strong) UIImage *photo;
 
