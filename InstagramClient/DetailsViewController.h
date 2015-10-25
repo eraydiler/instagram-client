@@ -11,8 +11,8 @@
 @class INSPhoto;
 @interface DetailsViewController : UIViewController
 
-@property (nonatomic, strong) INSPhoto *photoModel;
+@property (nonatomic, strong) INSPhoto *photoObject;
 @property (nonatomic, strong) UIImage *profilePhoto;
-@property (nonatomic, strong) UIImage *photo;
+@property (nonatomic, strong) UIImage *image;
 
 @end

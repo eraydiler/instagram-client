@@ -18,6 +18,7 @@
 		2A0CCA161AFAA72A00FA46BC /* NSLayoutConstraint+PureLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A0CCA101AFAA72A00FA46BC /* NSLayoutConstraint+PureLayout.m */; };
 		2A0CCA1D1AFABD7F00FA46BC /* INSPhotoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A0CCA1C1AFABD7F00FA46BC /* INSPhotoTableViewCell.m */; };
 		2A0CCA241AFAC9EB00FA46BC /* INSPhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A0CCA231AFAC9EB00FA46BC /* INSPhoto.m */; };
+		2A5A881E1BDD847900E0582D /* INSDetailsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A5A881D1BDD847900E0582D /* INSDetailsView.m */; };
 		2A79CBE51B055447004B7214 /* PhotoDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A79CBE41B055447004B7214 /* PhotoDetailViewController.m */; };
 		2A79CBE81B064E24004B7214 /* HelperModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A79CBE71B064E24004B7214 /* HelperModel.m */; };
 		2A8D51C11B03E221001C7130 /* INSSearchBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A8D51C01B03E221001C7130 /* INSSearchBar.m */; };
@@ -82,6 +83,8 @@
 		2A0CCA211AFAC4A400FA46BC /* InstagramClient-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "InstagramClient-Prefix.pch"; sourceTree = "<group>"; };
 		2A0CCA221AFAC9EB00FA46BC /* INSPhoto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = INSPhoto.h; sourceTree = "<group>"; };
 		2A0CCA231AFAC9EB00FA46BC /* INSPhoto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = INSPhoto.m; sourceTree = "<group>"; };
+		2A5A881C1BDD847900E0582D /* INSDetailsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = INSDetailsView.h; path = View/INSDetailsView.h; sourceTree = "<group>"; };
+		2A5A881D1BDD847900E0582D /* INSDetailsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = INSDetailsView.m; path = View/INSDetailsView.m; sourceTree = "<group>"; };
 		2A79CBE31B055447004B7214 /* PhotoDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoDetailViewController.h; sourceTree = "<group>"; };
 		2A79CBE41B055447004B7214 /* PhotoDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoDetailViewController.m; sourceTree = "<group>"; };
 		2A79CBE61B064E24004B7214 /* HelperModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelperModel.h; sourceTree = "<group>"; };
@@ -277,6 +280,8 @@
 				2A0CCA1C1AFABD7F00FA46BC /* INSPhotoTableViewCell.m */,
 				2A8D51BF1B03E221001C7130 /* INSSearchBar.h */,
 				2A8D51C01B03E221001C7130 /* INSSearchBar.m */,
+				2A5A881C1BDD847900E0582D /* INSDetailsView.h */,
+				2A5A881D1BDD847900E0582D /* INSDetailsView.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -469,6 +474,7 @@
 				2AFCB5931AFC089D00E45E2B /* UIActivityIndicatorView+AFNetworking.m in Sources */,
 				2AFCB5921AFC089D00E45E2B /* AFNetworkActivityIndicatorManager.m in Sources */,
 				2A0CC9E61AFAA03300FA46BC /* main.m in Sources */,
+				2A5A881E1BDD847900E0582D /* INSDetailsView.m in Sources */,
 				2A0CCA141AFAA72A00FA46BC /* ALView+PureLayout.m in Sources */,
 				2A0CCA151AFAA72A00FA46BC /* NSArray+PureLayout.m in Sources */,
 				2AFCB57C1AFC088500E45E2B /* AFSecurityPolicy.m in Sources */,

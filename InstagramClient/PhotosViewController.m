@@ -208,10 +208,10 @@ static NSString *const ACCESS_TOKEN = @"&access_token=220265065.5c873e0.81643230
     
     DetailsViewController *detailsVC = [[DetailsViewController alloc] init];
     detailsVC.profilePhoto = profilePhoto;
-    detailsVC.photo = photo;
+    detailsVC.image = photo;
     
-    INSPhoto *selectedModel = self.photoModels[indexPath.row];
-    detailsVC.photoModel = selectedModel;
+    INSPhoto *selectedObject = self.photoModels[indexPath.row];
+    detailsVC.photoObject = selectedObject;
     
     // Go to details view controller
     [self.navigationController pushViewController:detailsVC animated:YES];

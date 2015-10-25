@@ -21,7 +21,7 @@
 @implementation PhotoDetailViewController
 
 - (void)configureView {
-    self.photoView.image = self.photo;
+    self.photoView.image = self.photoImage;
 }
 
 - (void)viewDidLoad {
