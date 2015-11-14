@@ -33,7 +33,11 @@
         [self.contentView addSubview:self.dateLabel];
         [self.contentView addSubview:self.photoView];
         
-        self.contentView.backgroundColor = [UIColor colorWithRed:206.0/255.0 green:206.0/255.0 blue:206.0/255.0 alpha:1.0];
+        self.contentView.backgroundColor = [UIColor colorWithRed:206.0/255.0
+                                                           green:206.0/255.0
+                                                            blue:206.0/255.0
+                                                           alpha:1.0];
+        [self setDidSetupConstraints:NO];
         
         [self setNeedsUpdateConstraints];
     }
@@ -89,7 +93,8 @@
 
 - (UIImageView *)profilePicture {
     if (!_profilePicture) {
-        _profilePicture = [UIImageView newAutoLayoutView];
+        _profilePicture = [[UIImageView alloc] initForAutoLayout];
+        
         _profilePicture.backgroundColor = [UIColor redColor];
         _profilePicture.image = [UIImage imageNamed:@"placeholder.png"];
     }
@@ -99,7 +104,8 @@
 
 - (UILabel *)namelabel {
     if (!_namelabel) {
-        _namelabel = [UILabel newAutoLayoutView];
+        _namelabel = [[UILabel alloc] initForAutoLayout];
+        
         _namelabel.backgroundColor = [UIColor clearColor];
         _namelabel.text = @"Mister Tester";
     }
@@ -109,7 +115,8 @@
 
 - (UILabel *)dateLabel {
     if (!_dateLabel) {
-        _dateLabel = [UILabel newAutoLayoutView];
+        _dateLabel = [[UILabel alloc] initForAutoLayout];
+        
         _dateLabel.backgroundColor = [UIColor clearColor];
         _dateLabel.font = [UIFont systemFontOfSize:12.0];
         _dateLabel.text = @"2 hours ago";
@@ -120,7 +127,8 @@
 
 - (UIImageView *)photoView {
     if (!_photoView) {
-        _photoView = [UIImageView newAutoLayoutView];
+        _photoView = [[UIImageView alloc] initForAutoLayout];
+        
         _photoView.backgroundColor = [UIColor grayColor];
         _photoView.image = [UIImage imageNamed:@"placeholder.png"];
     }
@@ -130,8 +138,12 @@
 
 -(UIView *)containerView {
     if (!_containerView) {
-        _containerView = [UIView newAutoLayoutView];
-        _containerView.backgroundColor = [UIColor colorWithRed:237.0/255.0 green:237.0/255.0 blue:237.0/255.0 alpha:1.0];
+        _containerView = [[UIView alloc] initForAutoLayout];
+        
+        _containerView.backgroundColor = [UIColor colorWithRed:237.0/255.0
+                                                         green:237.0/255.0
+                                                          blue:237.0/255.0
+                                                         alpha:1.0];
     }
     
     return _containerView;

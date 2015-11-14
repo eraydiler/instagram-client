@@ -31,6 +31,8 @@
         [self addSubview:self.commentsButton];
         [self addSubview:self.username];
         
+        [self setDidSetupConstraints:NO];
+        
         [self setNeedsUpdateConstraints];
     }
     
@@ -72,26 +74,30 @@
 
 - (UIImageView *)profilePicView {
     if (!_profilePicView) {
-        _profilePicView = [UIImageView newAutoLayoutView];
-        _profilePicView.image = [UIImage imageNamed:@"placeholder.png"];
+        _profilePicView = [[UIImageView alloc] initForAutoLayout];
+        
+        [_profilePicView setImage:[UIImage imageNamed:@"placeholder.png"]];
         [_profilePicView autoSetDimensionsToSize:CGSizeMake(100.0, 100.0)];
         
         [self makeProfileImageCircular];
     }
+    
     return _profilePicView;
 }
 
 - (UIImageView *)photoView {
     if (!_photoView) {
-        _photoView = [UIImageView newAutoLayoutView];
+        _photoView = [[UIImageView alloc] initForAutoLayout];
+        
         _photoView.image = [UIImage imageNamed:@"placeholder.png"];
         
-        UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self
-                                                                                        action:@selector(photoTapped:)];
+        
+        UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc]
+                                                 initWithTarget:self
+                                                         action:@selector(photoTapped:)];
         [_photoView addGestureRecognizer:tapRecognizer];
         [_photoView setUserInteractionEnabled:YES];
         [tapRecognizer setCancelsTouchesInView:NO];
-
     }
     
     return _photoView;
@@ -99,31 +105,37 @@
 
 - (UILabel *)fullName {
     if (!_fullName) {
-        _fullName = [UILabel newAutoLayoutView];
+        _fullName = [[UILabel alloc] initForAutoLayout];
     }
+    
     return _fullName;
 }
 
 - (UILabel *)username {
     if (!_username) {
-        _username = [UILabel newAutoLayoutView];
+        _username = [[UILabel alloc] initForAutoLayout];
     }
+    
     return _username;
 }
 
 - (UIImageView *)heartView {
     if (!_heartView) {
-        _heartView = [UIImageView newAutoLayoutView];
+        _heartView = [[UIImageView alloc] initForAutoLayout];
+        
         _heartView.image = [UIImage imageNamed:@"heart.png"];
+        
         [_heartView autoSetDimensionsToSize:CGSizeMake(40.0, 40.0)];
 
     }
+    
     return _heartView;
 }
 
 - (UILabel *)likesLabel {
     if (!_likesLabel) {
-        _likesLabel = [UILabel newAutoLayoutView];
+        _likesLabel = [[UILabel alloc] initForAutoLayout];
+        
         _likesLabel.text = @"-";
         _likesLabel.layer.shadowColor = [[UIColor whiteColor] CGColor];
         _likesLabel.layer.shadowOffset = CGSizeMake(1.0f, 1.0f);
@@ -135,39 +147,45 @@
         _likesLabel.backgroundColor = [UIColor clearColor];
         _likesLabel.font = [UIFont systemFontOfSize:30];
     }
+    
     return _likesLabel;
 }
 
 - (UIButton *)commentsButton {
     if (!_commentsButton) {
-        _commentsButton = [UIButton new];
+        _commentsButton = [[UIButton alloc] initForAutoLayout];
+        
         [_commentsButton setTitle:@"Comments" forState:UIControlStateNormal];
+        
         [_commentsButton setTitleColor:[UIColor colorWithRed:0.0 / 255.0
                                                        green:122.0 / 255.0
                                                         blue:255.0 / 255.0
                                                        alpha:1.0]
                               forState:UIControlStateNormal];
+        
         [_commentsButton setTitleColor:[UIColor colorWithRed:0.0 / 255.0
                                                        green:122.0 / 255.0
                                                         blue:255.0 / 255.0
                                                        alpha:0.3]
                               forState:UIControlStateHighlighted];
+        
         [_commentsButton addTarget:self
-                            action:@selector(commentsTouched:)
+                            action:@selector(didTapCommentsButton:)
                   forControlEvents:UIControlEventTouchUpInside];
     }
+    
     return _commentsButton;
 }
 
 #pragma mark - selectors
 
-- (void)commentsTouched:(UIButton *)sender {
+- (void)didTapCommentsButton:(UIButton *)sender {
 }
 
 #pragma Mark - Helper Methods
 
-- (void) makeProfileImageCircular {
-    _profilePicView.layer.cornerRadius = 50 /*_view.frame.size.width / 2*/;
+- (void)makeProfileImageCircular {
+    _profilePicView.layer.cornerRadius = 50.0 /*_view.frame.size.width / 2*/;
     _profilePicView.clipsToBounds = YES;
 }
 

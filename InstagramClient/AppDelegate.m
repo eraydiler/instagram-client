@@ -18,11 +18,20 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 
+    
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    PhotosViewController *viewController = [[PhotosViewController alloc] initWithNibName:nil bundle:nil];
-    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:viewController];
+    
+    PhotosViewController *viewController = [[PhotosViewController alloc] initWithNibName:nil
+                                                                                  bundle:nil];
+    
+    
+    UINavigationController *navigationController = [[UINavigationController alloc]
+                                                    initWithRootViewController:viewController];
+    
     self.window.rootViewController = navigationController;
+    
     [self.window makeKeyAndVisible];
+    
     return YES;
 }
 

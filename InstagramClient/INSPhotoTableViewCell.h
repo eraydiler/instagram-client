@@ -11,10 +11,10 @@
 IB_DESIGNABLE
 @interface INSPhotoTableViewCell : UITableViewCell
 
-@property(nonatomic) IBInspectable UIView *containerView;
-@property(nonatomic) IBInspectable UIImageView *profilePicture;
-@property(nonatomic) IBInspectable UILabel *namelabel;
-@property(nonatomic) IBInspectable UILabel *dateLabel;
-@property(nonatomic) IBInspectable UIImageView *photoView;
+@property(nonatomic) IBInspectable UIView       * containerView;
+@property(nonatomic) IBInspectable UIImageView  * profilePicture;
+@property(nonatomic) IBInspectable UILabel      * namelabel;
+@property(nonatomic) IBInspectable UILabel      * dateLabel;
+@property(nonatomic) IBInspectable UIImageView  * photoView;
 
 @end

@@ -12,7 +12,7 @@
 #import "HelperModel.h"
 #import "INSDetailsView.h"
 
-@interface DetailsViewController () < INSDetailsViewDelegate >
+@interface DetailsViewController () <INSDetailsViewDelegate>
 
 @property (nonatomic, strong) INSDetailsView *detailsView;
 
@@ -42,7 +42,6 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-//    [self updateConstraints];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {

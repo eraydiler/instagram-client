@@ -11,6 +11,6 @@
 @class INSPhoto;
 @interface PhotoDetailViewController : UIViewController
 
-@property (nonatomic, strong) UIImage *photoImage;
+@property (nonatomic, strong) UIImage  * photoImage;
 
 @end

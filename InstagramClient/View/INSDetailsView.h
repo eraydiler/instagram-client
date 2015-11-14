@@ -21,12 +21,12 @@
 
 @property (nonatomic, weak) id <INSDetailsViewDelegate> delegate;
 
-@property (nonatomic, strong) UIImageView *photoView;
-@property (nonatomic, strong) UIImageView *profilePicView;
-@property (nonatomic, strong) UIImageView *heartView;
-@property (nonatomic, strong) UILabel *fullName;
-@property (nonatomic, strong) UILabel *username;
-@property (nonatomic, strong) UIButton *commentsButton;
-@property (nonatomic, strong) UILabel *likesLabel;
+@property (nonatomic, strong) UIImageView  * photoView;
+@property (nonatomic, strong) UIImageView  * profilePicView;
+@property (nonatomic, strong) UIImageView  * heartView;
+@property (nonatomic, strong) UILabel      * fullName;
+@property (nonatomic, strong) UILabel      * username;
+@property (nonatomic, strong) UIButton     * commentsButton;
+@property (nonatomic, strong) UILabel      * likesLabel;
 
 @end

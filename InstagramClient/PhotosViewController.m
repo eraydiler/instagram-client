@@ -25,24 +25,25 @@ static NSString *const URL_END = @"/media/recent?";
 static NSString *const COUNT = @"&count=20";
 static NSString *const ACCESS_TOKEN = @"&access_token=220265065.5c873e0.81643230ea8a479e9e1355d49529903a";
 
-@interface PhotosViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UITextFieldDelegate>
+@interface PhotosViewController ()
+<UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UITextFieldDelegate>
 
 @property (nonatomic) BOOL didSetupConstraints;
 @property (nonatomic) BOOL didSetupView;
 @property (nonatomic) BOOL didNewSearch;
 
-@property (nonatomic, strong) UISearchBar *search;
-@property (strong, nonatomic) UITableView *tableView;
-@property (nonatomic, strong) UIView *containerView;
-@property (strong, nonatomic) UIActivityIndicatorView *activityIndicator;
+@property (nonatomic, strong) UISearchBar              * search;
+@property (nonatomic, strong) UITableView              * tableView;
+@property (nonatomic, strong) UIView                   * containerView;
+@property (nonatomic, strong) UIActivityIndicatorView  * activityIndicator;
 
 // auto-complete
-@property (nonatomic, strong) NSMutableArray *autocompleteTags;
-@property (nonatomic, strong) UITableView *autocompleteTableView;
-@property (nonatomic, strong) NSMutableArray *pastTags;
-@property (nonatomic, strong) NSString *searchText;
+@property (nonatomic, strong) NSMutableArray           * autocompleteTags;
+@property (nonatomic, strong) UITableView              * autocompleteTableView;
+@property (nonatomic, strong) NSMutableArray           * pastTags;
+@property (nonatomic, strong) NSString                 * searchText;
 
-@property(nonatomic, strong) NSMutableArray *photoModels;
+@property(nonatomic, strong) NSMutableArray            * photoModels;
 
 // to keep track of what is the next page to load
 @property (nonatomic, assign) int currentPage;
@@ -86,21 +87,18 @@ static NSString *const ACCESS_TOKEN = @"&access_token=220265065.5c873e0.81643230
         }
     }];
     
-    UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(addTapGesture:)];
+    
+    UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                                    action:@selector(addTapGesture:)];
     [self.navigationController.navigationBar addGestureRecognizer:tapRecognizer];
     
     // This prevents navigation bar from clicking issues.
     [tapRecognizer setCancelsTouchesInView:NO];
-    
-    // testing
-//    [self.navigationController.navigationBar setBackgroundImage:[[UIImage alloc] init]
-//                                                  forBarMetrics:UIBarMetricsDefault];
-//    self.navigationController.navigationBar.shadowImage = [[UIImage alloc] init];
-//    self.navigationController.navigationBar.translucent = YES;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     [self configureView];
 }
 
@@ -113,6 +111,7 @@ static NSString *const ACCESS_TOKEN = @"&access_token=220265065.5c873e0.81643230
 {
     // Main view
     self.view = [[UIView alloc] init];
+    
     self.view.backgroundColor = [UIColor colorWithRed:206.0/255.0
                                                 green:206.0/255.0
                                                  blue:206.0/255.0
@@ -169,22 +168,27 @@ static NSString *const ACCESS_TOKEN = @"&access_token=220265065.5c873e0.81643230
     if (tableView == self.autocompleteTableView) {
         return [self.autocompleteTags count];
     }
+    
     return [self.photoModels count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     if (tableView == self.autocompleteTableView) {
-        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier
+                                                                forIndexPath:indexPath];
+        
         cell.textLabel.text = [self.autocompleteTags objectAtIndex:indexPath.row];
         cell.backgroundColor = [[UIColor clearColor] colorWithAlphaComponent:0.0];
         cell.textLabel.font = [UIFont systemFontOfSize:20.0];
+        
         return cell;
     }
     
-    INSPhotoTableViewCell *cell = (INSPhotoTableViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    INSPhotoTableViewCell *cell = (INSPhotoTableViewCell *)[tableView
+                                                            dequeueReusableCellWithIdentifier:CellIdentifier
+                                                                                 forIndexPath:indexPath];
     
-    // Configure the cell...
     [self configureCell:cell atIndexPath:indexPath];
     
     return cell;
@@ -194,7 +198,11 @@ static NSString *const ACCESS_TOKEN = @"&access_token=220265065.5c873e0.81643230
     if (tableView == self.autocompleteTableView) {
         return 50.0;
     }
-    NSLog(@"%f, %f, %f", [HelperModel screenHeight], [HelperModel viewHeight:self.search], [HelperModel viewHeight:self.navigationController.navigationBar]);
+    
+    NSLog(@"%f, %f, %f", [HelperModel screenHeight],
+                         [HelperModel viewHeight:self.search],
+                         [HelperModel viewHeight:self.navigationController.navigationBar]);
+    
     return [HelperModel screenHeight] - [HelperModel viewHeight:self.search] - [HelperModel viewHeight:self.navigationController.navigationBar] -20;
 }
 
@@ -203,10 +211,13 @@ static NSString *const ACCESS_TOKEN = @"&access_token=220265065.5c873e0.81643230
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     INSPhotoTableViewCell *selectedCell = (INSPhotoTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
+    
     UIImage *profilePhoto = selectedCell.profilePicture.image;
     UIImage *photo = selectedCell.photoView.image;
     
+    
     DetailsViewController *detailsVC = [[DetailsViewController alloc] init];
+    
     detailsVC.profilePhoto = profilePhoto;
     detailsVC.image = photo;
     
@@ -239,16 +250,10 @@ static NSString *const ACCESS_TOKEN = @"&access_token=220265065.5c873e0.81643230
     [searchBar resignFirstResponder];
 }
 
-- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
-{
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
     if ([searchText isEqualToString:@""]) {
         self.autocompleteTableView.hidden = YES;
     }
-//    if (![searchText isEqualToString:self.searchText]) {
-//        self.searchText = searchText;
-//        return;
-//    }
-//    NSLog(@"Clear clicked");
 }
 
 #pragma mark - UITextField delegate
@@ -256,6 +261,7 @@ static NSString *const ACCESS_TOKEN = @"&access_token=220265065.5c873e0.81643230
 // Handling search bar clear button
 - (BOOL)textFieldShouldClear:(UITextField *)textField {
     self.autocompleteTableView.hidden = YES;
+    
     return YES;
 }
 
@@ -267,6 +273,7 @@ static NSString *const ACCESS_TOKEN = @"&access_token=220265065.5c873e0.81643230
     
     NSString *substring = [NSString stringWithString:searchBar.text];
     substring = [substring stringByReplacingCharactersInRange:range withString:text];
+    
     [self searchAutocompleteEntriesWithSubstring:substring];
     
     return YES;
@@ -276,17 +283,24 @@ static NSString *const ACCESS_TOKEN = @"&access_token=220265065.5c873e0.81643230
 
 - (UIView *)containerView {
     if (!_containerView) {
-        _containerView = [UIView newAutoLayoutView];
-        _containerView.backgroundColor = [UIColor colorWithRed:237.0/255.0 green:237.0/255.0 blue:237.0/255.0 alpha:1.0];
+        _containerView = [[UIView alloc] initForAutoLayout];
+        _containerView.backgroundColor = [UIColor colorWithRed:237.0/255.0
+                                                         green:237.0/255.0
+                                                          blue:237.0/255.0
+                                                         alpha:1.0];
     }
+    
     return _containerView;
 }
 
 - (UIActivityIndicatorView *)activityIndicator {
     if (!_activityIndicator) {
-        _activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+        _activityIndicator = [[UIActivityIndicatorView alloc]
+                              initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+        
         _activityIndicator.color = [UIColor blackColor];
     }
+    
     return _activityIndicator;
 }
 
@@ -294,6 +308,7 @@ static NSString *const ACCESS_TOKEN = @"&access_token=220265065.5c873e0.81643230
     if (!_photoModels) {
         _photoModels = [[NSMutableArray alloc] init];
     }
+    
     return _photoModels;
 }
 
@@ -302,12 +317,14 @@ static NSString *const ACCESS_TOKEN = @"&access_token=220265065.5c873e0.81643230
         _search = [INSSearchBar newAutoLayoutView];
         _search.delegate = self;
     }
+    
     return _search;
 }
 
 - (UITableView *)tableView {
     if (!_tableView) {
-        _tableView = [UITableView newAutoLayoutView];
+        _tableView = [[UITableView alloc] initForAutoLayout];
+        
         _tableView.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
         _tableView.scrollEnabled = YES;
         _tableView.delegate = self;
@@ -315,24 +332,29 @@ static NSString *const ACCESS_TOKEN = @"&access_token=220265065.5c873e0.81643230
         [_tableView registerClass:[INSPhotoTableViewCell class]
                forCellReuseIdentifier:CellIdentifier];
     }
+    
     return _tableView;
 }
 
 - (UITableView *)autocompleteTableView {
     if (!_autocompleteTableView) {
-        _autocompleteTableView = [UITableView newAutoLayoutView];
+        _autocompleteTableView = [[UITableView alloc] initForAutoLayout];
+        
         _autocompleteTableView.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.8];
         _autocompleteTableView.hidden = YES;
         _autocompleteTableView.allowsSelection = NO;
         _autocompleteTableView.delegate = self;
         _autocompleteTableView.dataSource = self;
-        _autocompleteTableView.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
+        _autocompleteTableView.autoresizingMask = UIViewAutoresizingFlexibleHeight
+                                                  |UIViewAutoresizingFlexibleWidth;
         _autocompleteTableView.scrollEnabled = YES;
         _autocompleteTableView.layer.cornerRadius = 10;
         _autocompleteTableView.layer.masksToBounds = YES;
+        
         [_autocompleteTableView registerClass:[UITableViewCell class]
-                           forCellReuseIdentifier:CellIdentifier];
+                       forCellReuseIdentifier:CellIdentifier];
     }
+    
     return _autocompleteTableView;
 }
 
@@ -340,6 +362,7 @@ static NSString *const ACCESS_TOKEN = @"&access_token=220265065.5c873e0.81643230
     if (!_autocompleteTags) {
         _autocompleteTags = [[NSMutableArray alloc] init];
     }
+    
     return _autocompleteTags;
 }
 
@@ -347,6 +370,7 @@ static NSString *const ACCESS_TOKEN = @"&access_token=220265065.5c873e0.81643230
     if (!_pastTags) {
         _pastTags = [[NSMutableArray alloc] init];
     }
+    
     return _pastTags;
 }
 
@@ -354,6 +378,7 @@ static NSString *const ACCESS_TOKEN = @"&access_token=220265065.5c873e0.81643230
     if (!_searchText) {
         _searchText = [[NSString alloc] init];
     }
+    
     return _searchText;
 }
 
@@ -365,7 +390,7 @@ static NSString *const ACCESS_TOKEN = @"&access_token=220265065.5c873e0.81643230
     // configure photo cell
     if (cell == nil) {
         cell = [[INSPhotoTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
-                                         reuseIdentifier:CellIdentifier];
+                                            reuseIdentifier:CellIdentifier];
     }
     
     INSPhoto *photoModel = self.photoModels[indexPath.row];
@@ -381,6 +406,7 @@ static NSString *const ACCESS_TOKEN = @"&access_token=220265065.5c873e0.81643230
     // Get profile picture
     NSURLRequest *request = [NSURLRequest requestWithURL:photoModel.profilePictureURL];
     UIImage *placeholderImage = [UIImage imageNamed:@"placeholder"];
+    
     __weak INSPhotoTableViewCell *weakCell = cell;
     [cell.profilePicture setImageWithURLRequest:request
                                placeholderImage:placeholderImage
@@ -391,13 +417,15 @@ static NSString *const ACCESS_TOKEN = @"&access_token=220265065.5c873e0.81643230
     
     // Get photo
     request = [NSURLRequest requestWithURL:photoModel.photoURL];
+    
     placeholderImage = [UIImage imageNamed:@"placeholder"];
     [cell.photoView setImageWithURLRequest:request
-                      placeholderImage:placeholderImage
-                               success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
-                                   weakCell.photoView.image = image;
-                                   [weakCell setNeedsLayout];
-                               } failure:nil];
+                          placeholderImage:placeholderImage
+                                   success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+                                       weakCell.photoView.image = image;
+                                       [weakCell setNeedsLayout];
+                                   }
+                                   failure:nil];
 }
 
 - (void)showActivityIndicator {
@@ -413,11 +441,15 @@ static NSString *const ACCESS_TOKEN = @"&access_token=220265065.5c873e0.81643230
 }
 
 - (void)loadFromInstagram:(NSString *)tag {
+    if ([tag isEqualToString:@""]) {
+        tag = @"instagram";
+    }
     
-    if ([tag isEqualToString:@""]) tag = @"instagram";
+    
     NSString *requestURL = [NSString stringWithFormat:@"%@%@%@%@%@", URL_BEGIN, tag, URL_END, COUNT, ACCESS_TOKEN ];
 
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    
     [manager GET:requestURL
       parameters:nil
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -462,23 +494,30 @@ static NSString *const ACCESS_TOKEN = @"&access_token=220265065.5c873e0.81643230
              id responseObject = operation.responseObject;
              NSDictionary *dic = (NSDictionary *)responseObject;
              NSArray *meta = [dic objectForKey:@"meta"];
-             [self showAlert:[NSString stringWithFormat:@"Error with tag: %@", tag] forMessage:[NSString stringWithFormat:@"%@ try to search different tags.", [(NSDictionary *)meta objectForKey:@"error_message"]]];
+             
+             [self showAlert:[NSString stringWithFormat:@"Error with tag: %@", tag]
+                  forMessage:[NSString stringWithFormat:@"%@ try to search different tags.",
+                                                        [(NSDictionary *)meta objectForKey:@"error_message"]]];
              [self hideActivityIndicator];
          }];
 }
 
-- (void)showAlert:(NSString *)title forMessage:(NSString *)message {
+- (void)showAlert:(NSString *)title
+       forMessage:(NSString *)message {
+    
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title
-                                                       message:message
-                                                      delegate:self
-                                             cancelButtonTitle:@"OK"
-                                             otherButtonTitles:nil];
+                                                    message:message
+                                                   delegate:self
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil];
     [alert show];
 }
 
-- (NSString *)stringFromDate: (NSDate *)date {
+- (NSString *)stringFromDate:(NSDate *)date {
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    
     dateFormatter.dateFormat = @"yy/MM/dd HH:mm";
+    
     return [dateFormatter stringFromDate:date];
 }
 
@@ -500,12 +539,14 @@ static NSString *const ACCESS_TOKEN = @"&access_token=220265065.5c873e0.81643230
     // Put anything that starts with this substring into the autocompleteUrls array
     // The items in this array is what will show up in the table view
     [self.autocompleteTags removeAllObjects];
+    
     for(NSString *curString in self.pastUrls) {
         NSRange substringRange = [curString rangeOfString:substring];
         if (substringRange.location == 0) {
             [self.autocompleteTags addObject:curString];
         }
     }
+    
     [self.autocompleteTableView reloadData];
 }
 

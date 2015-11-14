@@ -13,11 +13,14 @@
 
 + (INSPhoto *)getPhotoModel:(NSDictionary *)dic {
     
+    
     INSPhoto *photoModel = [[INSPhoto alloc] init];
     
     // Get user
     NSDictionary *user = [dic objectForKey:@"user"];
+    
     NSString *profilePicture = [user objectForKey:@"profile_picture"];
+    
     photoModel.fullName = [user objectForKey:@"full_name"];
     photoModel.userName = [user objectForKey:@"username"];
     
@@ -28,12 +31,14 @@
     NSDictionary *images = [dic objectForKey:@"images"];
     NSDictionary *lowRes = [images objectForKey:@"low_resolution"];
     NSString *lowImage = [lowRes objectForKey:@"url"];
+    
     photoModel.photoURL = [NSURL URLWithString:lowImage];
     
     // Get time
     NSString *createdTime = [dic objectForKey:@"created_time"];
     NSTimeInterval interval = [createdTime doubleValue];;
     NSDate *date = [NSDate dateWithTimeIntervalSince1970: interval];
+    
     photoModel.date = date;
     
     // Get text

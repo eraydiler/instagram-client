@@ -12,9 +12,9 @@
 
 @interface PhotoDetailViewController () <UIScrollViewDelegate>
 
-@property (nonatomic, assign) BOOL didSetupConstraints;
-@property (nonatomic, strong) UIScrollView *scrollView;
-@property (nonatomic, strong) UIImageView *photoView;
+@property (nonatomic, assign) BOOL            didSetupConstraints;
+@property (nonatomic, strong) UIScrollView  * scrollView;
+@property (nonatomic, strong) UIImageView   * photoView;
 
 @end
 
@@ -26,6 +26,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     [self configureView];
 }
 
@@ -35,6 +36,7 @@
 
 - (void)loadView {
     self.view = [[UIView alloc] init];
+    
     self.view.backgroundColor = [UIColor colorWithRed:206.0/255.0
                                                 green:206.0/255.0
                                                  blue:206.0/255.0
@@ -43,20 +45,24 @@
     self.scrollView.delegate = self;
 
     [self.view addSubview:self.scrollView];
+    
     [self.view setNeedsUpdateConstraints];
 }
 
 - (void)updateViewConstraints {
     
     if (!_didSetupConstraints) {
-
         [self.scrollView autoPinEdge:ALEdgeTop toEdge:ALEdgeTop ofView:self.view
                          withOffset:[HelperModel viewHeight:self.navigationController.navigationBar] +20];
         [self.scrollView autoPinEdge:ALEdgeBottom toEdge:ALEdgeBottom ofView:self.view];
         [self.scrollView autoPinEdge:ALEdgeLeft toEdge:ALEdgeLeft ofView:self.view];
         [self.scrollView autoPinEdge:ALEdgeRight toEdge:ALEdgeRight ofView:self.view];
         
-        [self.photoView autoSetDimensionsToSize:CGSizeMake([HelperModel screenWidth], [HelperModel screenHeight] -[HelperModel viewHeight:self.navigationController.navigationBar] -20.0)];
+        [self.photoView
+         autoSetDimensionsToSize:CGSizeMake([HelperModel screenWidth],
+                                            [HelperModel screenHeight]
+                                             -[HelperModel viewHeight:self.navigationController.navigationBar]
+                                             -20.0)];
         
         self.didSetupConstraints = YES;
     }
@@ -66,8 +72,7 @@
 
 #pragma mark - Scrollview delegate
 
-- (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView
-{
+- (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView {
     return self.photoView;
 }
 
@@ -75,20 +80,23 @@
 
 - (UIImageView *)photoView {
     if (!_photoView) {
-        _photoView = [UIImageView newAutoLayoutView];
+        _photoView = [[UIImageView alloc] initForAutoLayout];
+        
         _photoView.backgroundColor = [UIColor whiteColor];
         _photoView.userInteractionEnabled = YES;
     }
+    
     return _photoView;
 }
 
 - (UIScrollView *)scrollView {
     if (!_scrollView) {
-        _scrollView = [UIScrollView newAutoLayoutView];
-//        _scrollView.backgroundColor = [UIColor redColor];
+        _scrollView = [[UIScrollView alloc] initForAutoLayout];
+        
         _scrollView.maximumZoomScale = 2.0;
         _scrollView.minimumZoomScale = 0.5;
     }
+    
     return _scrollView;
 }
 
